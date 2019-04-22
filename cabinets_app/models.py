@@ -9,7 +9,7 @@ class Account(models.Model):
     """
     name = models.CharField(max_length=128)
     billing_address = models.CharField(max_length=1024)
-    billing_phone = PhoneNumberField(null=False, blank=False, unique=True)
+    billing_phone = PhoneNumberField(null=False, blank=False)
     billing_email = models.EmailField(max_length=256)
     contact_name = models.CharField(max_length=128)
     discount = models.DecimalField(max_digits=3, decimal_places=2)
