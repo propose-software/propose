@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cpm_project',
+    'phonenumber_field',
     'cabinets_app'
 ]
 
