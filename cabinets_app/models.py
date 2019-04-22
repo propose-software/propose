@@ -1,3 +1,220 @@
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
 
-# Create your models here.
+
+class Labor(models.Model)
+
+
+class Account(models.Model):
+    """ Defines a customer account
+    """
+    name = models.CharField(max_length=128)
+    billing_address = models.CharField(max_length=1024)
+    billing_phone = PhoneNumberField(null=False, blank=False, unique=True)
+    billing_email = models.EmailField(max_length=256)
+    contact_name = models.CharField(max_length=128)
+    discount = models.DecimalField(decimal_places=2)
+
+    def __repr__(self):
+        return f'<Account name: {self.name}>'
+
+    def __str__(self):
+        return f'Account name: {self.name}'
+
+
+class Project(models.Model):
+    """ Defines a Project within an Account
+    """
+    name = models.CharField(max_length=128)
+    account = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+        related_name='projects'
+    )
+    physical_address = models.CharField(max_length=1024)
+    site_contact = models.CharField(max_length=128)
+    contact_phone = PhoneNumberField(null=False, blank=False, unique=True)
+    contact_email = models.EmailField(max_length=256)
+    hourly_rate = models.DecimalField(decimal_places=2)
+
+    def __repr__(self):
+        return f'<Project name: {self.name}>'
+
+    def __str__(self):
+        return f'Project: {self.name}'
+
+
+class Cabinet(models.Model):
+    """ Defines a Cabinet within a Project
+    """
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='cabinets'
+    )
+    specification = models.ForeignKey(
+        Specification,
+        on_delete=models.CASCADE,
+        related_name='cabinets'
+    )
+    room = models.CharField(max_length=128)
+    width = models.DecimalField(decimal_places=2)
+    height = models.DecimalField(decimal_places=2)
+    depth = models.DecimalField(decimal_places=2)
+    number_of_doors = models.IntegerField()
+    number_of_shelves = models.IntegerField()
+    finished_interior = models.BooleanField(default=False)
+    finished_left_end = models.BooleanField(default=False)
+    finished_right_end = models.BooleanField(default=False)
+    finished_top = models.BooleanField(default=False)
+    finished_bottom = models.BooleanField(default=False)
+
+    def __repr__(self):
+        return f'<Cabinet project: {str(self.project.id)} | room: {self.room}>'
+
+    def __str__(self):
+        return f'Cabinet for project: {str(self.project.id)} | room: {self.room}'
+
+
+class Drawer(models.Model):
+    """ Drawers for Cabinets
+    """
+    cabinet = models.ForeignKey(
+        Cabinet,
+        on_delete=models.CASCADE,
+        related_name='drawers'
+    )
+    height = models.DecimalField(decimal_places=2)
+
+    def __repr__(self):
+        return f'<Drawer for cabinet {str(self.cabinet.id)}>'
+
+    def __str__(self):
+        return f'Drawer in cabinet {str(self.cabinet.id)}'
+
+
+class Specification(models.Model):
+    """ Defines a default Specification within a Project
+    """
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='specifications'
+    )
+    interior_material = models.ForeignKey(
+        Material,
+        on_delete=models.SET_NULL,
+        related_name='interior_specifications'
+    )
+    exterior_material = models.ForeignKey(
+        Material,
+        on_delete=models.SET_NULL,
+        related_name='exterior_specifications'
+    )
+    name = models.CharField(max_length=128)
+    CONSTRUCTION_CHOICES = [
+        ('frameless', 'Frameless'),
+        ('faceframe', 'Faceframe Overlay'),
+        ('faceframe-inset', 'Faceframe Inset')
+    ]
+    construction = models.CharField(
+        choices=CONSTRUCTION_CHOICES,
+        default='frameless',
+        max_length=32
+    )
+    CATALOG_CHOICES = [
+        ('laminate', 'Laminate'),
+        ('wood slab', 'Wood Slab'),
+        ('wood 5-piece', 'Wood 5-Piece'),
+        ('thermofoil', 'Thermofoil')
+    ]
+    catalog = models.CharField(
+        choices=CATALOG_CHOICES,
+        default='laminate',
+        max_length=32
+    )
+    FINISH_LEVEL_CHOICES = [
+        (0, 'Unfinished'),
+        (3, 'Sand & Prep Only'),
+        (6, 'Clear'),
+        (8, 'Stain'),
+        (12, 'Stain & Glaze'),
+        (12, 'Stain & Distress'),
+        (16, 'Stain, Glaze & Distress'),
+        (10, 'Paint'),
+        (14, 'Paint & Glaze'),
+        (14, 'Paint & Distress'),
+        (18, 'Paint, Glaze & Distress')
+    ]
+    finish_level = models.IntegerField(
+        choices=FINISH_LEVEL_CHOICES,
+        default=0
+    )
+
+    def __repr__(self):
+        return f'<Specification name: {self.name}>'
+
+    def __str__(self):
+        return f'Project: {self.project.name} | Specification: {self.name}'
+
+
+class Material(models.Model):
+    """ Applied to Project/Cabinet via Specification
+    """
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=512)
+    thickness = models.DecimalField(decimal_places=2)
+    width = models.DecimalField(decimal_places=2)
+    length = models.DecimalField(decimal_places=2)
+    sheet_cost = models.DecimalField(decimal_places=2)
+    waste_factor = models.DecimalField(decimal_places=2)
+    markup = models.DecimalField(decimal_places=2)
+    date_updated = models.DateTimeField(default=timezone.now, blank=True)
+
+    @property
+    def sq_ft_cost(self):
+        return self.sheet_cost / ((self.width / 12) * (self.length / 12))
+
+    def __repr__(self):
+        return f'<Material: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Hardware(models.Model):
+    """ Applied to Project/Cabinet via Specification
+    """
+    name = models.CharField(max_length=128)
+    cost_per = models.DecimalField(decimal_places=2)
+    UNIT_TYPE_CHOICES = [
+        ('each', 'Each'),
+        ('pair', 'Pair'),
+        ('set', 'Set')
+    ]
+    unit_type = models.CharField(
+        choices=UNIT_TYPE_CHOICES,
+        max_length=16
+    )
+
+    def __repr__(self):
+        return f'<Hardware: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Labor(models.Model):
+    """ Correlates items to labor required, for invoice calculations
+    """
+    item_name = models.CharField(max_length=128)
+    minutes = models.IntegerField()
+    units = models.CharField(max_length=32)
+
+    def __repr__(self):
+        return f'<Labor: {self.item_name}>'
+
+    def __str__(self):
+        return f'{self.item_name}'
