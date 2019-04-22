@@ -4,9 +4,6 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-class Labor(models.Model)
-
-
 class Account(models.Model):
     """ Defines a customer account
     """
@@ -15,13 +12,73 @@ class Account(models.Model):
     billing_phone = PhoneNumberField(null=False, blank=False, unique=True)
     billing_email = models.EmailField(max_length=256)
     contact_name = models.CharField(max_length=128)
-    discount = models.DecimalField(decimal_places=2)
+    discount = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __repr__(self):
         return f'<Account name: {self.name}>'
 
     def __str__(self):
         return f'Account name: {self.name}'
+
+
+class Material(models.Model):
+    """ Applied to Project/Cabinet via Specification
+    """
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=512)
+    thickness = models.DecimalField(max_digits=4, decimal_places=2)
+    width = models.DecimalField(max_digits=6, decimal_places=2)
+    length = models.DecimalField(max_digits=6, decimal_places=2)
+    sheet_cost = models.DecimalField(max_digits=6, decimal_places=2)
+    waste_factor = models.DecimalField(max_digits=3, decimal_places=2)
+    markup = models.DecimalField(max_digits=3, decimal_places=2)
+    date_updated = models.DateTimeField(default=timezone.now, blank=True)
+
+    @property
+    def sq_ft_cost(self):
+        return self.sheet_cost / ((self.width / 12) * (self.length / 12))
+
+    def __repr__(self):
+        return f'<Material: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Hardware(models.Model):
+    """ Applied to Project/Cabinet via Specification
+    """
+    name = models.CharField(max_length=128)
+    cost_per = models.DecimalField(max_digits=6, decimal_places=2)
+    UNIT_TYPE_CHOICES = [
+        ('each', 'Each'),
+        ('pair', 'Pair'),
+        ('set', 'Set')
+    ]
+    unit_type = models.CharField(
+        choices=UNIT_TYPE_CHOICES,
+        max_length=16
+    )
+
+    def __repr__(self):
+        return f'<Hardware: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class Labor(models.Model):
+    """ Correlates items to labor required, for invoice calculations
+    """
+    item_name = models.CharField(max_length=128)
+    minutes = models.IntegerField()
+    units = models.CharField(max_length=32)
+
+    def __repr__(self):
+        return f'<Labor: {self.item_name}>'
+
+    def __str__(self):
+        return f'{self.item_name}'
 
 
 class Project(models.Model):
@@ -37,62 +94,13 @@ class Project(models.Model):
     site_contact = models.CharField(max_length=128)
     contact_phone = PhoneNumberField(null=False, blank=False, unique=True)
     contact_email = models.EmailField(max_length=256)
-    hourly_rate = models.DecimalField(decimal_places=2)
+    hourly_rate = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __repr__(self):
         return f'<Project name: {self.name}>'
 
     def __str__(self):
         return f'Project: {self.name}'
-
-
-class Cabinet(models.Model):
-    """ Defines a Cabinet within a Project
-    """
-    project = models.ForeignKey(
-        Project,
-        on_delete=models.CASCADE,
-        related_name='cabinets'
-    )
-    specification = models.ForeignKey(
-        Specification,
-        on_delete=models.CASCADE,
-        related_name='cabinets'
-    )
-    room = models.CharField(max_length=128)
-    width = models.DecimalField(decimal_places=2)
-    height = models.DecimalField(decimal_places=2)
-    depth = models.DecimalField(decimal_places=2)
-    number_of_doors = models.IntegerField()
-    number_of_shelves = models.IntegerField()
-    finished_interior = models.BooleanField(default=False)
-    finished_left_end = models.BooleanField(default=False)
-    finished_right_end = models.BooleanField(default=False)
-    finished_top = models.BooleanField(default=False)
-    finished_bottom = models.BooleanField(default=False)
-
-    def __repr__(self):
-        return f'<Cabinet project: {str(self.project.id)} | room: {self.room}>'
-
-    def __str__(self):
-        return f'Cabinet for project: {str(self.project.id)} | room: {self.room}'
-
-
-class Drawer(models.Model):
-    """ Drawers for Cabinets
-    """
-    cabinet = models.ForeignKey(
-        Cabinet,
-        on_delete=models.CASCADE,
-        related_name='drawers'
-    )
-    height = models.DecimalField(decimal_places=2)
-
-    def __repr__(self):
-        return f'<Drawer for cabinet {str(self.cabinet.id)}>'
-
-    def __str__(self):
-        return f'Drawer in cabinet {str(self.cabinet.id)}'
 
 
 class Specification(models.Model):
@@ -106,11 +114,13 @@ class Specification(models.Model):
     interior_material = models.ForeignKey(
         Material,
         on_delete=models.SET_NULL,
+        null=True,
         related_name='interior_specifications'
     )
     exterior_material = models.ForeignKey(
         Material,
         on_delete=models.SET_NULL,
+        null=True,
         related_name='exterior_specifications'
     )
     name = models.CharField(max_length=128)
@@ -160,61 +170,50 @@ class Specification(models.Model):
         return f'Project: {self.project.name} | Specification: {self.name}'
 
 
-class Material(models.Model):
-    """ Applied to Project/Cabinet via Specification
+class Cabinet(models.Model):
+    """ Defines a Cabinet within a Project
     """
-    name = models.CharField(max_length=128)
-    description = models.CharField(max_length=512)
-    thickness = models.DecimalField(decimal_places=2)
-    width = models.DecimalField(decimal_places=2)
-    length = models.DecimalField(decimal_places=2)
-    sheet_cost = models.DecimalField(decimal_places=2)
-    waste_factor = models.DecimalField(decimal_places=2)
-    markup = models.DecimalField(decimal_places=2)
-    date_updated = models.DateTimeField(default=timezone.now, blank=True)
-
-    @property
-    def sq_ft_cost(self):
-        return self.sheet_cost / ((self.width / 12) * (self.length / 12))
-
-    def __repr__(self):
-        return f'<Material: {self.name}>'
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class Hardware(models.Model):
-    """ Applied to Project/Cabinet via Specification
-    """
-    name = models.CharField(max_length=128)
-    cost_per = models.DecimalField(decimal_places=2)
-    UNIT_TYPE_CHOICES = [
-        ('each', 'Each'),
-        ('pair', 'Pair'),
-        ('set', 'Set')
-    ]
-    unit_type = models.CharField(
-        choices=UNIT_TYPE_CHOICES,
-        max_length=16
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='cabinets'
     )
+    specification = models.ForeignKey(
+        Specification,
+        on_delete=models.CASCADE,
+        related_name='cabinets'
+    )
+    room = models.CharField(max_length=128)
+    width = models.DecimalField(max_digits=6, decimal_places=2)
+    height = models.DecimalField(max_digits=6, decimal_places=2)
+    depth = models.DecimalField(max_digits=6, decimal_places=2)
+    number_of_doors = models.IntegerField()
+    number_of_shelves = models.IntegerField()
+    finished_interior = models.BooleanField(default=False)
+    finished_left_end = models.BooleanField(default=False)
+    finished_right_end = models.BooleanField(default=False)
+    finished_top = models.BooleanField(default=False)
+    finished_bottom = models.BooleanField(default=False)
 
     def __repr__(self):
-        return f'<Hardware: {self.name}>'
+        return f'<Cabinet project: {str(self.project.id)} | room: {self.room}>'
 
     def __str__(self):
-        return f'{self.name}'
+        return f'Cabinet for project: {str(self.project.id)} | room: {self.room}'
 
 
-class Labor(models.Model):
-    """ Correlates items to labor required, for invoice calculations
+class Drawer(models.Model):
+    """ Drawers for Cabinets
     """
-    item_name = models.CharField(max_length=128)
-    minutes = models.IntegerField()
-    units = models.CharField(max_length=32)
+    cabinet = models.ForeignKey(
+        Cabinet,
+        on_delete=models.CASCADE,
+        related_name='drawers'
+    )
+    height = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __repr__(self):
-        return f'<Labor: {self.item_name}>'
+        return f'<Drawer for cabinet {str(self.cabinet.id)}>'
 
     def __str__(self):
-        return f'{self.item_name}'
+        return f'Drawer in cabinet {str(self.cabinet.id)}'

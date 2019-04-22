@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cpm_project'
+    'cpm_project',
+    'cabinets_app'
 ]
 
 MIDDLEWARE = [
