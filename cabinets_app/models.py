@@ -200,10 +200,10 @@ class Cabinet(models.Model):
     finished_bottom = models.BooleanField(default=False)
 
     def __repr__(self):
-        return f'<Cabinet project: {str(self.project.id)} | room: {self.room}>'
+        return f'<Cabinet project: {str(self.project.id)} | Room: {self.room} | Cab No: {self.cabinet_number} >'
 
     def __str__(self):
-        return f'Cabinet for project: {str(self.project.id)} | room: {self.room}'
+        return f'Cabinet for project: {str(self.project.id)} | Room: {self.room} | Cab No: {self.cabinet_number}'
 
 
 class Drawer(models.Model):
@@ -223,7 +223,7 @@ class Drawer(models.Model):
     )
 
     def __repr__(self):
-        return f'<Drawer for cabinet {str(self.cabinet.id)}>'
+        return f'<Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}>'
 
     def __str__(self):
-        return f'Drawer in cabinet {str(self.cabinet.id)}'
+        return f'Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}'
