@@ -73,10 +73,7 @@ def project_delete(req, proj_id=None):
         project = Project.objects.get(pk=proj_id)
         account_id = project.account.id
         project.delete()
-        context = {
-            'projects': Project.objects.filter(account__id=account_id)
-        }
-        return render(req, './project/project_list.html', context)
+        return redirect('/account/' + str(account_id))
     else:
         context = {
             'project': Project.objects.get(pk=proj_id)
