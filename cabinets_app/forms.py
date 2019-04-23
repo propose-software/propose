@@ -37,7 +37,6 @@ class CabinetForm(forms.ModelForm):
     class Meta:
         model = Cabinet
         fields = [
-            'project',
             'specification',
             'room',
             'width',
@@ -51,3 +50,7 @@ class CabinetForm(forms.ModelForm):
             'finished_top',
             'finished_bottom'
         ]
+
+    def __init__(self, project, *args, **kwargs):
+        super(CabinetForm, self).__init__(*args, **kwargs)
+        self.fields['specification'].queryset = Specification.objects.filter(project=project)
