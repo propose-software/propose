@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from .models import (
     Account, Material, Labor,
     Specification, Cabinet, Drawer,
@@ -132,6 +133,8 @@ def cabinet_create(req, proj_id=None):
     if req.method == 'POST':
         form = CabinetForm(req.POST)
         if form.is_valid():
+            max_cab_no = Cabinet.objects.filter(project__id=proj_id).aggregate(Max('cabinet_number'))
+            form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
             new_cabinet = form.save()
             return redirect('cabinet_detail', proj_id=proj_id, cab_id=new_cabinet.id)
         else:
