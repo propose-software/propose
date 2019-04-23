@@ -11,14 +11,12 @@ urlpatterns = [
     path('', account, name='account'),
     path('account/',
          account_create, name='account_create'),
-    path('account/detail/<int:account_id>',
+    path('account/<int:account_id>',
          account_detail, name='account_detail'),
-    path('account/detail/<int:account_id>/update',
+    path('account/<int:account_id>/update',
          account_update, name='account_update'),
-    path('account/detail/<int:account_id>/delete',
+    path('account/<int:account_id>/delete',
          account_delete, name='account_delete'),
-
-    path('account/<int:account_id>', project_list, name='project_list'),
 
     path('project/',
          project_create, name='project_create'),
