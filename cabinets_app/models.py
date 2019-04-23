@@ -128,9 +128,9 @@ class Specification(models.Model):
     )
     name = models.CharField(max_length=128)
     CONSTRUCTION_CHOICES = [
-        ('frameless', 'Frameless'),
-        ('faceframe', 'Faceframe Overlay'),
-        ('faceframe-inset', 'Faceframe Inset')
+        ('Frameless', 'Frameless'),
+        ('Faceframe Overlay', 'Faceframe Overlay'),
+        ('Faceframe Inset', 'Faceframe Inset')
     ]
     construction = models.CharField(
         choices=CONSTRUCTION_CHOICES,
@@ -138,10 +138,10 @@ class Specification(models.Model):
         max_length=32
     )
     CATALOG_CHOICES = [
-        ('laminate', 'Laminate'),
-        ('wood slab', 'Wood Slab'),
-        ('wood 5-piece', 'Wood 5-Piece'),
-        ('thermofoil', 'Thermofoil')
+        ('Laminate', 'Laminate'),
+        ('Wood Slab', 'Wood Slab'),
+        ('Wood 5-Piece', 'Wood 5-Piece'),
+        ('Thermofoil', 'Thermofoil')
     ]
     catalog = models.CharField(
         choices=CATALOG_CHOICES,
@@ -149,21 +149,22 @@ class Specification(models.Model):
         max_length=32
     )
     FINISH_LEVEL_CHOICES = [
-        (0, 'Unfinished'),
-        (3, 'Sand & Prep Only'),
-        (6, 'Clear'),
-        (8, 'Stain'),
-        (12, 'Stain & Glaze'),
-        (12, 'Stain & Distress'),
-        (16, 'Stain, Glaze & Distress'),
-        (10, 'Paint'),
-        (14, 'Paint & Glaze'),
-        (14, 'Paint & Distress'),
-        (18, 'Paint, Glaze & Distress')
+        ('Unfinished', 'Unfinished'),
+        ('Sand & Prep Only', 'Sand & Prep Only'),
+        ('Clear', 'Clear'),
+        ('Stain', 'Stain'),
+        ('Stain & Glaze', 'Stain & Glaze'),
+        ('Stain & Distress', 'Stain & Distress'),
+        ('Stain, Glaze & Distress', 'Stain, Glaze & Distress'),
+        ('Paint', 'Paint'),
+        ('Paint & Glaze', 'Paint & Glaze'),
+        ('Paint & Distress', 'Paint & Distress'),
+        ('Paint, Glaze & Distress', 'Paint, Glaze & Distress')
     ]
-    finish_level = models.IntegerField(
+    finish_level = models.CharField(
         choices=FINISH_LEVEL_CHOICES,
-        default=0
+        default='Unfinished',
+        max_length=125
     )
 
     def __repr__(self):

@@ -5,8 +5,12 @@
 {% block content %}
 <div>
     <h1>Existing Accounts</h1>
+    <a href="{% url 'account_create' %}">Create Account</a>
+
     {% for account in accounts %}
         <p><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></p>
+        <a href="{% url 'account_update' account_id=account.id %}">Update</a>
+        <a href="{% url 'account_delete' account_id=account.id %}">Delete</a></li>
     {% endfor %}
 </div>
 {% endblock content %}

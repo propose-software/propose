@@ -1,0 +1,17 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Project Delete{% endblock %}
+
+{% block content %}
+<h1>Delete Cabinet</h1>
+
+<p class="warning">Are you certain you want to delete this Cabinet?</p>
+
+<p>Project name: {{ project.name }}</p>
+<p>Cabinet ID: {{ cabinet.id }}</p>
+
+<form action="{% url 'cabinet_delete' proj_id=project.id cab_id=cabinet.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete"/>
+</form>
+{% endblock %}
