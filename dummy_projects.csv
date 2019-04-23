@@ -1,0 +1,16 @@
+﻿Name,Address,Contact,Phone,Email,Salesperson,Account,Discount
+Smith Residence,"438 Tacoma Street, Tacoma WA 98404",Joe Smith,(209) 123-4567,john@smith.com,Chris Ball,Smith,0.05
+Davidson Residence,"1232 Blue Street, Tacoma WA 98404",Kelly Davidson,(546) 234-6789,kelly@davidson.com,Chris Ball,Davidson,0.05
+Anderson Residence,"786 Jeff Way, Seattle WA 12345",Josh Anderson,(345) 989-0987,josh@anderson.com,Milo Anderson,Anderson,0.05
+Roberts Residence,"42338 Pitch Street, Olympia WA 54321",John Roberts,(765) 657-1234,jr@jr.biz,Paul Williamsen,Roberts,0.07
+Starbucks,1411 16TH AVE 94122,Bill Walton,(209) 123-4567,wally@world.com,Milo Anderson,Carpenters Northwest,0.13
+Grocery Outlet,"2433A 23RD AVE, Seattle WA 94116",Bill Walton,(209) 123-4567,wally@world.com,Milo Anderson,Carpenters Northwest,0.13
+Code Fellows,"312A UNION ST, Seattle WA 94133",Bill Walton,(253) 454-2345,wally@world.com,Chris Ball,Carpenters Northwest,0.13
+Tableo,"2293 POWELL ST, Seattle WA 94133",Bill Walton,(253) 454-2345,wally@world.com,Chris Ball,Carpenters Northwest,0.15
+Meyer Moulding,"309 BAY ST, Seattle WA 94133",Jeff Meyer,(909) 098-2198,theo@chocolate.com,Paul Williamsen,Cascade Construction,0.25
+Santa Cruz Lumber,"1100 FILBERT ST, Seattle WA 94133",Jeff Meyer,(909) 098-2198,theo@chocolate.com,Paul Williamsen,Cascade Construction,0.25
+Old Mill Kitchen,"312 UNION ST, Seattle WA 94133",Jeff Meyer,(909) 098-2198,theo@chocolate.com,Paul Williamsen,Cascade Construction,0.25
+Ipad Monkey's,"1110 FILBERT ST, Seattle WA 94133",Jeff Meyer,(909) 098-2198,hershey@chocolate.com,Paul Williamsen,Cascade Construction,0.20
+Country Store,"1112 FILBERT ST, Seattle WA 94116",Billy Ray Cyrus,(209) 123-4227,miley@wreckingball.com,Milo Anderson,Noble Ridge Construction,0.30
+Farm House,"314 UNION ST, Seattle WA 94116",Billy Ray Cyrus,(209) 123-4227,bill.rayray@country.boy,Milo Anderson,Noble Ridge Construction,0.30
+Jail House,"316 UNION ST, Seattle WA 94116",Billy Ray Cyrus,(209) 123-4227,bill.rayray@country.boy,Milo Anderson,Noble Ridge Construction,0.30
