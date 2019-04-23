@@ -44,9 +44,11 @@ def project_create(req):
 def project_detail(req, proj_id=None):
     project = Project.objects.get(pk=proj_id)
     account = Account.objects.get(pk=project.account.id)
+    specs = Specification.objects.filter(project=project)
     context = {
         'project': project,
-        'account': account
+        'account': account,
+        'specs': specs,
     }
     return render(req, './project/project_detail.html', context)
 
