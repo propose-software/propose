@@ -78,7 +78,7 @@ def project_delete(req, proj_id=None):
         context = {
             'project': Project.objects.get(pk=proj_id)
         }
-        return render(req, './project/project_delete_confirm.html', context)
+        return render(req, './project/project_delete.html', context)
 
 
 @login_required
