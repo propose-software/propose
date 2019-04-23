@@ -32,7 +32,7 @@ def project_create(req):
         form = ProjectForm(req.POST)
         if form.is_valid():
             new_project = form.save()
-            return redirect('project/' + str(new_project.id))
+            return redirect('/project/' + str(new_project.id))
         else:
             return render(req, './project/project_create.html', {'form': form})
     else:
@@ -41,11 +41,30 @@ def project_create(req):
 
 
 @login_required
-def project_detail(req):
+def project_update(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    if req.method == 'POST':
+        form = ProjectForm(req.POST, instance=project)
+        if form.is_valid():
+            project = form.save()
+            return redirect('/project/' + str(project.id))
+        else:
+            return render(req, './project/project_update.html', {'form': form})
+    else:
+        form = ProjectForm(instance=project)
+        context = {
+            'form': form,
+            'project': project
+        }
+        return render(req, './project/project_update.html', context)
+
+
+@login_required
+def project_detail(req, proj_id=None):
     context = {
-        'project': Project.objects.get(id=proj_id)
+        'project': Project.objects.get(pk=proj_id)
     }
-    return render(req, './project/project_detail.html')
+    return render(req, './project/project_detail.html', context)
 
 
 @login_required

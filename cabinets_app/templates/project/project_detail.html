@@ -1,0 +1,15 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Project Detail{% endblock %}
+
+{% block content %}
+<div class="cabinet_detail">
+  <h1>project detail</h1>
+  <p>{{ project.name }}</p>
+  <p>{{ project.physical_address }}</p>
+  <p>{{ project.site_contact }}</p>
+  <p>{{ project.contact_phone }}</p>
+  <p>{{ project.contact_email }}</p>
+  <p>{{ project.hourly_rate }}</p>
+</div>
+{% endblock content %}
