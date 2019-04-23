@@ -20,8 +20,7 @@ from .views import home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_view, name='home'),
-    path ('project/', include('cabinets_app.urls')),
-    path('accounts/', include('django_registration.backends.activation.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('cabinets_app.urls')),
+    path('users/', include('django_registration.backends.activation.urls')),
+    path('users/', include('django.contrib.auth.urls')),
 ]
