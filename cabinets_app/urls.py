@@ -1,8 +1,8 @@
 from .views import (
     account, project_list,
+    account_create, account_detail, account_update, account_delete,
     project_create, project_detail, project_update, project_delete,
-    cabinet_create, cabinet_detail, cabinet_update, cabinet_delete,
-    cabinet_detail_view, spec_detail_view, account_create, account_detail, account_update, account_delete
+    cabinet_create, cabinet_detail, cabinet_update, cabinet_delete
 )
 from django.urls import path
 
@@ -35,9 +35,5 @@ urlpatterns = [
     path('project/<int:proj_id>/cabinet/<int:cab_id>/update',
          cabinet_update, name='cabinet_update'),
     path('project/<int:proj_id>/cabinet/<int:cab_id>/delete',
-         cabinet_delete, name='cabinet_delete'),
-
-
-    path('2/cabinet/2', cabinet_detail_view, name='cabinet_detail_view'),
-    path('3/specification/3', spec_detail_view, name='spec_detail_view')
+         cabinet_delete, name='cabinet_delete')
 ]

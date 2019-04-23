@@ -19,6 +19,7 @@ class ProjectForm(forms.ModelForm):
             'hourly_rate'
         ]
 
+
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
@@ -29,4 +30,24 @@ class AccountForm(forms.ModelForm):
             'billing_email',
             'contact_name',
             'discount'
+        ]
+
+
+class CabinetForm(forms.ModelForm):
+    class Meta:
+        model = Cabinet
+        fields = [
+            'project',
+            'specification',
+            'room',
+            'width',
+            'height',
+            'depth',
+            'number_of_doors',
+            'number_of_shelves',
+            'finished_interior',
+            'finished_left_end',
+            'finished_right_end',
+            'finished_top',
+            'finished_bottom'
         ]

@@ -147,32 +147,33 @@ def cabinet_detail(req, proj_id=None, cab_id=None):
 
 @login_required
 def cabinet_update(req, proj_id=None, cab_id=None):
-    project = Project.objects.get(pk=proj_id)
+    cabinet = Cabinet.objects.get(pk=cab_id)
     if req.method == 'POST':
-        form = ProjectForm(req.POST, instance=project)
+        form = CabinetForm(req.POST, instance=cabinet)
         if form.is_valid():
-            project = form.save()
-            return redirect('/project/' + str(project.id))
+            cabinet = form.save()
+            return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
         else:
-            return render(req, './project/project_update.html', {'form': form})
+            return render(req, './cabinet/cabinet_update.html', {'form': form})
     else:
-        form = ProjectForm(instance=project)
+        form = ProjectForm(instance=cabinet)
         context = {
             'form': form,
-            'project': project
+            'project': project,
+            'cabinet': cabinet
         }
-        return render(req, './project/project_update.html', context)
+        return render(req, './cabinet/cabinet_update.html', context)
 
 
 @login_required
-def project_delete(req, proj_id=None):
+def cabinet_delete(req, proj_id=None, cab_id=None):
     if req.method == 'POST':
-        project = Project.objects.get(pk=proj_id)
-        account_id = project.account.id
-        project.delete()
-        return redirect('/account/' + str(account_id))
+        cabinet = Cabinet.objects.get(pk=cab_id)
+        cabinet.delete()
+        return redirect('project_detail', proj_id=proj_id)
     else:
         context = {
-            'project': Project.objects.get(pk=proj_id)
+            'project': Project.objects.get(pk=proj_id),
+            'cabinet': Cabinet.objects.get(pk=cab_id)
         }
-        return render(req, './project/project_delete.html', context)
+        return render(req, './cabinet/cabinet_delete.html', context)
