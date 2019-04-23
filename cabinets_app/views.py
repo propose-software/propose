@@ -119,10 +119,60 @@ def account_delete():
 
 
 @login_required
-def cabinet_detail_view(request):
-    return render(request, './cabinet_detail.html')
+def cabinet_create(req, proj_id=None):
+    if req.method == 'POST':
+        form = CabinetForm(req.POST)
+        if form.is_valid():
+            new_cabinet = form.save()
+            return redirect('cabinet_detail', proj_id=proj_id, cab_id=new_cabinet.id)
+        else:
+            return render(req, './cabinet/cabinet_create.html', {'form': form})
+    else:
+        form = ProjectForm()
+        return render(req, './cabinet/cabinet_create.html', {'form': form})
 
 
 @login_required
-def spec_detail_view(request):
-    return render(request, './spec_detail.html')
+def cabinet_detail(req, proj_id=None, cab_id=None):
+    cabinet = Cabinet.objects.get(pk=cab_id)
+    project = Project.objects.get(pk=proj_id)
+    account = Account.objects.get(pk=project.account.id)
+    context = {
+        'cabinet': cabinet,
+        'project': project,
+        'account': account
+    }
+    return render(req, './cabinet/cabinet_detail.html', context)
+
+
+@login_required
+def cabinet_update(req, proj_id=None, cab_id=None):
+    project = Project.objects.get(pk=proj_id)
+    if req.method == 'POST':
+        form = ProjectForm(req.POST, instance=project)
+        if form.is_valid():
+            project = form.save()
+            return redirect('/project/' + str(project.id))
+        else:
+            return render(req, './project/project_update.html', {'form': form})
+    else:
+        form = ProjectForm(instance=project)
+        context = {
+            'form': form,
+            'project': project
+        }
+        return render(req, './project/project_update.html', context)
+
+
+@login_required
+def project_delete(req, proj_id=None):
+    if req.method == 'POST':
+        project = Project.objects.get(pk=proj_id)
+        account_id = project.account.id
+        project.delete()
+        return redirect('/account/' + str(account_id))
+    else:
+        context = {
+            'project': Project.objects.get(pk=proj_id)
+        }
+        return render(req, './project/project_delete.html', context)
