@@ -18,3 +18,15 @@ class ProjectForm(forms.ModelForm):
             'contact_email',
             'hourly_rate'
         ]
+
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = [
+            'name',
+            'billing_address',
+            'billing_phone',
+            'billing_email',
+            'contact_name',
+            'discount'
+        ]
