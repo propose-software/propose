@@ -69,13 +69,16 @@ def project_update(req, proj_id=None):
 
 @login_required
 def project_delete(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    account_id = project.account.id
-    project.delete()
-    context = {
-        'projects': Project.objects.filter(account__id=account_id)
-    }
-    return render(req, './project/project_list.html', context)
+    if req.method == 'POST':
+        project = Project.objects.get(pk=proj_id)
+        account_id = project.account.id
+        project.delete()
+        return redirect('/account/' + str(account_id))
+    else:
+        context = {
+            'project': Project.objects.get(pk=proj_id)
+        }
+        return render(req, './project/project_delete.html', context)
 
 
 @login_required
