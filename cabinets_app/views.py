@@ -6,7 +6,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm
+    ProjectForm, AccountForm
 )
 
 
@@ -82,6 +82,40 @@ def project_delete(req, proj_id=None):
             'project': Project.objects.get(pk=proj_id)
         }
         return render(req, './project/project_delete.html', context)
+
+'''
+    path('account/',
+         account_create, name='account_create'),
+    path('account/',
+         account_detail, name='account_detail'),
+    path('account/',
+         account_update, name='account_update'),
+    path('account/',
+         account_delete, name='account_delete'),
+'''
+
+@login_required
+def account_create(request):
+    if request.method == 'POST':
+        form = AccountForm(request.POST)
+        if form.is_valid():
+            new_account = form.save()
+            return redirect('/account/' + str(new_account.name))
+        else:
+            return render(request, './account/account_create.html', {'form': form})
+    else:
+        form = AccountForm()
+        return render(request, './account/account_create.html', {'form': form})
+
+@login_required
+def account_detail():
+    pass
+@login_required
+def account_update():
+    pass
+@login_required
+def account_delete():
+    pass
 
 
 @login_required

@@ -31,7 +31,10 @@ class Material(models.Model):
     sheet_cost = models.DecimalField(max_digits=6, decimal_places=2)
     waste_factor = models.DecimalField(max_digits=3, decimal_places=2)
     markup = models.DecimalField(max_digits=3, decimal_places=2)
-    date_updated = models.DateTimeField(default=timezone.now, blank=True)
+    date_updated = models.DateTimeField(
+        default=timezone.now,
+        blank=True
+    )
 
     @property
     def sq_ft_cost(self):
@@ -58,6 +61,7 @@ class Hardware(models.Model):
         choices=UNIT_TYPE_CHOICES,
         max_length=16
     )
+    markup = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __repr__(self):
         return f'<Hardware: {self.name}>'
@@ -183,6 +187,7 @@ class Cabinet(models.Model):
         related_name='cabinets'
     )
     room = models.CharField(max_length=128)
+    cabinet_number = models.IntegerField()
     width = models.DecimalField(max_digits=6, decimal_places=2)
     height = models.DecimalField(max_digits=6, decimal_places=2)
     depth = models.DecimalField(max_digits=6, decimal_places=2)
@@ -210,6 +215,12 @@ class Drawer(models.Model):
         related_name='drawers'
     )
     height = models.DecimalField(max_digits=6, decimal_places=2)
+    material = models.ForeignKey(
+        Material,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name='drawer_material'
+    )
 
     def __repr__(self):
         return f'<Drawer for cabinet {str(self.cabinet.id)}>'
