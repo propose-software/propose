@@ -6,7 +6,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm
+    ProjectForm, AccountForm, CabinetForm
 )
 
 
@@ -119,6 +119,15 @@ def account_delete():
 
 
 @login_required
+def cabinet_list(req, proj_id=None):
+    context = {
+        'project': Project.objects.get(pk=proj_id),
+        'cabinets': Cabinet.objects.filter(project__id=proj_id)
+    }
+    return render(req, './cabinet/cabinet_list.html', context)
+
+
+@login_required
 def cabinet_create(req, proj_id=None):
     if req.method == 'POST':
         form = CabinetForm(req.POST)
@@ -128,8 +137,11 @@ def cabinet_create(req, proj_id=None):
         else:
             return render(req, './cabinet/cabinet_create.html', {'form': form})
     else:
-        form = ProjectForm()
-        return render(req, './cabinet/cabinet_create.html', {'form': form})
+        context = {
+            'form': CabinetForm(),
+            'project': Project.objects.get(pk=proj_id)
+        }
+        return render(req, './cabinet/cabinet_create.html', context)
 
 
 @login_required
@@ -156,10 +168,10 @@ def cabinet_update(req, proj_id=None, cab_id=None):
         else:
             return render(req, './cabinet/cabinet_update.html', {'form': form})
     else:
-        form = ProjectForm(instance=cabinet)
+        form = CabinetForm(instance=cabinet)
         context = {
             'form': form,
-            'project': project,
+            'project': Project.objects.get(pk=proj_id),
             'cabinet': cabinet
         }
         return render(req, './cabinet/cabinet_update.html', context)

@@ -39,6 +39,7 @@ class CabinetForm(forms.ModelForm):
         fields = [
             'project',
             'specification',
+            'cabinet_number',
             'room',
             'width',
             'height',

@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2>Create Cabinet</h2>
-<form action="{% url 'cabinet_create' %}" method="POST">
+<form action="{% url 'cabinet_create' proj_id=project.id %}" method="POST">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
