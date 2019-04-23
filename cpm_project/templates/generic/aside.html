@@ -1,5 +1,5 @@
 <p>Account: 
-    <a href="{% url 'project_list' account_id=account.id %}">{{ project.account.name }}</a></p>
+    <a href="{% url 'project_list' account_id=project.account.id %}">{{ project.account.name }}</a></p>
 <p>Projects:</p>
 <ul>
 {% for proj in project.account.projects.all %}

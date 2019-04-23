@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CPM</title>
+  <title>{% block title %}CPM{% endblock title %}</title>
 </head>
 <body>
   <header>
@@ -12,13 +12,16 @@
           <ul>
             {% if user.is_authenticated %}
             <li><a href="{% url 'account' %}">Accounts</a></li>
-            <li><a href="{% url "logout" %}">Logout</a></li>
+            <li><a href="">Materials</a></li>
+            <li><a href="">Hardware</a></li>
+            <li><a href="">Labor</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
             {% else %}
-            <li><a href="{% url "django_registration_register" %}">Signup</a></li>
-            <li><a href="{% url "login" %}">Signin</a></li>
+            <li><a href="{% url 'django_registration_register' %}">Signup</a></li>
+            <li><a href="{% url 'login' %}">Signin</a></li>
             {% endif %}
             {% if user.is_superuser %}
-            <li><a href="{% url "admin:index" %}">Admin</a></li>
+            <li><a href="{% url 'admin:index' %}">Admin</a></li>
             {% endif %}
           </ul>
         </nav>
@@ -33,6 +36,5 @@
   <h3></h3>
   {% endblock content%}
   <Footer></Footer>
-
 </body>
 </html>
