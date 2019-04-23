@@ -51,7 +51,6 @@ class Hardware(models.Model):
     """ Applied to Project/Cabinet via Specification
     """
     name = models.CharField(max_length=128)
-    description = models.CharField(max_length=512)
     cost_per = models.DecimalField(max_digits=6, decimal_places=2)
     UNIT_TYPE_CHOICES = [
         ('each', 'Each'),

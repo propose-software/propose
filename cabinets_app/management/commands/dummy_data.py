@@ -7,6 +7,12 @@ import csv
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+
+        Account.objects.all().delete()
+        Material.objects.all().delete()
+        Hardware.objects.all().delete()
+        Labor.objects.all().delete()
+
         with open('dummy_accounts.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -55,7 +61,6 @@ class Command(BaseCommand):
             for row in reader:
                 p = Hardware(
                     name=row['\ufeffName'],
-                    description=row['Description'],
                     cost_per=row['Cost_Per'],
                     unit_type=row['Unit'],
                     markup=row['Markup'],
@@ -89,8 +94,16 @@ class Command(BaseCommand):
         with open('dummy_cabinets.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                project = Project.objects.get(name=row['Project'])
-                spec = Specification.objects.get(name=row['Spec'])
+                project = Project.objects.get(name=row['\ufeffProject'])
+                spec = Specification.objects.filter(
+                    name=row['Spec'],
+                    project=project
+                )[0]
+                fin_int = True if row['Fin_Interior'] == 'True' else False
+                fin_left = True if row['Fin_Interior'] == 'True' else False
+                fin_right = True if row['Fin_Interior'] == 'True' else False
+                fin_top = True if row['Fin_Interior'] == 'True' else False
+                fin_bot = True if row['Fin_Interior'] == 'True' else False
                 p = Cabinet(
                     project=project,
                     room=row['Room'],
@@ -101,24 +114,25 @@ class Command(BaseCommand):
                     depth=row['Depth'],
                     number_of_doors=row['Num_Doors'],
                     number_of_shelves=row['Num_Shelves'],
-                    finished_interior=row['Fin_Interior'],
-                    finished_left_end=row['Fin_Left'],
-                    finished_right_end=row['Fin_Right'],
-                    finished_top=row['Fin_Top'],
-                    finished_bottom=row['Fin_Bottom'],
+                    finished_interior=fin_int,
+                    finished_left_end=fin_left,
+                    finished_right_end=fin_right,
+                    finished_top=fin_top,
+                    finished_bottom=fin_bot,
                 )
                 p.save()
 
-        with open('dummy_specs.csv') as f:
+        with open('dummy_drawers.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                cabinet = Cabinet.objects.get(
-                    project=row['Project'],
-                    cabinet_numer=row['Cab_No']
-                )
+                project = Project.objects.get(name=row['\ufeffProject'])
+                cabinet = Cabinet.objects.filter(
+                    project=project,
+                    cabinet_number=row['Cab_No']
+                )[0]
                 material = Material.objects.get(name=row['Material'])
                 p = Drawer(
-                    cabinet=cabinet
+                    cabinet=cabinet,
                     height=row['Height'],
                     material=material,
                 )
