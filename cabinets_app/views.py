@@ -6,7 +6,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm
+    ProjectForm, AccountForm, SpecForm
 )
 
 
@@ -144,5 +144,29 @@ def cabinet_detail_view(req):
 
 
 @login_required
-def spec_detail_view(req):
-    return render(req, './spec_detail.html')
+def spec_create(req):
+    if req.method == 'POST':
+        form = SpecForm(req.POST)
+        if form.is_valid():
+            new_spec = form.save()
+            return redirect('/spec/detail/' + str(new_spec.id))
+        else:
+            return render(req, './specifications/spec_create.html', {'form': form})
+    else:
+        form = SpecForm()
+        return render(req, './specifications/spec_create.html', {'form': form})
+
+@login_required
+def spec_detail(req, spec_id=None):
+    context = {
+        'spec': Specification.objects.get(pk=spec_id)
+    }
+    return render(req, './specifications/spec_detail.html', context)
+
+@login_required
+def spec_update(req):
+    pass
+@login_required
+def spec_delete(req):
+    pass
+

@@ -30,3 +30,17 @@ class AccountForm(forms.ModelForm):
             'contact_name',
             'discount'
         ]
+
+class SpecForm(forms.ModelForm):
+    class Meta:
+        model = Specification
+        fields = [
+            'project',
+            'name',
+            'interior_material',
+            'exterior_material',
+            'construction',
+            'catalog',
+            'finish_level'
+
+        ]
