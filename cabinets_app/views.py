@@ -84,39 +84,59 @@ def project_delete(req, proj_id=None):
         }
         return render(req, './project/project_delete.html', context)
 
-'''
-    path('account/',
-         account_create, name='account_create'),
-    path('account/',
-         account_detail, name='account_detail'),
-    path('account/',
-         account_update, name='account_update'),
-    path('account/',
-         account_delete, name='account_delete'),
-'''
 
 @login_required
-def account_create(request):
-    if request.method == 'POST':
-        form = AccountForm(request.POST)
+def account_create(req):
+    if req.method == 'POST':
+        form = AccountForm(req.POST)
         if form.is_valid():
             new_account = form.save()
-            return redirect('/account/' + str(new_account.name))
+            return redirect('/account/detail/' + str(new_account.id))
         else:
-            return render(request, './account/account_create.html', {'form': form})
+            return render(req, './account/account_create.html', {'form': form})
     else:
         form = AccountForm()
-        return render(request, './account/account_create.html', {'form': form})
+        return render(req, './account/account_create.html', {'form': form})
 
 @login_required
-def account_detail():
-    pass
+def account_detail(req, account_id=None):
+    context = {
+        'account': Account.objects.get(pk=account_id)
+    }
+    return render(req, './account/account_detail.html', context)
+
+
 @login_required
-def account_update():
-    pass
+def account_update(req, account_id=None):
+    account = Account.objects.get(pk=account_id)
+    if req.method == 'POST':
+        form = AccountForm(req.POST, instance=account)
+        if form.is_valid():
+            account = form.save()
+            return redirect('/account/detail/' + str(account.id))
+        else:
+            return render(req, './account/account_update.html', {'form': form})
+            ## Where do we want to go if it gets updated?
+    else:
+        form = AccountForm(instance=account)
+        context = {
+            'form': form,
+            'account': account
+        }
+        return render(req, './account/account_update.html', context)
+
+
 @login_required
-def account_delete():
-    pass
+def account_delete(req, account_id=None):
+    if req.method == 'POST':
+        account = Account.objects.get(pk=account_id)
+        account.delete()
+        return redirect('/')
+    else:
+        context = {
+            'account': Account.objects.get(pk=account_id)
+        }
+        return render(req, './account/account_delete.html', context)
 
 
 @login_required
@@ -192,3 +212,4 @@ def cabinet_delete(req, proj_id=None, cab_id=None):
             'cabinet': Cabinet.objects.get(pk=cab_id)
         }
         return render(req, './cabinet/cabinet_delete.html', context)
+

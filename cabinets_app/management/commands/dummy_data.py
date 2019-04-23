@@ -7,6 +7,12 @@ import csv
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+
+        Account.objects.all().delete()
+        Material.objects.all().delete()
+        Hardware.objects.all().delete()
+        Labor.objects.all().delete()
+
         with open('dummy_accounts.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -38,7 +44,6 @@ class Command(BaseCommand):
         with open('dummy_materials.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
-                updated = timezone.now()
                 p = Material(
                     name=row['\ufeffName'],
                     description=row['Description'],
@@ -48,5 +53,87 @@ class Command(BaseCommand):
                     sheet_cost=row['Sheet_Cost'],
                     waste_factor=row['Waste_Factor'],
                     markup=row['Markup'],
+                )
+                p.save()
+
+        with open('dummy_hardware.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                p = Hardware(
+                    name=row['\ufeffName'],
+                    cost_per=row['Cost_Per'],
+                    unit_type=row['Unit'],
+                    markup=row['Markup'],
+                )
+                p.save()
+
+        with open('dummy_labor.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                p = Labor(
+                    item_name=row['\ufeffItem_Name'],
+                    minutes=row['Minutes'],
+                    units=row['Units'],
+                )
+                p.save()
+
+        with open('dummy_specs.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                project = Project.objects.get(name=row['Project'])
+                int_mat = Material.objects.get(name=row['Int_Material'])
+                ext_mat = Material.objects.get(name=row['Ext_Material'])
+                p = Specification(
+                    name=row['\ufeffName'],
+                    project=project,
+                    interior_material=int_mat,
+                    exterior_material=ext_mat,
+                )
+                p.save()
+
+        with open('dummy_cabinets.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                project = Project.objects.get(name=row['\ufeffProject'])
+                spec = Specification.objects.filter(
+                    name=row['Spec'],
+                    project=project
+                )[0]
+                fin_int = True if row['Fin_Interior'] == 'True' else False
+                fin_left = True if row['Fin_Interior'] == 'True' else False
+                fin_right = True if row['Fin_Interior'] == 'True' else False
+                fin_top = True if row['Fin_Interior'] == 'True' else False
+                fin_bot = True if row['Fin_Interior'] == 'True' else False
+                p = Cabinet(
+                    project=project,
+                    room=row['Room'],
+                    specification=spec,
+                    cabinet_number=row['Cab_No'],
+                    width=row['Width'],
+                    height=row['Height'],
+                    depth=row['Depth'],
+                    number_of_doors=row['Num_Doors'],
+                    number_of_shelves=row['Num_Shelves'],
+                    finished_interior=fin_int,
+                    finished_left_end=fin_left,
+                    finished_right_end=fin_right,
+                    finished_top=fin_top,
+                    finished_bottom=fin_bot,
+                )
+                p.save()
+
+        with open('dummy_drawers.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                project = Project.objects.get(name=row['\ufeffProject'])
+                cabinet = Cabinet.objects.filter(
+                    project=project,
+                    cabinet_number=row['Cab_No']
+                )[0]
+                material = Material.objects.get(name=row['Material'])
+                p = Drawer(
+                    cabinet=cabinet,
+                    height=row['Height'],
+                    material=material,
                 )
                 p.save()
