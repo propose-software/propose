@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.db.models import Max
 from .models import (
     Account, Material, Labor,
     Specification, Cabinet, Drawer,
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm
+    ProjectForm, AccountForm, CabinetForm
 )
 
 
@@ -139,17 +140,33 @@ def account_delete(req, account_id=None):
 
 
 @login_required
+def cabinet_list(req, proj_id=None):
+    context = {
+        'project': Project.objects.get(pk=proj_id),
+        'cabinets': Cabinet.objects.filter(project__id=proj_id)
+    }
+    return render(req, './cabinet/cabinet_list.html', context)
+
+
+@login_required
 def cabinet_create(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
-        form = CabinetForm(req.POST)
+        form = CabinetForm(project, req.POST)
         if form.is_valid():
+            max_cab_no = Cabinet.objects.filter(project__id=proj_id).aggregate(Max('cabinet_number'))
+            form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
+            form.instance.project = project
             new_cabinet = form.save()
             return redirect('cabinet_detail', proj_id=proj_id, cab_id=new_cabinet.id)
         else:
             return render(req, './cabinet/cabinet_create.html', {'form': form})
     else:
-        form = ProjectForm()
-        return render(req, './cabinet/cabinet_create.html', {'form': form})
+        context = {
+            'form': CabinetForm(project),
+            'project': project
+        }
+        return render(req, './cabinet/cabinet_create.html', context)
 
 
 @login_required
@@ -167,16 +184,17 @@ def cabinet_detail(req, proj_id=None, cab_id=None):
 
 @login_required
 def cabinet_update(req, proj_id=None, cab_id=None):
+    project = Project.objects.get(pk=proj_id)
     cabinet = Cabinet.objects.get(pk=cab_id)
     if req.method == 'POST':
-        form = CabinetForm(req.POST, instance=cabinet)
+        form = CabinetForm(project, req.POST, instance=cabinet)
         if form.is_valid():
             cabinet = form.save()
             return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
         else:
             return render(req, './cabinet/cabinet_update.html', {'form': form})
     else:
-        form = ProjectForm(instance=cabinet)
+        form = CabinetForm(project, instance=cabinet)
         context = {
             'form': form,
             'project': project,

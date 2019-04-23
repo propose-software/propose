@@ -10,7 +10,7 @@
 <p>Project name: {{ project.name }}</p>
 <p>Cabinet ID: {{ cabinet.id }}</p>
 
-<form action="{% url 'project_delete' proj_id=project.id cab_id=cabinet.id %}" method="POST">
+<form action="{% url 'cabinet_delete' proj_id=project.id cab_id=cabinet.id %}" method="POST">
     {% csrf_token %}
     <input type="submit" value="Delete"/>
 </form>
