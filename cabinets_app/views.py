@@ -41,6 +41,14 @@ def project_create(req):
 
 
 @login_required
+def project_detail(req, proj_id=None):
+    context = {
+        'project': Project.objects.get(pk=proj_id)
+    }
+    return render(req, './project/project_detail.html', context)
+
+
+@login_required
 def project_update(req, proj_id=None):
     project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
@@ -60,11 +68,14 @@ def project_update(req, proj_id=None):
 
 
 @login_required
-def project_detail(req, proj_id=None):
+def project_delete(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    account_id = project.account.id
+    project.delete()
     context = {
-        'project': Project.objects.get(pk=proj_id)
+        'projects': Project.objects.filter(account__id=account_id)
     }
-    return render(req, './project/project_detail.html', context)
+    return render(req, './project/project_list.html', context)
 
 
 @login_required
