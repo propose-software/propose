@@ -6,7 +6,7 @@
 <div>
     <h1>Existing Accounts</h1>
     {% for account in accounts %}
-        <p><a href="{% url 'project_list' account_id=account.id %}">{{account.name}}</a></p>
+        <p><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></p>
     {% endfor %}
 </div>
 {% endblock content %}

@@ -99,10 +99,14 @@ def account_create(req):
         form = AccountForm()
         return render(req, './account/account_create.html', {'form': form})
 
+
 @login_required
 def account_detail(req, account_id=None):
+    account = Account.objects.get(pk=account_id)
+    projects = Project.objects.filter(account__id=account_id)
     context = {
-        'account': Account.objects.get(pk=account_id)
+        'account': account,
+        'projects': projects,
     }
     return render(req, './account/account_detail.html', context)
 
