@@ -106,7 +106,7 @@ def account_detail(req, account_id=None):
 def account_update(req, account_id=None):
     account = Account.objects.get(pk=account_id)
     if req.method == 'POST':
-        form = ProjectForm(req.POST, instance=account)
+        form = AccountForm(req.POST, instance=account)
         if form.is_valid():
             account = form.save()
             return redirect('/account/detail/' + str(account.id))
@@ -126,16 +126,13 @@ def account_update(req, account_id=None):
 def account_delete(req, account_id=None):
     if req.method == 'POST':
         account = Account.objects.get(pk=account_id)
-        # account_id = project.account.id
-        # project.delete()
-        return redirect('/account/' + str(account_id))
+        account.delete()
+        return redirect('')
     else:
         context = {
-            'project': Account.objects.get(pk=account_id)
+            'account': Account.objects.get(pk=account_id)
         }
         return render(req, './account/account_delete.html', context)
-
-
 
 
 @login_required
