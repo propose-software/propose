@@ -1,0 +1,20 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Cabinet List{% endblock %}
+
+{% block content %}
+<div>
+    <h2>List of Cabinets for this Project</h2>
+
+    <ul>
+    {% for cab in cabinets %}
+        <li><a href="{% url 'cabinet_detail' proj_id=project.id cab_id=cab.id %}">
+            {{cab.cabinet_number}}</a> | 
+        <a href="{% url 'cabinet_update' proj_id=project.id cab_id=cab.id %}">
+            Update</a> |
+        <a href="{% url 'cabinet_delete' proj_id=project.id cab_id=cab.id %}">
+            Delete</a></li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
