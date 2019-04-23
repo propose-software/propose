@@ -1,0 +1,15 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Account Detail{% endblock %}
+
+{% block content %}
+<div class="account_detail">
+  <h1>project detail</h1>
+  <p>{{ account.name }}</p>
+  <p>{{ account.billing_address }}</p>
+  <p>{{ account.billing_phone }}</p>
+  <p>{{ account.billing_email }}</p>
+  <p>{{ account.contact_name }}</p>
+  <p>{{ account.discount }}</p>
+</div>
+{% endblock content %}
