@@ -11,10 +11,7 @@
       <nav class="main_nav">
           <ul>
             {% if user.is_authenticated %}
-            <li><a href="{% url "account_view" %}">Account View</a></li>
-            <li><a href="{% url "project_detail_view" %}">Project</a></li>
-            <li><a href="{% url "cabinet_detail_view" %}">Cabinet</a></li>
-            <li><a href="{% url "spec_detail_view" %}">Specification</a></li>
+            <li><a href="{% url 'account' %}">Accounts</a></li>
             <li><a href="{% url "logout" %}">Logout</a></li>
             {% else %}
             <li><a href="{% url "django_registration_register" %}">Signup</a></li>

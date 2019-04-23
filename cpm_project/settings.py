@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_registration',
     'cpm_project',
+    'phonenumber_field',
     'cabinets_app'
 ]
 
@@ -132,6 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Django Registration Settings
 ACCOUNT_ACTIVATION_DAYS = 1
+LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 if DEBUG:
