@@ -3,7 +3,7 @@
 {% block title %}Project Create{% endblock %}
 
 {% block content %}
-<h1>Create Project</h1>
+<h2>Create Project</h2>
 <form action="{% url 'project_create' %}" method="POST">
     {% csrf_token %}
     {{ form }}

@@ -20,15 +20,15 @@
             {% if user.is_superuser %}
             <li><a href="{% url "admin:index" %}">Admin</a></li>
             {% endif %}
-
-
-
-
-
           </ul>
         </nav>
   </header>
   <h1>CPM</h1>
+  <aside>
+  {% if project %}
+    {% include './aside.html' %}
+  {% endif %}
+  </aside>
   {% block content %}
   <h3></h3>
   {% endblock content%}
