@@ -11,7 +11,8 @@ autopep8 = "*"
 django = "*"
 psycopg2-binary = "*"
 django-registration = "*"
-
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [requires]
 python_version = "3.7"
