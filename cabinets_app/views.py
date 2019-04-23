@@ -127,7 +127,7 @@ def account_delete(req, account_id=None):
     if req.method == 'POST':
         account = Account.objects.get(pk=account_id)
         account.delete()
-        return redirect('')
+        return redirect('/')
     else:
         context = {
             'account': Account.objects.get(pk=account_id)

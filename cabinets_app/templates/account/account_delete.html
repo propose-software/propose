@@ -9,7 +9,7 @@
 
 <p>Account name: {{ account.name }}</p>
 
-<form action="{% url 'account_delete' %}" method="POST">
+<form action="{% url 'account_delete' account_id=account.id %}" method="POST">
     {% csrf_token %}
     <input type="submit" value="Delete"/>
 </form>
