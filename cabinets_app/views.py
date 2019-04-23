@@ -42,8 +42,11 @@ def project_create(req):
 
 @login_required
 def project_detail(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    account = Account.objects.get(pk=project.account.id)
     context = {
-        'project': Project.objects.get(pk=proj_id)
+        'project': project,
+        'account': account
     }
     return render(req, './project/project_detail.html', context)
 

@@ -29,6 +29,11 @@
         </nav>
   </header>
   <h1>CPM</h1>
+  <aside>
+  {% if project %}
+    {% include './aside.html' %}
+  {% endif %}
+  </aside>
   {% block content %}
   <h3></h3>
   {% endblock content%}
