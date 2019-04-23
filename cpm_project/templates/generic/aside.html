@@ -1,7 +1,8 @@
-<p>Account: <br />{{ project.account.name }}</p>
-<p>Projects:
-    {% for proj in project.account.projects.all %}
-        {{ proj.name }}<br />
-    {% endfor %}
-
+<p>Account: {{ project.account.name }}</p>
+<p>Projects:</p>
+<ul>
+{% for proj in project.account.projects.all %}
+    <li><a href="{% url 'project_detail' proj_id=proj.id %}">{{ proj.name }}</a></li>
+{% endfor %}
+</ul>
 </p>

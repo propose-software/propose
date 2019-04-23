@@ -4,12 +4,11 @@
 
 {% block content %}
 <div class="cabinet_detail">
-  <h2>Project Detail</h2>
-  <p>{{ project.name }}</p>
-  <p>{{ project.physical_address }}</p>
-  <p>{{ project.site_contact }}</p>
-  <p>{{ project.contact_phone }}</p>
-  <p>{{ project.contact_email }}</p>
-  <p>{{ project.hourly_rate }}</p>
+  <h2>{{ project.name }} Project</h2>
+  <p>Physical address: {{ project.physical_address }}</p>
+  <p>Site contact: {{ project.site_contact }}</p>
+  <p>Contact phone: {{ project.contact_phone }}</p>
+  <p>Contact email: {{ project.contact_email }}</p>
+  <p>Hourly rate: {{ project.hourly_rate }}</p>
 </div>
 {% endblock content %}
