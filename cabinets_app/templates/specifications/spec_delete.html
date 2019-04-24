@@ -3,14 +3,16 @@
 {% block title %}Specification Delete{% endblock %}
 
 {% block content %}
-<h1>Delete Specification</h1>
+<h2>Delete Specification</h2>
 
 <p class="warning">Are you certain you want to delete this Specification? Please be sure to update the specification for each cabinet in this project.</p>
 
 <p>Specification name: {{ spec.name }}</p>
 
-<form action="{% url 'spec_delete' spec_id=spec.id %}" method="POST">
+<form action="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}" method="POST">
+    <table>
     {% csrf_token %}
+    </table>
     <input type="submit" value="Delete"/>
 </form>
 {% endblock %}

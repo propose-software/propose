@@ -3,7 +3,7 @@
 {% block title %}Account Update{% endblock %}
 
 {% block content %}
-<h1>Update Account</h1>
+<h2>Update Account</h2>
 <form action="{% url 'account_update' account_id=account.id%}" method="POST">
     {% csrf_token %}
     {{ form }}
