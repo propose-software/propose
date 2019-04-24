@@ -1,0 +1,16 @@
+header { grid-area: header; }
+nav { grid-area: nav; }
+aside {grid-area: aside; }
+main { grid-area: main; }
+footer { grid-area: footer; }
+
+body {
+    display: grid;
+    grid-template-areas:    "header header"
+                            "nav nav"
+                            "aside main"
+                            "footer footer";
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 100px 40px 1fr 30px;
+    min-height: 100vh;
+}
