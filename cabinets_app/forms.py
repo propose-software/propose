@@ -93,6 +93,7 @@ DrawerFormSet = forms.modelformset_factory(
     extra=1
 )
 
+
 class HardwareForm(forms.ModelForm):
     class Meta:
         model = Hardware
@@ -103,10 +104,10 @@ class HardwareForm(forms.ModelForm):
             'markup'
         ]
 
+
 class RoomForm(forms.ModelForm):
     class Meta:
-        model = Hardware
+        model = Room
         fields = [
             'name',
         ]
-

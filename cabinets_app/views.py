@@ -5,7 +5,8 @@ from .models import (
     Specification, Hardware, Project, Room
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm, RoomForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm,
+    MaterialForm, HardwareForm, RoomForm
 )
 
 
@@ -324,10 +325,12 @@ def hardware_delete(req, hardware_id=None):
 
 @login_required
 def room_create(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
         form = RoomForm(req.POST)
         if form.is_valid():
-            new_room= form.save()
+            form.instance.project = project
+            new_room = form.save()
             return redirect('/project/' + str(proj_id))
         else:
             return render(req, './room/room_create.html', {'form': form})
@@ -337,11 +340,12 @@ def room_create(req, proj_id=None):
 
 
 @login_required
-def project_update(req, room_id=None, proj_id=None):
-    room = Room.objects.get(pk=room_id)
+def room_update(req, room_id=None, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
         form = RoomForm(req.POST, instance=room)
         if form.is_valid():
+            form.instance.project = project
             room = form.save()
             return redirect('/project/' + str(proj_id))
         else:
@@ -359,7 +363,6 @@ def project_update(req, room_id=None, proj_id=None):
 def room_delete(req, room_id=None, proj_id=None):
     if req.method == 'POST':
         room = Room.objects.get(pk=room_id)
-        account_id = room.account.id
         room.delete()
         return redirect('/project/' + str(proj_id))
     else:
