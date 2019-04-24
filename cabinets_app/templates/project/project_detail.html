@@ -10,10 +10,13 @@
   <p><span>Contact Phone:</span> {{ project.contact_phone }}</p>
   <p><span>Contact Email:</span> {{ project.contact_email }}</p>
   <p><span>Hourly Rate:</span> ${{ project.hourly_rate }}</p>
+  <a href="{% url 'project_update' proj_id=project.id %}">Update</a>
+  <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
 </section>
 
 <section class="spec_block">
   <h3>Specifications</h3>
+  <p><a href="{% url 'spec_create' %}">Create New Specification</a></p>
   <ul>
     {% for spec in specs %}
       <li>
@@ -23,6 +26,7 @@
         <p><span>Interior Material:</span> {{spec.interior_material}}</p>
         <p><span>Exterior Material:</span> {{spec.exterior_material}}</p>
         <p><span>Finish Level:</span> {{spec.finish_level}}</p>
+
       </li>
     {% endfor %}
   </ul>

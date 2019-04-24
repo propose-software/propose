@@ -17,9 +17,7 @@
 
     <ul>
       {% for project in projects %}
-      <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a> |
-        <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
-        <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a></li>
+      <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a></li>
         {% endfor %}
       </ul>
 
