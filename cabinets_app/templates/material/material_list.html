@@ -1,0 +1,13 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Material List{% endblock %}
+
+{% block content %}
+<div>
+  {% for material in materials %}
+    <p><a href="{% url 'material_detail' material_id=material.id %}">{{material.name}}</a></p>
+    <a href="{% url 'material_update' material_id=material.id %}">Update</a>
+    <a href="{% url 'material_delete' material_id=material.id %}">Delete</a></li>
+  {% endfor %}
+</div>
+{% endblock content %}

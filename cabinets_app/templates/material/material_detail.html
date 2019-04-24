@@ -1,0 +1,19 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Account Detail{% endblock %}
+
+{% block content %}
+<div class="material_detail">
+  <h2>Material Detail</h2>
+  <p>Material Name: {{ material.name }}</p>
+  <p>Description: {{ material.description }}</p>
+  <p>Thickness: {{ material.thickness }}</p>
+  <p>Width: {{ material.width }}</p>
+  <p>Length: {{ material.length }}</p>
+  <p>Sheet Cost: {{ material.sheet_cost }}</p>
+  <p>Waste Factor: {{ material.waste_factor }}</p>
+  <p>Markup: {{ material.markup }}</p>
+  <p>Date Updated: {{ material.date_updated }}</p>
+</div>
+
+{% endblock content %}

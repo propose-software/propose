@@ -7,7 +7,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm
 )
 
 
@@ -143,6 +143,69 @@ def account_delete(req, account_id=None):
             'account': Account.objects.get(pk=account_id)
         }
         return render(req, './account/account_delete.html', context)
+
+
+@login_required
+def material_list(req):
+    context = {
+        'materials': Material.objects.all()
+    }
+    return render(req, './material/material_list.html', context)
+
+
+@login_required
+def material_create(req):
+    if req.method == 'POST':
+        form = MaterialForm(req.POST)
+        if form.is_valid():
+            new_material = form.save()
+            return redirect('/material/' + str(new_material.id))
+        else:
+            return render(req, './material/material_create.html', {'form': form})
+    else:
+        form = MaterialForm()
+        return render(req, './material/material_create.html', {'form': form})
+
+
+@login_required
+def material_detail(req, material_id=None):
+    material = Material.objects.get(pk=material_id)
+    context = {
+        'material': material,
+    }
+    return render(req, './material/material_detail.html', context)
+
+
+@login_required
+def material_update(req, material_id=None):
+    material = Material.objects.get(pk=material_id)
+    if req.method == 'POST':
+        form = MaterialForm(req.POST, instance=material)
+        if form.is_valid():
+            material = form.save()
+            return redirect('/material/detail/' + str(material.id))
+        else:
+            return render(req, './material/material_update.html', {'form': form})
+    else:
+        form = MaterialForm(instance=material)
+        context = {
+            'form': form,
+            'material': material
+        }
+        return render(req, './material/material_update.html', context)
+
+
+@login_required
+def material_delete(req, material_id=None):
+    if req.method == 'POST':
+        material = Material.objects.get(pk=material_id)
+        material.delete()
+        return redirect('/material/all')
+    else:
+        context = {
+            'material': Material.objects.get(pk=material_id)
+        }
+        return render(req, './material/material_delete.html', context)
 
 
 @login_required
