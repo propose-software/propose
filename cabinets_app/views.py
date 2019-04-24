@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Max
+from django import forms
 from .models import (
     Account, Material, Labor,
     Specification, Cabinet, Drawer,
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm, DrawerFormSet
+    ProjectForm, AccountForm, CabinetForm, SpecForm
 )
 
 
@@ -122,7 +123,7 @@ def account_update(req, account_id=None):
             return redirect('/account/detail/' + str(account.id))
         else:
             return render(req, './account/account_update.html', {'form': form})
-            ## Where do we want to go if it gets updated?
+            # Where do we want to go if it gets updated?
     else:
         form = AccountForm(instance=account)
         context = {
@@ -160,7 +161,8 @@ def cabinet_create(req, proj_id=None):
     if req.method == 'POST':
         form = CabinetForm(project, req.POST)
         if form.is_valid():
-            max_cab_no = Cabinet.objects.filter(project__id=proj_id).aggregate(Max('cabinet_number'))
+            max_cab_no = Cabinet.objects.filter(
+                project__id=proj_id).aggregate(Max('cabinet_number'))
             form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
             form.instance.project = project
             new_cabinet = form.save()
@@ -168,12 +170,30 @@ def cabinet_create(req, proj_id=None):
         else:
             return render(req, './cabinet/cabinet_create.html', {'form': form})
     else:
+        DrawerFormSet = forms.modelformset_factory(
+            Drawer,
+            fields=('height', 'material'),
+            extra=1
+        )
         context = {
             'form': CabinetForm(project),
-            'draw_form': DrawerFormSet(queryset=Drawer.objects.none()),
-            'project': project
+            'project': project,
+            'drawer_form': DrawerFormSet(queryset=Drawer.objects.none())
         }
         return render(req, './cabinet/cabinet_create.html', context)
+
+
+@login_required
+def drawer_form(req, proj_id=None):
+    DrawerFormSet = forms.modelformset_factory(
+        Drawer,
+        fields=('height', 'material'),
+        extra=1
+    )
+    context = {
+        'form': DrawerFormSet(req.POST)
+    }
+    return render(req, './cabinet/drawer_form.html', context)
 
 
 @login_required
@@ -202,6 +222,7 @@ def spec_create(req):
         form = SpecForm()
         return render(req, './specifications/spec_create.html', {'form': form})
 
+
 @login_required
 def spec_detail(req, spec_id=None):
     context = {
@@ -209,9 +230,12 @@ def spec_detail(req, spec_id=None):
     }
     return render(req, './specifications/spec_detail.html', context)
 
+
 @login_required
 def spec_update(req):
     pass
+
+
 @login_required
 def spec_delete(req):
     pass
@@ -249,4 +273,3 @@ def cabinet_delete(req, proj_id=None, cab_id=None):
             'cabinet': Cabinet.objects.get(pk=cab_id)
         }
         return render(req, './cabinet/cabinet_delete.html', context)
-
