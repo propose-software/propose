@@ -7,7 +7,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm
 )
 
 
@@ -335,3 +335,69 @@ def spec_delete(req, spec_id=None):
             'spec': Specification.objects.get(pk=spec_id)
         }
         return render(req, './specifications/spec_delete.html', context)
+
+
+
+
+@login_required
+def hardware_list(req):
+    context = {
+        'hardware': Hardware.objects.all()
+    }
+    return render(req, './hardware/hardware_list.html', context)
+
+
+@login_required
+def hardware_create(req):
+    if req.method == 'POST':
+        form = HardwareForm(req.POST)
+        if form.is_valid():
+            new_hardware = form.save()
+            return redirect('/hardware/' + str(new_hardware.id))
+        else:
+            return render(req, './hardware/hardware_create.html', {'form': form})
+    else:
+        form = HardwareForm()
+        return render(req, './hardware/hardware_create.html', {'form': form})
+
+
+@login_required
+def hardware_detail(req, hardware_id=None):
+    hardware = Hardware.objects.get(pk=hardware_id)
+    context = {
+        'hardware': hardware,
+    }
+    return render(req, './hardware/hardware_detail.html', context)
+
+
+@login_required
+def hardware_update(req, hardware_id=None):
+    hardware = Hardware.objects.get(pk=hardware_id)
+    if req.method == 'POST':
+        form = HardwareForm(req.POST, instance=hardware)
+        if form.is_valid():
+            hardware = form.save()
+            return redirect('/hardware/detail/' + str(hardware.id))
+        else:
+            return render(req, './hardware/hardware_update.html', {'form': form})
+    else:
+        form = HardwareForm(instance=hardware)
+        context = {
+            'form': form,
+            'hardware': hardware
+        }
+        return render(req, './hardware/hardware_update.html', context)
+
+
+@login_required
+def hardware_delete(req, hardware_id=None):
+    if req.method == 'POST':
+        hardware = Hardware.objects.get(pk=hardware_id)
+        hardware.delete()
+        return redirect('/hardware/all')
+    else:
+        context = {
+            'hardware': Hardware.objects.get(pk=hardware_id)
+        }
+        return render(req, './hardware/hardware_delete.html', context)
+
