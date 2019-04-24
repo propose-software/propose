@@ -5,8 +5,26 @@
 {% block content %}
 <h2>Create Cabinet</h2>
 <form action="{% url 'cabinet_create' proj_id=project.id %}" method="POST">
+    <table>
     {% csrf_token %}
     {{ form }}
+    </table>
+    <p>Drawers: (<span id="add">add</span>) | (<span id="sub">subtract</span>)</p>
+    {% for draw in draw_form %}
+    <table class="drawerRow">
+        <tr>
+            <td>{{ draw.height.label }}</td>
+            <td>{{ draw.height }}</td>
+        </tr>
+        <tr>
+            <td>{{ draw.material.label }}</td>
+            <td>{{ draw.material }}</td>
+        </tr>
+    </table>
+    {% endfor %}
     <input type="submit" value="Submit">
 </form>
+
+<script src="https://code.jquery.com/jquery-3.4.0.slim.min.js"></script>
+<script src="/static/js/app.js"></script>
 {% endblock content %}

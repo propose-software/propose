@@ -7,7 +7,7 @@ from .models import (
     Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm, DrawerFormSet
 )
 
 
@@ -170,6 +170,7 @@ def cabinet_create(req, proj_id=None):
     else:
         context = {
             'form': CabinetForm(project),
+            'draw_form': DrawerFormSet(queryset=Drawer.objects.none()),
             'project': project
         }
         return render(req, './cabinet/cabinet_create.html', context)

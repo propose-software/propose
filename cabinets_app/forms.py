@@ -32,7 +32,7 @@ class AccountForm(forms.ModelForm):
             'discount'
         ]
 
-        
+
 class SpecForm(forms.ModelForm):
     class Meta:
         model = Specification
@@ -68,5 +68,17 @@ class CabinetForm(forms.ModelForm):
 
     def __init__(self, project, *args, **kwargs):
         super(CabinetForm, self).__init__(*args, **kwargs)
-        self.fields['specification'].queryset = Specification.objects.filter(project=project)
+        self.fields['specification'].queryset = Specification.objects.filter(
+            project=project)
 
+
+class DrawerForm(forms.ModelForm):
+    class Meta:
+        model = Drawer
+        fields = [
+            'height',
+            'material'
+        ]
+
+
+DrawerFormSet = forms.modelformset_factory(Drawer, fields=('height', 'material'), extra=3)
