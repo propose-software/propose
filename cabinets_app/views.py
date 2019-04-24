@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Max
 from .models import (
     Account, Material, Labor,
-    Specification, Cabinet, Drawer,
-    Hardware, Project
+    Specification, Hardware, Project
 )
 from .forms import (
     ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm
@@ -122,7 +120,7 @@ def account_update(req, account_id=None):
             return redirect('/account/detail/' + str(account.id))
         else:
             return render(req, './account/account_update.html', {'form': form})
-            ## Where do we want to go if it gets updated?
+            # Where do we want to go if it gets updated?
     else:
         form = AccountForm(instance=account)
         context = {
@@ -400,4 +398,3 @@ def hardware_delete(req, hardware_id=None):
             'hardware': Hardware.objects.get(pk=hardware_id)
         }
         return render(req, './hardware/hardware_delete.html', context)
-

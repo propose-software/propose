@@ -5,8 +5,23 @@
 {% block content %}
 <h2>Create Cabinet</h2>
 <form action="{% url 'cabinet_create' proj_id=project.id %}" method="POST">
-    {% csrf_token %}
+    <table>
     {{ form }}
+    </table>
+    <p>Drawers: (<span id="add">add</span>) | (<span id="sub">subtract</span>)</p>
+
+    <table id="drawerForm"
+        data-url="{% url 'drawer_form' proj_id=project.id %}">
+        {% csrf_token %}
+        {{ drawer_form }}
+    </table>
+
     <input type="submit" value="Submit">
 </form>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.0.min.js"
+  integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg="
+  crossorigin="anonymous"></script>
+<script src="/static/js/app.js"></script>
 {% endblock content %}

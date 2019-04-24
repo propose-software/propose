@@ -83,7 +83,15 @@ class CabinetForm(forms.ModelForm):
 
     def __init__(self, project, *args, **kwargs):
         super(CabinetForm, self).__init__(*args, **kwargs)
-        self.fields['specification'].queryset = Specification.objects.filter(project=project)
+        self.fields['specification'].queryset = Specification.objects.filter(
+            project=project)
+
+
+DrawerFormSet = forms.modelformset_factory(
+    Drawer,
+    fields=('height', 'material'),
+    extra=1
+)
 
 class HardwareForm(forms.ModelForm):
     class Meta:
@@ -94,3 +102,4 @@ class HardwareForm(forms.ModelForm):
             'unit_type',
             'markup'
         ]
+
