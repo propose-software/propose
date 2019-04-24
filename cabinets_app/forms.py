@@ -83,6 +83,8 @@ class CabinetForm(forms.ModelForm):
         super(CabinetForm, self).__init__(*args, **kwargs)
         self.fields['specification'].queryset = Specification.objects.filter(
             project=project)
+        self.fields['room'].queryset = Room.objects.filter(
+            project=project)
 
 
 DrawerFormSet = forms.modelformset_factory(
