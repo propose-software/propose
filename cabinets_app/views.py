@@ -188,7 +188,7 @@ def material_update(req, material_id=None):
         form = MaterialForm(req.POST, instance=material)
         if form.is_valid():
             material = form.save()
-            return redirect('/material/detail/' + str(material.id))
+            return redirect('/material/' + str(material.id))
         else:
             return render(req, './material/material_update.html', {'form': form})
     else:
@@ -305,7 +305,7 @@ def hardware_update(req, hardware_id=None):
         form = HardwareForm(req.POST, instance=hardware)
         if form.is_valid():
             hardware = form.save()
-            return redirect('/hardware/detail/' + str(hardware.id))
+            return redirect('/hardware/' + str(hardware.id))
         else:
             return render(req, './hardware/hardware_update.html', {'form': form})
     else:
