@@ -103,3 +103,10 @@ class HardwareForm(forms.ModelForm):
             'markup'
         ]
 
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = Hardware
+        fields = [
+            'name',
+        ]
+
