@@ -29,6 +29,16 @@ urlpatterns = [
     path('material/<int:material_id>/delete',
          material_delete, name='material_delete'),
 
+    path('hardware/all', hardware_list, name='hardware_list'),
+    path('hardware/',
+         hardware_create, name='hardware_create'),
+    path('hardware/<int:hardware_id>',
+         hardware_detail, name='hardware_detail'),
+    path('hardware/<int:hardware_id>/update',
+         hardware_update, name='hardware_update'),
+    path('hardware/<int:hardware_id>/delete',
+         hardware_delete, name='hardware_delete'),
+
     path('project/',
          project_create, name='project_create'),
     path('project/<int:proj_id>',

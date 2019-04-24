@@ -6,8 +6,6 @@
   <div>
     {% for hardware in hardwares %}
       <p><a href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{hardware.name}}</a></p>
-      <a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a>
-      <a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></li>
     {% endfor %}
   </div>
 {% endblock content %}

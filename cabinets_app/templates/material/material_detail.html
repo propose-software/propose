@@ -14,6 +14,9 @@
   <p>Waste Factor: {{ material.waste_factor }}</p>
   <p>Markup: {{ material.markup }}</p>
   <p>Date Updated: {{ material.date_updated }}</p>
+
+  <p><a href="{% url 'material_update' material_id=material.id %}">Update</a></p>
+  <p><a href="{% url 'material_delete' material_id=material.id %}">Delete</a></p>
 </div>
 
 {% endblock content %}

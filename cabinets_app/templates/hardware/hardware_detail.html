@@ -6,14 +6,11 @@
 <div class="hardware_detail">
   <h2>Hardware Detail</h2>
   <p>Hardware Name: {{ hardware.name }}</p>
-  <p>Description: {{ hardware.description }}</p>
-  <p>Thickness: {{ hardware.thickness }}</p>
-  <p>Width: {{ hardware.width }}</p>
-  <p>Length: {{ hardware.length }}</p>
-  <p>Sheet Cost: {{ hardware.sheet_cost }}</p>
-  <p>Waste Factor: {{ hardware.waste_factor }}</p>
+  <p>Cost Per {{ hardware.unit_type }}: {{ hardware.cost_per }}</p>
   <p>Markup: {{ hardware.markup }}</p>
-  <p>Date Updated: {{ hardware.date_updated }}</p>
+
+  <p><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>
+  <p><a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></p>
 </div>
 
 {% endblock content %}
