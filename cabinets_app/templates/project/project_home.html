@@ -1,9 +1,66 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Project Detail{% endblock %}
+{% block title %}Project Home{% endblock %}
 
 {% block content %}
   <section class="project_detail">
-
+    <h2>{{ project.name }} Project</h2>
+    <ul>
+      {% for room in rooms %}
+        <li>
+          <h3>{{ room.name }}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th span="5">Finished Interior / End</th>
+                <th></th>
+              </tr>
+              <tr>
+                <th>Cab No.</th>
+                <th>Spec.</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Depth</th>
+                <th># Doors</th>
+                <th># Shelves</th>
+                <th>Interior</th>
+                <th>Left</th>
+                <th>Right</th>
+                <th>Top</th>
+                <th>Bottom</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for cabinet in cabinets %}
+                {% if cabinet.room.name == room.name %}
+                  <tr>
+                    <td>{{ cabinet.cabinet_number }}</td>
+                    <td>{{ cabinet.specification }}</td>
+                    <td>{{ cabinet.width }}</td>
+                    <td>{{ cabinet.height }}</td>
+                    <td>{{ cabinet.depth }}</td>
+                    <td>{{ cabinet.number_of_doors }}</td>
+                    <td>{{ cabinet.number_of_shelves }}</td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox"></td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </li>
+      {% endfor %}
+    </ul>
   </section>
 {% endblock content %}
