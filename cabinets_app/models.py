@@ -205,7 +205,11 @@ class Cabinet(models.Model):
         null=True,
         related_name='cabinets'
     )
-    room = models.CharField(max_length=128)
+    room = models.ForeignKey(
+        Room,
+        on_delete=models.CASCADE,
+        related_name='cabinets'
+    )
     cabinet_number = models.IntegerField()
     width = models.DecimalField(max_digits=6, decimal_places=2)
     height = models.DecimalField(max_digits=6, decimal_places=2)
