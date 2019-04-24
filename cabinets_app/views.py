@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .models import (
     Account, Material, Labor,
-    Specification, Hardware, Project, Room
+    Specification, Hardware, Project, Room, Cabinet
 )
 from .forms import (
     ProjectForm, AccountForm, CabinetForm, SpecForm,
@@ -25,6 +25,19 @@ def project_list(req, account_id=None):
         'projects': Project.objects.filter(account__id=account_id)
     }
     return render(req, './project/project_list.html', context)
+
+
+@login_required
+def project_home(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    rooms = Room.objects.filter(project=project)
+    cabinets = Cabinet.objects.filter(project=project)
+    context = {
+        'project': project,
+        'rooms': rooms,
+        'cabinets': cabinets,
+    }
+    return render(req, './project/project_home.html', context)
 
 
 @login_required
