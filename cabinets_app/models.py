@@ -106,6 +106,23 @@ class Project(models.Model):
         return f'Project: {self.name}'
 
 
+class Project(models.Model):
+    """ Defines a Project within an Account
+    """
+    name = models.CharField(max_length=128)
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        related_name='projects'
+    )
+
+    def __repr__(self):
+        return f'<Room name: {self.name} in {self.project.name}>'
+
+    def __str__(self):
+        return f'Room name: {self.name} in {self.project.name}'
+
+
 class Specification(models.Model):
     """ Defines a default Specification within a Project
     """
