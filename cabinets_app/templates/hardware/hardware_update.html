@@ -1,0 +1,12 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Hardware Update{% endblock %}
+
+{% block content %}
+<h1>Update Hardware</h1>
+<form action="{% url 'hardware_update' hardware_id=hardware.id%}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Save">
+</form>
+{% endblock content %}

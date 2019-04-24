@@ -11,18 +11,21 @@
   <p>Email: {{ account.billing_email }}</p>
   <p>Contact: {{ account.contact_name }}</p>
   <p>Discount: {{ account.discount }}</p>
+  
+  <p><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
+  <p><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
 </div>
 <div>
+
     <h3>Existing Projects</h3>
 
     <ul>
       {% for project in projects %}
-      <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a> |
-        <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
-        <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a></li>
+      <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a></li>
         {% endfor %}
       </ul>
 
       <a href="{% url 'project_create' %}">Create New Project</a>
     </div>
+
 {% endblock content %}

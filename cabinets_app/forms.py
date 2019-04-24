@@ -44,7 +44,22 @@ class SpecForm(forms.ModelForm):
             'construction',
             'catalog',
             'finish_level'
+        ]
 
+
+class MaterialForm(forms.ModelForm):
+    class Meta:
+        model = Material
+        fields = [
+            'name',
+            'description',
+            'thickness',
+            'width',
+            'length',
+            'sheet_cost',
+            'waste_factor',
+            'markup',
+            'date_updated',
         ]
 
 
@@ -77,3 +92,14 @@ DrawerFormSet = forms.modelformset_factory(
     fields=('height', 'material'),
     extra=1
 )
+
+class HardwareForm(forms.ModelForm):
+    class Meta:
+        model = Hardware
+        fields = [
+            'name',
+            'cost_per',
+            'unit_type',
+            'markup'
+        ]
+

@@ -184,7 +184,8 @@ class Cabinet(models.Model):
     )
     specification = models.ForeignKey(
         Specification,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        null=True,
         related_name='cabinets'
     )
     room = models.CharField(max_length=128)

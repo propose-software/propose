@@ -5,7 +5,7 @@ from .models import (
     Specification, Hardware, Project
 )
 from .forms import (
-    ProjectForm, AccountForm, SpecForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm
 )
 
 
@@ -144,12 +144,152 @@ def account_delete(req, account_id=None):
 
 
 @login_required
-def spec_create(req):
+def material_list(req):
+    context = {
+        'materials': Material.objects.all()
+    }
+    return render(req, './material/material_list.html', context)
+
+
+@login_required
+def material_create(req):
+    if req.method == 'POST':
+        form = MaterialForm(req.POST)
+        if form.is_valid():
+            new_material = form.save()
+            return redirect('/material/' + str(new_material.id))
+        else:
+            return render(req, './material/material_create.html', {'form': form})
+    else:
+        form = MaterialForm()
+        return render(req, './material/material_create.html', {'form': form})
+
+
+@login_required
+def material_detail(req, material_id=None):
+    material = Material.objects.get(pk=material_id)
+    context = {
+        'material': material,
+    }
+    return render(req, './material/material_detail.html', context)
+
+
+@login_required
+def material_update(req, material_id=None):
+    material = Material.objects.get(pk=material_id)
+    if req.method == 'POST':
+        form = MaterialForm(req.POST, instance=material)
+        if form.is_valid():
+            material = form.save()
+            return redirect('/material/detail/' + str(material.id))
+        else:
+            return render(req, './material/material_update.html', {'form': form})
+    else:
+        form = MaterialForm(instance=material)
+        context = {
+            'form': form,
+            'material': material
+        }
+        return render(req, './material/material_update.html', context)
+
+
+@login_required
+def material_delete(req, material_id=None):
+    if req.method == 'POST':
+        material = Material.objects.get(pk=material_id)
+        material.delete()
+        return redirect('/material/all')
+    else:
+        context = {
+            'material': Material.objects.get(pk=material_id)
+        }
+        return render(req, './material/material_delete.html', context)
+
+
+@login_required
+def cabinet_list(req, proj_id=None):
+    context = {
+        'project': Project.objects.get(pk=proj_id),
+        'cabinets': Cabinet.objects.filter(project__id=proj_id)
+    }
+    return render(req, './cabinet/cabinet_list.html', context)
+
+
+@login_required
+def cabinet_create(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    if req.method == 'POST':
+        form = CabinetForm(project, req.POST)
+        if form.is_valid():
+            max_cab_no = Cabinet.objects.filter(project__id=proj_id).aggregate(Max('cabinet_number'))
+            form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
+            form.instance.project = project
+            new_cabinet = form.save()
+            return redirect('cabinet_detail', proj_id=proj_id, cab_id=new_cabinet.id)
+        else:
+            return render(req, './cabinet/cabinet_create.html', {'form': form})
+    else:
+        context = {
+            'form': CabinetForm(project),
+            'project': project
+        }
+        return render(req, './cabinet/cabinet_create.html', context)
+
+
+@login_required
+def cabinet_detail(req, proj_id=None, cab_id=None):
+    cabinet = Cabinet.objects.get(pk=cab_id)
+    project = Project.objects.get(pk=proj_id)
+    account = Account.objects.get(pk=project.account.id)
+    context = {
+        'cabinet': cabinet,
+        'project': project,
+        'account': account
+    }
+    return render(req, './cabinet/cabinet_detail.html', context)
+
+
+def cabinet_update(req, proj_id=None, cab_id=None):
+    project = Project.objects.get(pk=proj_id)
+    cabinet = Cabinet.objects.get(pk=cab_id)
+    if req.method == 'POST':
+        form = CabinetForm(project, req.POST, instance=cabinet)
+        if form.is_valid():
+            cabinet = form.save()
+            return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
+        else:
+            return render(req, './cabinet/cabinet_update.html', {'form': form})
+    else:
+        form = CabinetForm(project, instance=cabinet)
+        context = {
+            'form': form,
+            'project': project,
+            'cabinet': cabinet
+        }
+        return render(req, './cabinet/cabinet_update.html', context)
+
+
+@login_required
+def cabinet_delete(req, proj_id=None, cab_id=None):
+    if req.method == 'POST':
+        cabinet = Cabinet.objects.get(pk=cab_id)
+        cabinet.delete()
+        return redirect('project_detail', proj_id=proj_id)
+    else:
+        context = {
+            'project': Project.objects.get(pk=proj_id),
+            'cabinet': Cabinet.objects.get(pk=cab_id)
+        }
+        return render(req, './cabinet/cabinet_delete.html', context)
+
+
+@login_required
+def spec_create(req, proj_id=None):
     if req.method == 'POST':
         form = SpecForm(req.POST)
         if form.is_valid():
             new_spec = form.save()
-            return redirect('/spec/detail/' + str(new_spec.id))
+            return redirect('/spec/' + str(new_spec.id))
         else:
             return render(req, './specifications/spec_create.html', {'form': form})
     else:
@@ -166,11 +306,95 @@ def spec_detail(req, spec_id=None):
 
 
 @login_required
-def spec_update(req):
-    pass
+def spec_update(req, spec_id=None):
+    spec = Specification.objects.get(pk=spec_id)
+    if req.method == 'POST':
+        form = SpecForm(req.POST, instance=spec)
+        if form.is_valid():
+            account = form.save()
+            return redirect('/spec/' + str(spec.id))
+        else:
+            return render(req, './specifications/spec_update.html', {'form': form})
+    else:
+        form = SpecForm(instance=spec)
+        context = {
+            'form': form,
+            'spec': spec
+        }
+        return render(req, './specifications/spec_update.html', context)
 
 
 @login_required
-def spec_delete(req):
-    pass
+def spec_delete(req, spec_id=None):
+    if req.method == 'POST':
+        spec = Specification.objects.get(pk=spec_id)
+        spec.delete()
+        return redirect('/')
+    else:
+        context = {
+            'spec': Specification.objects.get(pk=spec_id)
+        }
+        return render(req, './specifications/spec_delete.html', context)
 
+
+@login_required
+def hardware_list(req):
+    context = {
+        'hardware': Hardware.objects.all()
+    }
+    return render(req, './hardware/hardware_list.html', context)
+
+
+@login_required
+def hardware_create(req):
+    if req.method == 'POST':
+        form = HardwareForm(req.POST)
+        if form.is_valid():
+            new_hardware = form.save()
+            return redirect('/hardware/' + str(new_hardware.id))
+        else:
+            return render(req, './hardware/hardware_create.html', {'form': form})
+    else:
+        form = HardwareForm()
+        return render(req, './hardware/hardware_create.html', {'form': form})
+
+
+@login_required
+def hardware_detail(req, hardware_id=None):
+    hardware = Hardware.objects.get(pk=hardware_id)
+    context = {
+        'hardware': hardware,
+    }
+    return render(req, './hardware/hardware_detail.html', context)
+
+
+@login_required
+def hardware_update(req, hardware_id=None):
+    hardware = Hardware.objects.get(pk=hardware_id)
+    if req.method == 'POST':
+        form = HardwareForm(req.POST, instance=hardware)
+        if form.is_valid():
+            hardware = form.save()
+            return redirect('/hardware/detail/' + str(hardware.id))
+        else:
+            return render(req, './hardware/hardware_update.html', {'form': form})
+    else:
+        form = HardwareForm(instance=hardware)
+        context = {
+            'form': form,
+            'hardware': hardware
+        }
+        return render(req, './hardware/hardware_update.html', context)
+
+
+@login_required
+def hardware_delete(req, hardware_id=None):
+    if req.method == 'POST':
+        hardware = Hardware.objects.get(pk=hardware_id)
+        hardware.delete()
+        return redirect('/hardware/all')
+    else:
+        context = {
+            'hardware': Hardware.objects.get(pk=hardware_id)
+        }
+        return render(req, './hardware/hardware_delete.html', context)
