@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import (
     Account, Material, Labor,
-    Specification, Hardware, Project
+    Specification, Hardware, Project, Room
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm
+    ProjectForm, AccountForm, CabinetForm, SpecForm, MaterialForm, HardwareForm, RoomForm
 )
 
 
@@ -205,84 +205,6 @@ def material_delete(req, material_id=None):
         }
         return render(req, './material/material_delete.html', context)
 
-
-@login_required
-def cabinet_list(req, proj_id=None):
-    context = {
-        'project': Project.objects.get(pk=proj_id),
-        'cabinets': Cabinet.objects.filter(project__id=proj_id)
-    }
-    return render(req, './cabinet/cabinet_list.html', context)
-
-
-@login_required
-def cabinet_create(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = CabinetForm(project, req.POST)
-        if form.is_valid():
-            max_cab_no = Cabinet.objects.filter(project__id=proj_id).aggregate(Max('cabinet_number'))
-            form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
-            form.instance.project = project
-            new_cabinet = form.save()
-            return redirect('cabinet_detail', proj_id=proj_id, cab_id=new_cabinet.id)
-        else:
-            return render(req, './cabinet/cabinet_create.html', {'form': form})
-    else:
-        context = {
-            'form': CabinetForm(project),
-            'project': project
-        }
-        return render(req, './cabinet/cabinet_create.html', context)
-
-
-@login_required
-def cabinet_detail(req, proj_id=None, cab_id=None):
-    cabinet = Cabinet.objects.get(pk=cab_id)
-    project = Project.objects.get(pk=proj_id)
-    account = Account.objects.get(pk=project.account.id)
-    context = {
-        'cabinet': cabinet,
-        'project': project,
-        'account': account
-    }
-    return render(req, './cabinet/cabinet_detail.html', context)
-
-
-def cabinet_update(req, proj_id=None, cab_id=None):
-    project = Project.objects.get(pk=proj_id)
-    cabinet = Cabinet.objects.get(pk=cab_id)
-    if req.method == 'POST':
-        form = CabinetForm(project, req.POST, instance=cabinet)
-        if form.is_valid():
-            cabinet = form.save()
-            return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
-        else:
-            return render(req, './cabinet/cabinet_update.html', {'form': form})
-    else:
-        form = CabinetForm(project, instance=cabinet)
-        context = {
-            'form': form,
-            'project': project,
-            'cabinet': cabinet
-        }
-        return render(req, './cabinet/cabinet_update.html', context)
-
-
-@login_required
-def cabinet_delete(req, proj_id=None, cab_id=None):
-    if req.method == 'POST':
-        cabinet = Cabinet.objects.get(pk=cab_id)
-        cabinet.delete()
-        return redirect('project_detail', proj_id=proj_id)
-    else:
-        context = {
-            'project': Project.objects.get(pk=proj_id),
-            'cabinet': Cabinet.objects.get(pk=cab_id)
-        }
-        return render(req, './cabinet/cabinet_delete.html', context)
-
-
 @login_required
 def spec_create(req, proj_id=None):
     if req.method == 'POST':
@@ -398,3 +320,50 @@ def hardware_delete(req, hardware_id=None):
             'hardware': Hardware.objects.get(pk=hardware_id)
         }
         return render(req, './hardware/hardware_delete.html', context)
+
+
+@login_required
+def room_create(req, proj_id=None):
+    if req.method == 'POST':
+        form = RoomForm(req.POST)
+        if form.is_valid():
+            new_room= form.save()
+            return redirect('/project/' + str(proj_id))
+        else:
+            return render(req, './room/room_create.html', {'form': form})
+    else:
+        form = RoomForm()
+        return render(req, './room/room_create.html', {'form': form})
+
+
+@login_required
+def project_update(req, room_id=None, proj_id=None):
+    room = Room.objects.get(pk=room_id)
+    if req.method == 'POST':
+        form = RoomForm(req.POST, instance=room)
+        if form.is_valid():
+            room = form.save()
+            return redirect('/project/' + str(proj_id))
+        else:
+            return render(req, './room/room_update.html', {'form': form})
+    else:
+        form = RoomForm(instance=room)
+        context = {
+            'form': form,
+            'room': room
+        }
+        return render(req, './room/room_update.html', context)
+
+
+@login_required
+def room_delete(req, room_id=None, proj_id=None):
+    if req.method == 'POST':
+        room = Room.objects.get(pk=room_id)
+        account_id = room.account.id
+        room.delete()
+        return redirect('/project/' + str(proj_id))
+    else:
+        context = {
+            'room': Room.objects.get(pk=room_id)
+        }
+        return render(req, './room/room_delete.html', context)
