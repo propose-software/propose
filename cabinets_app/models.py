@@ -106,7 +106,7 @@ class Project(models.Model):
         return f'Project: {self.name}'
 
 
-class Project(models.Model):
+class Room(models.Model):
     """ Defines a Project within an Account
     """
     name = models.CharField(max_length=128)
