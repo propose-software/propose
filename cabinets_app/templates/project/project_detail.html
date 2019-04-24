@@ -24,11 +24,11 @@
       <li>
         <table>
           <h4><a href="{% url 'spec_detail' proj_id=project.id spec_id=spec.id %}">{{spec.name}}</a></h4>
-            <p><td>Construction Style:</td> <td>{{spec.construction}}</td></tr>
-            <p><td>Catalog:</td> <td>{{spec.catalog}}</td></tr>
-            <p><td>Interior Material:</td> <td>{{spec.interior_material}}</td></tr>
-            <p><td>Exterior Material:</td> <td>{{spec.exterior_material}}</td></tr>
-            <p><td>Finish Level:</td> <td>{{spec.finish_level}}</td></tr>
+            <td>Construction Style:</td> <td>{{spec.construction}}</td></tr>
+            <td>Catalog:</td> <td>{{spec.catalog}}</td></tr>
+            <td>Interior Material:</td> <td>{{spec.interior_material}}</td></tr>
+            <td>Exterior Material:</td> <td>{{spec.exterior_material}}</td></tr>
+            <td>Finish Level:</td> <td>{{spec.finish_level}}</td></tr>
       </table>
        </li>
       {% endfor %}
