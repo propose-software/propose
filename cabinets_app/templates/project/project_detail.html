@@ -17,7 +17,7 @@
   <ul>
     {% for spec in specs %}
       <li>
-        <h4>{{spec.name}}</h4>
+        <h4> <a href="{% url 'spec_detail' spec_id=spec.id %}"> {{spec.name}} </a></h4>
         <p><span>Construction Style:</span> {{spec.construction}}</p>
         <p><span>Catalog:</span> {{spec.catalog}}</p>
         <p><span>Interior Material:</span> {{spec.interior_material}}</p>
