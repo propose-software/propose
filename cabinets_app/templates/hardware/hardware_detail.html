@@ -3,14 +3,14 @@
 {% block title %}Hardware Detail{% endblock %}
 
 {% block content %}
-<div class="hardware_detail">
-  <h2>Hardware Detail</h2>
-  <p>Hardware Name: {{ hardware.name }}</p>
-  <p>Cost Per {{ hardware.unit_type }}: ${{ hardware.cost_per }}</p>
-  <p>Markup: {{ hardware.markup }}</p>
+  <div class="hardware_detail">
+    <h2>Hardware Detail</h2>
+    <p>Hardware Name: {{ hardware.name }}</p>
+    <p>Cost Per {{ hardware.unit_type }}: ${{ hardware.cost_per }}</p>
+    <p>Markup: {{ hardware.markup }}</p>
 
-  <p><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>
-  <p><a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></p>
-</div>
+    <p><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>
+    <p><a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></p>
+  </div>
 
 {% endblock content %}
