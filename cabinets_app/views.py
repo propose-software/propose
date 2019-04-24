@@ -206,6 +206,7 @@ def material_delete(req, material_id=None):
         }
         return render(req, './material/material_delete.html', context)
 
+
 @login_required
 def spec_create(req, proj_id=None):
     if req.method == 'POST':
@@ -330,13 +331,17 @@ def room_create(req, proj_id=None):
         form = RoomForm(req.POST)
         if form.is_valid():
             form.instance.project = project
-            new_room = form.save()
+            form.save()
             return redirect('/project/' + str(proj_id))
         else:
             return render(req, './room/room_create.html', {'form': form})
     else:
         form = RoomForm()
-        return render(req, './room/room_create.html', {'form': form})
+        context = {
+            'form': form,
+            'project': project
+        }
+        return render(req, './room/room_create.html', context)
 
 
 @login_required

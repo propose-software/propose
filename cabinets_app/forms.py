@@ -2,7 +2,7 @@ from django import forms
 from .models import (
     Account, Material, Hardware,
     Labor, Project, Specification,
-    Cabinet, Drawer
+    Cabinet, Drawer, Room
 )
 
 
