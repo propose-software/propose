@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 from .models import (
     Account, Material, Labor,
     Specification, Hardware, Project, Room, Cabinet
@@ -200,6 +201,7 @@ def material_update(req, material_id=None):
     if req.method == 'POST':
         form = MaterialForm(req.POST, instance=material)
         if form.is_valid():
+            form.instance.date_updated = datetime.now()
             material = form.save()
             return redirect('/material/' + str(material.id))
         else:
@@ -228,16 +230,24 @@ def material_delete(req, material_id=None):
 
 @login_required
 def spec_create(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
         form = SpecForm(req.POST)
         if form.is_valid():
             new_spec = form.save()
             return redirect('/spec/' + str(new_spec.id))
         else:
-            return render(req, './specifications/spec_create.html', {'form': form})
+            context = {
+                'form': form,
+                'project': project
+            }
+            return render(req, './specifications/spec_create.html', context)
     else:
-        form = SpecForm()
-        return render(req, './specifications/spec_create.html', {'form': form})
+        context = {
+            'form': SpecForm(),
+            'project': project
+        }
+        return render(req, './specifications/spec_create.html', context)
 
 
 @login_required
@@ -264,11 +274,10 @@ def spec_update(req, proj_id=None, spec_id=None):
                 'spec': spec,
                 'project': project
             }
-            return render(req, './specifications/spec_update.html', {'form': form})
+            return render(req, './specifications/spec_update.html', context)
     else:
-        form = SpecForm(instance=spec)
         context = {
-            'form': form,
+            'form': SpecForm(instance=spec),
             'spec': spec,
             'project': project
         }
@@ -279,11 +288,13 @@ def spec_update(req, proj_id=None, spec_id=None):
 def spec_delete(req, proj_id=None, spec_id=None):
     if req.method == 'POST':
         spec = Specification.objects.get(pk=spec_id)
+        project = Project.objects.get(pk=proj_id)
         spec.delete()
         return redirect('/')
     else:
         context = {
-            'spec': Specification.objects.get(pk=spec_id)
+            'spec': Specification.objects.get(pk=spec_id),
+            'project': Project.objects.get(pk=proj_id)
         }
         return render(req, './specifications/spec_delete.html', context)
 
