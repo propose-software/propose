@@ -9,8 +9,12 @@
 
   <p>Specification name: {{ spec.name }}</p>
 
+<<<<<<< HEAD
+  <form action="{% url 'spec_delete' spec_id=spec.id proj_id=project.id %}" method="POST">
+=======
 <form action="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}" method="POST">
     <table>
+>>>>>>> 5242fc3a6c140b74c01c2de1b882a3d6f3833320
     {% csrf_token %}
     </table>
     <input type="submit" value="Delete"/>

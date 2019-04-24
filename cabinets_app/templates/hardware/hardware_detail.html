@@ -4,10 +4,12 @@
 
 {% block content %}
   <div class="hardware_detail">
-    <h2>Hardware Detail</h2>
-    <p>Hardware Name: {{ hardware.name }}</p>
-    <p>Cost Per {{ hardware.unit_type }}: ${{ hardware.cost_per }}</p>
-    <p>Markup: {{ hardware.markup }}</p>
+    <table>
+      <h2>Hardware Detail</h2>
+      <tr><td>Hardware Name:</td> <td>{{ hardware.name }} </td></tr>
+      <tr><td>Cost Per  {{hardware.unit_type }}:</td> <td>${{ hardware.cost_per }}</td></tr>
+      <tr><td>Markup:</td> <td>{{ hardware.markup }}</td></tr>
+    </table>
 
     <p><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>
     <p><a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></p>

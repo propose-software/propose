@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 from .models import (
     Account, Material, Labor,
     Specification, Hardware, Project, Room
@@ -187,6 +188,7 @@ def material_update(req, material_id=None):
     if req.method == 'POST':
         form = MaterialForm(req.POST, instance=material)
         if form.is_valid():
+            form.instance.date_updated = datetime.now()
             material = form.save()
             return redirect('/material/' + str(material.id))
         else:
@@ -273,6 +275,7 @@ def spec_update(req, proj_id=None, spec_id=None):
 def spec_delete(req, proj_id=None, spec_id=None):
     if req.method == 'POST':
         spec = Specification.objects.get(pk=spec_id)
+        project = Project.objects.get(pk=proj_id)
         spec.delete()
         return redirect('/')
     else:

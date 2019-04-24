@@ -4,15 +4,15 @@
 
 {% block content %}
   <div class="spec_detail">
-
-  <h2>Specification: {{ spec.name }} </h2>
-  <p>Construction: {{ spec.construction }}</p>
-  <p>Catalog: {{ spec.catalog }}</p>
-  <p>Interior Material: {{ spec.interior_material }}</p>
-  <p>Exterior Material: {{ spec.exterior_material }}</p>
-  <p>Finish Level: {{ spec.finish_level }}</p>
-  <a href="{% url 'spec_update' proj_id=project.id spec_id=spec.id %}">Update</a> |
-  <a href="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}">Delete</a>
-
+    <table>
+      <h3>Specification: {{ spec.name }} </h3>
+        <tr><td>Construction:</td> <td>{{ spec.construction }}</td></tr>
+        <tr><td>Catalog:</td> <td>{{ spec.catalog }}</td></tr>
+        <tr><td>Interior Material:</td> <td>{{ spec.interior_material }}</td></tr>
+        <tr><td>Exterior Material:</td> <td>{{ spec.exterior_material }}</td></tr>
+        <tr><td>Finish Level:</td> <td>{{ spec.finish_level }}</td></tr>
+  </table>
+    <a href="{% url 'spec_update' spec_id=spec.id proj_id=project.id %}">Update</a> |
+    <a href="{% url 'spec_delete' spec_id=spec.id proj_id=project.id %}">Delete</a>
   </div>
 {% endblock content %}
