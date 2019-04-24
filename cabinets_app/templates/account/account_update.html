@@ -1,12 +1,12 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Account Update{% endblock %}
+{% block title %}Update Account{% endblock %}
 
 {% block content %}
-<h1>Update Account</h1>
-<form action="{% url 'account_update' account_id=account.id%}" method="POST">
+  <h1>Update Account</h1>
+  <form action="{% url 'account_update' account_id=account.id%}" method="POST">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
-</form>
+  </form>
 {% endblock content %}

@@ -3,16 +3,16 @@
 {% block title %}Specification Detail{% endblock %}
 
 {% block content %}
-<div class="spec_detail">
+  <div class="spec_detail">
 
-  <h3>Specification: {{ spec.name }} </h3>
-  <p>Construction: {{ spec.construction }}</p>
-  <p>Catalog: {{ spec.catalog }}</p>
-  <p>Interior Material: {{ spec.interior_material }}</p>
-  <p>Exterior Material: {{ spec.exterior_material }}</p>
-  <p>Finish Level: {{ spec.finish_level }}</p>
-  <a href="{% url 'spec_update' spec_id=spec.id %}">Update</a> |
-  <a href="{% url 'spec_delete' spec_id=spec.id %}">Delete</a>
+    <h3>Specification: {{ spec.name }} </h3>
+    <p>Construction: {{ spec.construction }}</p>
+    <p>Catalog: {{ spec.catalog }}</p>
+    <p>Interior Material: {{ spec.interior_material }}</p>
+    <p>Exterior Material: {{ spec.exterior_material }}</p>
+    <p>Finish Level: {{ spec.finish_level }}</p>
+    <a href="{% url 'spec_update' spec_id=spec.id %}">Update</a> |
+    <a href="{% url 'spec_delete' spec_id=spec.id %}">Delete</a>
 
-</div>
+  </div>
 {% endblock content %}
