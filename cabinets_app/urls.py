@@ -4,7 +4,8 @@ from .views import (
     project_create, project_detail, project_update, project_delete,
     spec_create, spec_detail, spec_delete, spec_update,
     cabinet_create, cabinet_detail, cabinet_update, cabinet_delete, cabinet_list,
-    material_create, material_delete, material_detail, material_list, material_update
+    material_create, material_delete, material_detail, material_list, material_update,
+    hardware_create, hardware_delete, hardware_detail, hardware_list, hardware_update
 )
 from django.urls import path
 

@@ -285,7 +285,6 @@ def cabinet_delete(req, proj_id=None, cab_id=None):
         return render(req, './cabinet/cabinet_delete.html', context)
 
 
-
 @login_required
 def spec_create(req, proj_id=None):
     if req.method == 'POST':
@@ -299,12 +298,14 @@ def spec_create(req, proj_id=None):
         form = SpecForm()
         return render(req, './specifications/spec_create.html', {'form': form})
 
+
 @login_required
 def spec_detail(req, spec_id=None):
     context = {
         'spec': Specification.objects.get(pk=spec_id)
     }
     return render(req, './specifications/spec_detail.html', context)
+
 
 @login_required
 def spec_update(req, spec_id=None):
@@ -324,6 +325,7 @@ def spec_update(req, spec_id=None):
         }
         return render(req, './specifications/spec_update.html', context)
 
+
 @login_required
 def spec_delete(req, spec_id=None):
     if req.method == 'POST':
@@ -335,8 +337,6 @@ def spec_delete(req, spec_id=None):
             'spec': Specification.objects.get(pk=spec_id)
         }
         return render(req, './specifications/spec_delete.html', context)
-
-
 
 
 @login_required

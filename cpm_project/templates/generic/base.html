@@ -13,7 +13,7 @@
           {% if user.is_authenticated %}
           <li><a href="{% url 'account' %}">Accounts</a></li>
           <li><a href="{% url 'material_list' %}">Materials</a></li>
-          <li><a href="">Hardware</a></li>
+          <li><a href="{% url 'hardware_list' %}">Hardware</a></li>
           <li><a href="">Labor</a></li>
           <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}

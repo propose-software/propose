@@ -11,6 +11,9 @@
   <p>Email: {{ account.billing_email }}</p>
   <p>Contact: {{ account.contact_name }}</p>
   <p>Discount: {{ account.discount }}</p>
+  
+  <p><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
+  <p><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
 </div>
 <div>
 

@@ -4,6 +4,8 @@
 
 {% block content %}
   <div>
+    <h2>Existing Materials</h2>
+    <p><a href="{% url 'material_create' %}">Create Material</a></p>
     {% for material in materials %}
       <p><a href="{% url 'material_detail' material_id=material.id %}">{{material.name}}</a></p>
     {% endfor %}
