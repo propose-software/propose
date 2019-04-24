@@ -3,10 +3,10 @@
 {% block title %}Update Room{% endblock %}
 
 {% block content %}
-<h2>Update Room</h2>
-<form action="{% url 'room_update' room_id=room.id%}" method="POST">
+  <h2>Update Room</h2>
+  <form action="{% url 'room_update' room_id=room.id%}" method="POST">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
-</form>
+  </form>
 {% endblock content %}

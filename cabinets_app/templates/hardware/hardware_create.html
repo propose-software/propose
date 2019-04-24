@@ -1,12 +1,12 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Hardware Create{% endblock %}
+{% block title %}Create Hardware{% endblock %}
 
 {% block content %}
-<h2>Create Hardware</h2>
-<form action="{% url 'hardware_create' %}" method="POST">
-  {% csrf_token %}
-  {{ form }}
-  <input type="submit" value="Submit">
-</form>
+  <h2>Create Hardware</h2>
+  <form action="{% url 'hardware_create' %}" method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+  </form>
 {% endblock content %}

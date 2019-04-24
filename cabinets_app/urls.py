@@ -23,6 +23,8 @@ urlpatterns = [
          account_update, name='account_update'),
     path('account/<int:account_id>/delete',
          account_delete, name='account_delete'),
+    path('acount/<int:account_id>/project/',
+         project_create, name='project_create'),
 
     path('material/all', material_list, name='material_list'),
     path('material/',
@@ -44,8 +46,6 @@ urlpatterns = [
     path('hardware/<int:hardware_id>/delete',
          hardware_delete, name='hardware_delete'),
 
-    path('project/',
-         project_create, name='project_create'),
     path('project/<int:proj_id>',
          project_detail, name='project_detail'),
     path('project/<int:proj_id>/update',
