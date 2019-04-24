@@ -4,7 +4,7 @@
 
 {% block content %}
   <h2>Update Specification</h2>
-  <form action="{% url 'spec_update' spec_id=spec.id%}" method="POST">
+  <form action="{% url 'spec_update' spec_id=spec.id proj_id=project.id%}" method="POST">
     {% csrf_token %}
     {{ form }}
     <input type="submit" value="Submit">
