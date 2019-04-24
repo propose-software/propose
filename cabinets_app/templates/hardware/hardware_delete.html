@@ -3,14 +3,14 @@
 {% block title %}Hardware Delete{% endblock %}
 
 {% block content %}
-<h1>Delete Hardware</h1>
+  <h1>Delete Hardware</h1>
 
-<p class="warning">Are you certain you want to delete this Hardware? Please be sure to edit any Specifications that are currently using this hardware.</p>
+  <p class="warning">Are you certain you want to delete this Hardware? Please be sure to edit any Specifications that are currently using this hardware.</p>
 
-<p>Hardware name: {{ hardware.name }}</p>
+  <p>Hardware name: {{ hardware.name }}</p>
 
-<form action="{% url 'hardware_delete' hardware_id=hardware.id %}" method="POST">
-  {% csrf_token %}
-  <input class="delete" type="submit" value="Delete"/>
-</form>
+  <form action="{% url 'hardware_delete' hardware_id=hardware.id %}" method="POST">
+    {% csrf_token %}
+    <input class="delete" type="submit" value="Delete"/>
+  </form>
 {% endblock %}

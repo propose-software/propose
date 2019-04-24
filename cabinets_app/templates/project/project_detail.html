@@ -3,16 +3,16 @@
 {% block title %}Project Detail{% endblock %}
 
 {% block content %}
-<section class="project_detail">
-  <h2>{{ project.name }} Project</h2>
-  <p><span>Jobsite Address:</span> {{ project.physical_address }}</p>
-  <p><span>Site Contact:</span> {{ project.site_contact }}</p>
-  <p><span>Contact Phone:</span> {{ project.contact_phone }}</p>
-  <p><span>Contact Email:</span> {{ project.contact_email }}</p>
-  <p><span>Hourly Rate:</span> ${{ project.hourly_rate }}</p>
-  <a href="{% url 'project_update' proj_id=project.id %}">Update</a>
-  <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
-</section>
+  <section class="project_detail">
+    <h2>{{ project.name }} Project</h2>
+    <p><span>Jobsite Address:</span> {{ project.physical_address }}</p>
+    <p><span>Site Contact:</span> {{ project.site_contact }}</p>
+    <p><span>Contact Phone:</span> {{ project.contact_phone }}</p>
+    <p><span>Contact Email:</span> {{ project.contact_email }}</p>
+    <p><span>Hourly Rate:</span> ${{ project.hourly_rate }}</p>
+    <a href="{% url 'project_update' proj_id=project.id %}">Update</a>
+    <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
+  </section>
 
 <section class="spec_block">
   <h3>Specifications</h3>
@@ -26,9 +26,8 @@
         <p><span>Interior Material:</span> {{spec.interior_material}}</p>
         <p><span>Exterior Material:</span> {{spec.exterior_material}}</p>
         <p><span>Finish Level:</span> {{spec.finish_level}}</p>
-
-      </li>
-    {% endfor %}
-  </ul>
-</section>
+       </li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endblock content %}

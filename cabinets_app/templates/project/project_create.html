@@ -3,10 +3,10 @@
 {% block title %}Project Create{% endblock %}
 
 {% block content %}
-<h2>Create Project</h2>
-<form action="{% url 'project_create' %}" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+<h2>Create Project for </h2>
+<form action="{% url 'project_create' account_id=account.id %}" method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
 </form>
 {% endblock content %}
