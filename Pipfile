@@ -13,6 +13,8 @@ psycopg2-binary = "*"
 django-registration = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
+django-sass-processor = "*"
+libsass = "*"
 
 [requires]
 python_version = "3.7"

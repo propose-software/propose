@@ -14,20 +14,19 @@
     <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
   </section>
 
-  <section class="spec_block">
-    <h3>Specifications</h3>
-    <p><a href="{% url 'spec_create' %}">Create New Specification</a></p>
-    <ul>
-      {% for spec in specs %}
-        <li>
-          <h4> <a href="{% url 'spec_detail' spec_id=spec.id %}"> {{spec.name}} </a></h4>
-          <p><span>Construction Style:</span> {{spec.construction}}</p>
-          <p><span>Catalog:</span> {{spec.catalog}}</p>
-          <p><span>Interior Material:</span> {{spec.interior_material}}</p>
-          <p><span>Exterior Material:</span> {{spec.exterior_material}}</p>
-          <p><span>Finish Level:</span> {{spec.finish_level}}</p>
-
-        </li>
+<section class="spec_block">
+  <h3>Specifications</h3>
+  <p><a href="{% url 'spec_create' proj_id=project.id %}">Create New Specification</a></p>
+  <ul>
+    {% for spec in specs %}
+      <li>
+        <h4><a href="{% url 'spec_detail' proj_id=project.id spec_id=spec.id %}">{{spec.name}}</a></h4>
+        <p><span>Construction Style:</span> {{spec.construction}}</p>
+        <p><span>Catalog:</span> {{spec.catalog}}</p>
+        <p><span>Interior Material:</span> {{spec.interior_material}}</p>
+        <p><span>Exterior Material:</span> {{spec.exterior_material}}</p>
+        <p><span>Finish Level:</span> {{spec.finish_level}}</p>
+       </li>
       {% endfor %}
     </ul>
   </section>
