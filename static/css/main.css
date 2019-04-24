@@ -45,4 +45,48 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+nav ul li {
+  display: inline; }
+
+nav ul li a {
+  padding: 5px;
+  cursor: pointer; }
+
+h1 {
+  font-size: 4em; }
+
+h2 {
+  font-size: 2em; }
+
+p {
+  margin: .8em auto; }
+
+main ul {
+  margin-left: 1em; }
+
+main ul li {
+  list-style-type: disc; }
+
+header {
+  grid-area: header; }
+
+nav {
+  grid-area: nav; }
+
+aside {
+  grid-area: aside; }
+
+main {
+  grid-area: main; }
+
+footer {
+  grid-area: footer; }
+
+body {
+  display: grid;
+  grid-template-areas: "header header" "nav nav" "aside main" "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: 100px 40px 1fr 30px;
+  min-height: 100vh; }
+
 /*# sourceMappingURL=main.css.map */
