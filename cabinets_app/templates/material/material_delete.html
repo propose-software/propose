@@ -1,0 +1,16 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Material Delete{% endblock %}
+
+{% block content %}
+<h1>Delete Material</h1>
+
+<p class="warning">Are you certain you want to delete this Material? Please be sure to edit any Specifications that are currently using this material.</p>
+
+<p>Material name: {{ material.name }}</p>
+
+<form action="{% url 'material_delete' material_id=material.id %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete"/>
+</form>
+{% endblock %}
