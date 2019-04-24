@@ -4,16 +4,18 @@
 
 {% block content %}
 <div class="material_detail">
-  <h2>Material Detail</h2>
-  <p>Material Name: {{ material.name }}</p>
-  <p>Description: {{ material.description }}</p>
-  <p>Thickness: {{ material.thickness }}</p>
-  <p>Width: {{ material.width }}</p>
-  <p>Length: {{ material.length }}</p>
-  <p>Sheet Cost: {{ material.sheet_cost }}</p>
-  <p>Waste Factor: {{ material.waste_factor }}</p>
-  <p>Markup: {{ material.markup }}</p>
-  <p>Date Updated: {{ material.date_updated }}</p>
+  <table>
+    <h2>Material Detail</h2>
+    <tr><td>Material Name:</td> <td>{{ material.name }}</td></tr>
+    <tr><td>Description:</td> <td>{{ material.description }}</td></tr>
+    <tr><td>Thickness:</td> <td>{{ material.thickness }}</td></tr>
+    <tr><td>Width:</td> <td>{{ material.width }}</td></tr>
+    <tr><td>Length:</td> <td>{{ material.length }}</td></tr>
+    <tr><td>Sheet Cost:</td> <td>{{ material.sheet_cost }}</td></tr>
+    <tr><td>Waste Factor:</td> <td>{{ material.waste_factor }}</td></tr>
+    <tr><td>Markup:</td> <td>{{ material.markup }}</td></tr>
+    <tr><td>Date Updated:</td> <td>{{ material.date_updated }}</td></tr>
+  </table>
 
   <p><a href="{% url 'material_update' material_id=material.id %}">Update</a></p>
   <p><a href="{% url 'material_delete' material_id=material.id %}">Delete</a></p>
