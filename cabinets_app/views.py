@@ -222,34 +222,42 @@ def spec_create(req, proj_id=None):
 
 
 @login_required
-def spec_detail(req, spec_id=None):
+def spec_detail(req, proj_id=None, spec_id=None):
     context = {
-        'spec': Specification.objects.get(pk=spec_id)
+        'spec': Specification.objects.get(pk=spec_id),
+        'project': Project.objects.get(pk=proj_id)
     }
     return render(req, './specifications/spec_detail.html', context)
 
 
 @login_required
-def spec_update(req, spec_id=None):
+def spec_update(req, proj_id=None, spec_id=None):
     spec = Specification.objects.get(pk=spec_id)
+    project = Project.objects.get(pk=proj_id)
     if req.method == 'POST':
         form = SpecForm(req.POST, instance=spec)
         if form.is_valid():
             account = form.save()
             return redirect('/spec/' + str(spec.id))
         else:
+            context = {
+                'form': form,
+                'spec': spec,
+                'project': project
+            }
             return render(req, './specifications/spec_update.html', {'form': form})
     else:
         form = SpecForm(instance=spec)
         context = {
             'form': form,
-            'spec': spec
+            'spec': spec,
+            'project': project
         }
         return render(req, './specifications/spec_update.html', context)
 
 
 @login_required
-def spec_delete(req, spec_id=None):
+def spec_delete(req, proj_id=None, spec_id=None):
     if req.method == 'POST':
         spec = Specification.objects.get(pk=spec_id)
         spec.delete()

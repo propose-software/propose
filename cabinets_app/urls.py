@@ -60,13 +60,13 @@ urlpatterns = [
     path('project/<int:proj_id>/room/<int:room_id>/delete',
          room_delete, name='room_delete'),
 
-    path('spec/',
+    path('project/<int:proj_id>/spec/',
          spec_create, name='spec_create'),
-    path('spec/<int:spec_id>',
+    path('project/<int:proj_id>/spec/<int:spec_id>',
          spec_detail, name='spec_detail'),
-    path('spec/<int:spec_id>/update',
+    path('project/<int:proj_id>/spec/<int:spec_id>/update',
          spec_update, name='spec_update'),
-    path('spec/<int:spec_id>/delete',
+    path('project/<int:proj_id>/spec/<int:spec_id>/delete',
          spec_delete, name='spec_delete'),
 
     path('project/<int:proj_id>/cabinet',
