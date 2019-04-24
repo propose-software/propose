@@ -3,29 +3,29 @@
 {% block title %}Account Detail{% endblock %}
 
 {% block content %}
-<div class="account_detail">
-  <h2>Account Detail</h2>
-  <p>Account Name: {{ account.name }}</p>
-  <p>Address: {{ account.billing_address }}</p>
-  <p>Phone: {{ account.billing_phone }}</p>
-  <p>Email: {{ account.billing_email }}</p>
-  <p>Contact: {{ account.contact_name }}</p>
-  <p>Discount: {{ account.discount }}</p>
-  
-  <p><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
-  <p><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
-</div>
+  <div class="account_detail">
+    <h2>Account Detail</h2>
+    <p>Account Name: {{ account.name }}</p>
+    <p>Address: {{ account.billing_address }}</p>
+    <p>Phone: {{ account.billing_phone }}</p>
+    <p>Email: {{ account.billing_email }}</p>
+    <p>Contact: {{ account.contact_name }}</p>
+    <p>Discount: {{ account.discount }}</p>
+
+    <p><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
+    <p><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
+  </div>
 <div>
 
-    <h3>Existing Projects</h3>
+  <h3>Existing Projects</h3>
 
-    <ul>
-      {% for project in projects %}
-      <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a></li>
-        {% endfor %}
-      </ul>
+  <ul>
+    {% for project in projects %}
+    <li><a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a></li>
+    {% endfor %}
+  </ul>
 
-      <a href="{% url 'project_create' %}">Create New Project</a>
-    </div>
+  <a href="{% url 'project_create' account_id=account.id %}">Create New Project</a>
+</div>
 
 {% endblock content %}

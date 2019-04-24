@@ -3,7 +3,7 @@
 {% block title %}Specification Detail{% endblock %}
 
 {% block content %}
-<div class="spec_detail">
+  <div class="spec_detail">
 
   <h2>Specification: {{ spec.name }} </h2>
   <p>Construction: {{ spec.construction }}</p>
@@ -14,5 +14,5 @@
   <a href="{% url 'spec_update' proj_id=project.id spec_id=spec.id %}">Update</a> |
   <a href="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}">Delete</a>
 
-</div>
+  </div>
 {% endblock content %}

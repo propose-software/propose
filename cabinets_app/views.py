@@ -27,17 +27,23 @@ def project_list(req, account_id=None):
 
 
 @login_required
-def project_create(req):
+def project_create(req, account_id=None):
+    account = Account.objects.get(pk=account_id)
     if req.method == 'POST':
         form = ProjectForm(req.POST)
         if form.is_valid():
+            form.instance.account = account
             new_project = form.save()
             return redirect('/project/' + str(new_project.id))
         else:
             return render(req, './project/project_create.html', {'form': form})
     else:
         form = ProjectForm()
-        return render(req, './project/project_create.html', {'form': form})
+        context = {
+            'form': form,
+            'account': account,
+        }
+        return render(req, './project/project_create.html', context)
 
 
 @login_required
@@ -182,7 +188,7 @@ def material_update(req, material_id=None):
         form = MaterialForm(req.POST, instance=material)
         if form.is_valid():
             material = form.save()
-            return redirect('/material/detail/' + str(material.id))
+            return redirect('/material/' + str(material.id))
         else:
             return render(req, './material/material_update.html', {'form': form})
     else:
@@ -315,7 +321,7 @@ def hardware_update(req, hardware_id=None):
         form = HardwareForm(req.POST, instance=hardware)
         if form.is_valid():
             hardware = form.save()
-            return redirect('/hardware/detail/' + str(hardware.id))
+            return redirect('/hardware/' + str(hardware.id))
         else:
             return render(req, './hardware/hardware_update.html', {'form': form})
     else:

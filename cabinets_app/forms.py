@@ -10,7 +10,6 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = [
-            'account',
             'name',
             'physical_address',
             'site_contact',
@@ -59,7 +58,6 @@ class MaterialForm(forms.ModelForm):
             'sheet_cost',
             'waste_factor',
             'markup',
-            'date_updated',
         ]
 
 

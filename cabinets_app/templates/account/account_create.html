@@ -1,12 +1,12 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Account Create{% endblock %}
+{% block title %}Create Account{% endblock %}
 
 {% block content %}
 <h1>Create Account</h1>
 <form action="{% url 'account_create' %}" method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
 </form>
 {% endblock content %}
