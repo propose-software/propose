@@ -58,7 +58,6 @@ class MaterialForm(forms.ModelForm):
             'sheet_cost',
             'waste_factor',
             'markup',
-            'date_updated',
         ]
 
 
