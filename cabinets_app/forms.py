@@ -72,17 +72,8 @@ class CabinetForm(forms.ModelForm):
             project=project)
 
 
-# class DrawerForm(forms.ModelForm):
-#     class Meta:
-#         model = Drawer
-#         fields = [
-#             'height',
-#             'material'
-#         ]
-
-
-# DrawerFormSet = forms.modelformset_factory(
-#     Drawer,
-#     fields=('height', 'material'),
-#     extra=1
-# )
+DrawerFormSet = forms.modelformset_factory(
+    Drawer,
+    fields=('height', 'material'),
+    extra=1
+)
