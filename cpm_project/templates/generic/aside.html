@@ -1,8 +1,44 @@
 <p>Account:
     <a href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account.name }}</a></p>
-<p>Related Projects:</p>
-  <ul>
+{% if not cabinet and not spec %}
+    <p>Related Projects:</p>
+    <ul>
     {% for proj in project.account.projects.all %}
-      <li><a href="{% url 'project_detail' proj_id=proj.id %}">{{ proj.name }}</a></li>
+        <li><a href="{% url 'project_detail' proj_id=proj.id %}">{{ proj.name }}</a></li>
     {% endfor %}
-  </ul>
+    </ul>
+{% else %}
+    <p>Project: 
+        <a href="{% url 'project_detail' proj_id=project.id %}">{{ project.name }}</a></p>
+    {% if spec %}
+        <p>Related Specs:</p>
+        <ul>
+        {% for s in spec.project.specifications.all %}
+            <li><a href="{% url 'spec_detail' proj_id=project.id spec_id=s.id %}">{{ s.name }}</a></li>
+        {% endfor %}
+        </ul>
+        <p>Related Cabinets:</p>
+        <ul>
+        {% for c in spec.project.cabinets.all %}
+            <li>
+            <a href="{% url 'cabinet_detail' proj_id=project.id cab_id=c.id %}">
+                {{c.cabinet_number}}-{{c.room.name}}: {{ c.specification.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% elif cabinet %}
+        <p>Related Specs:</p>
+        <ul>
+        {% for s in cabinet.project.specifications.all %}
+            <li><a href="{% url 'spec_detail' proj_id=project.id spec_id=s.id %}">{{ s.name }}</a></li>
+        {% endfor %}
+        </ul>
+        <p>Related Cabinets:</p>
+        <ul>
+        {% for c in cabinet.project.cabinets.all %}
+            <li>
+            <a href="{% url 'cabinet_detail' proj_id=project.id cab_id=c.id %}">
+                {{c.cabinet_number}}-{{c.room.name}}: {{ c.specification.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endif %}

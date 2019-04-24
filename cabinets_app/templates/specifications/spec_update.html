@@ -3,10 +3,12 @@
 {% block title %}Update Specification{% endblock %}
 
 {% block content %}
-  <h2>Update Specification</h2>
-  <form action="{% url 'spec_update' spec_id=spec.id%}" method="POST">
-    {% csrf_token %}
-    {{ form }}
+<h2>Update Specification</h2>
+<form action="{% url 'spec_update' proj_id=project.id spec_id=spec.id%}" method="POST">
+    <table>
+        {% csrf_token %}
+        {{ form }}
+    </table>
     <input type="submit" value="Submit">
   </form>
 {% endblock content %}
