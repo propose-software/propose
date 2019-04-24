@@ -10,7 +10,7 @@
 <p>Material name: {{ material.name }}</p>
 
 <form action="{% url 'material_delete' material_id=material.id %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Delete"/>
+  {% csrf_token %}
+  <input class="delete" type="submit" value="Delete"/>
 </form>
 {% endblock %}
