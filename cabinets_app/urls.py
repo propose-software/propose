@@ -47,6 +47,8 @@ urlpatterns = [
          hardware_delete, name='hardware_delete'),
 
     path('project/<int:proj_id>',
+         project_home, name='project_home'),
+    path('project/<int:proj_id>/detail',
          project_detail, name='project_detail'),
     path('project/<int:proj_id>/update',
          project_update, name='project_update'),
