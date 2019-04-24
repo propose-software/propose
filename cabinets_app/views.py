@@ -188,34 +188,6 @@ def cabinet_detail(req, proj_id=None, cab_id=None):
     return render(req, './cabinet/cabinet_detail.html', context)
 
 
-@login_required
-def spec_create(req):
-    if req.method == 'POST':
-        form = SpecForm(req.POST)
-        if form.is_valid():
-            new_spec = form.save()
-            return redirect('/spec/detail/' + str(new_spec.id))
-        else:
-            return render(req, './specifications/spec_create.html', {'form': form})
-    else:
-        form = SpecForm()
-        return render(req, './specifications/spec_create.html', {'form': form})
-
-@login_required
-def spec_detail(req, spec_id=None):
-    context = {
-        'spec': Specification.objects.get(pk=spec_id)
-    }
-    return render(req, './specifications/spec_detail.html', context)
-
-@login_required
-def spec_update(req):
-    pass
-@login_required
-def spec_delete(req):
-    pass
-
-
 def cabinet_update(req, proj_id=None, cab_id=None):
     project = Project.objects.get(pk=proj_id)
     cabinet = Cabinet.objects.get(pk=cab_id)
@@ -249,3 +221,54 @@ def cabinet_delete(req, proj_id=None, cab_id=None):
         }
         return render(req, './cabinet/cabinet_delete.html', context)
 
+
+
+@login_required
+def spec_create(req):
+    if req.method == 'POST':
+        form = SpecForm(req.POST)
+        if form.is_valid():
+            new_spec = form.save()
+            return redirect('/spec/' + str(new_spec.id))
+        else:
+            return render(req, './specifications/spec_create.html', {'form': form})
+    else:
+        form = SpecForm()
+        return render(req, './specifications/spec_create.html', {'form': form})
+
+@login_required
+def spec_detail(req, spec_id=None):
+    context = {
+        'spec': Specification.objects.get(pk=spec_id)
+    }
+    return render(req, './specifications/spec_detail.html', context)
+
+@login_required
+def spec_update(req, spec_id=None):
+    spec = Specification.objects.get(pk=spec_id)
+    if req.method == 'POST':
+        form = SpecForm(req.POST, instance=spec)
+        if form.is_valid():
+            account = form.save()
+            return redirect('/spec/' + str(spec.id))
+        else:
+            return render(req, './specifications/spec_update.html', {'form': form})
+    else:
+        form = SpecForm(instance=spec)
+        context = {
+            'form': form,
+            'spec': spec
+        }
+        return render(req, './specifications/spec_update.html', context)
+
+@login_required
+def spec_delete(req, spec_id=None):
+    if req.method == 'POST':
+        spec = Specification.objects.get(pk=spec_id)
+        spec.delete()
+        return redirect('/')
+    else:
+        context = {
+            'spec': Specification.objects.get(pk=spec_id)
+        }
+        return render(req, './specifications/spec_delete.html', context)

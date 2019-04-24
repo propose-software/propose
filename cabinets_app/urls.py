@@ -30,11 +30,11 @@ urlpatterns = [
 
     path('spec/',
          spec_create, name='spec_create'),
-    path('spec/detail/<int:spec_id>',
+    path('spec/<int:spec_id>',
          spec_detail, name='spec_detail'),
-    path('spec/detail/<int:spec_id>/update',
+    path('spec/<int:spec_id>/update',
          spec_update, name='spec_update'),
-    path('spec/detail/<int:spec.id>/delete',
+    path('spec/<int:spec_id>/delete',
          spec_delete, name='spec_delete'),
 
 
