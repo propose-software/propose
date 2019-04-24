@@ -287,7 +287,7 @@ def cabinet_delete(req, proj_id=None, cab_id=None):
 
 
 @login_required
-def spec_create(req):
+def spec_create(req, proj_id=None):
     if req.method == 'POST':
         form = SpecForm(req.POST)
         if form.is_valid():
