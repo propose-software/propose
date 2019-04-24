@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 from cabinets_app.models import (Account, Project, Material,
-    Specification, Cabinet, Hardware, Drawer, Labor)
+    Specification, Cabinet, Hardware, Drawer, Labor, Room)
 import csv
 
 
@@ -91,6 +91,16 @@ class Command(BaseCommand):
                 )
                 p.save()
 
+        with open('dummy_rooms.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                project = Project.objects.get(name=row['Project'])
+                p = Room(
+                    project=project,
+                    name=row['Room']
+                )
+                p.save()
+
         with open('dummy_cabinets.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
@@ -99,6 +109,10 @@ class Command(BaseCommand):
                     name=row['Spec'],
                     project=project
                 )[0]
+                room = Room.objects.filter(
+                    project=project,
+                    name=row['Room']
+                )[0]
                 fin_int = True if row['Fin_Interior'] == 'True' else False
                 fin_left = True if row['Fin_Interior'] == 'True' else False
                 fin_right = True if row['Fin_Interior'] == 'True' else False
@@ -106,8 +120,8 @@ class Command(BaseCommand):
                 fin_bot = True if row['Fin_Interior'] == 'True' else False
                 p = Cabinet(
                     project=project,
-                    room=row['Room'],
                     specification=spec,
+                    room=room,
                     cabinet_number=row['Cab_No'],
                     width=row['Width'],
                     height=row['Height'],
