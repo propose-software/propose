@@ -6,64 +6,56 @@
   <section class="project-detail">
     <h2>{{ project.name }} Project Invoice</h2>
     <p><a href="{% url 'project_detail' proj_id=project.id %}">Project Detail</a></p>
-    <table>
-      {% for room in rooms %}
-      <thead>
-        <tr>
-          <th>{{ room.name }}</th>
-          <th colspan="7"></th>
-          <th colspan="5">Finished Interior / End</th>
-          <th></th>
-        </tr>
-        <tr>
-          <th></th>
-          <th>Cab No.</th>
-          <th>Spec.</th>
-          <th>Width</th>
-          <th>Height</th>
-          <th>Depth</th>
-          <th># Doors</th>
-          <th># Shelves</th>
-          <th>Interior</th>
-          <th>Left</th>
-          <th>Right</th>
-          <th>Top</th>
-          <th>Bottom</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for cab in room.cabinets.all %}
-        <tr>
-          <td><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
-            Edit</a> | <a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
-            Delete</a></td>
-          <td>{{ cab.cabinet_number }}</td>
-          <td><a href="{% url 'spec_detail' proj_id=cab.project.id spec_id=cab.specification.id %}">{{ cab.specification.name }}</a></td>
-          <td>{{ cab.width }}"</td>
-          <td>{{ cab.height }}"</td>
-          <td>{{ cab.depth }}"</td>
-          <td>{{ cab.number_of_doors }}</td>
-          <td>{{ cab.number_of_shelves }}</td>
-          <td>{{ cab.finished_interior }}</td>
-          <td>{{ cab.finished_left_end }}</td>
-          <td>{{ cab.finished_right_end }}</td>
-          <td>{{ cab.finished_top }}</td>
-          <td>{{ cab.finished_bottom }}</td>
-          <td>${{ cab.price|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-        <tr>
-          <td>{{ room.cabinets.all|length }} Cabinets</td>
-          <td>{{ room.drawer_count }} Drawers</td>
-          <td colspan="11"></td>
-          <td>${{ room.price|floatformat:2 }}</td>
-        </tr>
-        <tr>
-          <td><a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a></td>
-        </tr>
-      </tbody>
-      {% endfor %}
-      </table>
+    {% for room in rooms %}
+      <section class="room">
+        <h4>{{ room.name }}</h4>
+        <table >
+          <thead>
+            <tr>
+              <th></th>
+              <th>Cab No.</th>
+              <th>Spec.</th>
+              <th>Width</th>
+              <th>Height</th>
+              <th>Depth</th>
+              <th># Doors</th>
+              <th># Shelves</th>
+              <th>Interior</th>
+              <th>Left</th>
+              <th>Right</th>
+              <th>Top</th>
+              <th>Bottom</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cab in room.cabinets.all %}
+            <tr>
+              <td><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
+                Edit</a> | <a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
+                Delete</a></td>
+              <td>{{ cab.cabinet_number }}</td>
+              <td><a href="{% url 'spec_detail' proj_id=cab.project.id spec_id=cab.specification.id %}">{{ cab.specification.name }}</a></td>
+              <td>{{ cab.width }}"</td>
+              <td>{{ cab.height }}"</td>
+              <td>{{ cab.depth }}"</td>
+              <td>{{ cab.number_of_doors }}</td>
+              <td>{{ cab.number_of_shelves }}</td>
+              <td>{{ cab.finished_interior }}</td>
+              <td>{{ cab.finished_left_end }}</td>
+              <td>{{ cab.finished_right_end }}</td>
+              <td>{{ cab.finished_top }}</td>
+              <td>{{ cab.finished_bottom }}</td>
+              <td>${{ cab.price|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+            <p>{{ room.cabinets.all|length }} Cabinets</p>
+            <p>{{ room.drawer_count }} Drawers</p>
+            <a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a>
+            <p>${{ room.price|floatformat:2 }}</p>
+      </section>
+    {% endfor %}
   </section>
 {% endblock content %}

@@ -53,7 +53,7 @@ def account_update(req, account_id=None):
         form = AccountForm(req.POST, instance=account)
         if form.is_valid():
             account = form.save()
-            return redirect('/account/detail/' + str(account.id))
+            return redirect('account_detail', account_id=account_id)
         else:
             return render(req, './account/account_update.html', {'form': form})
     else:

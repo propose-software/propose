@@ -7,7 +7,7 @@
   <p><a href="{% url 'hardware_create' %}">Create New Hardware</a></p>
   <ul>
   {% for hardware in hardware %}
-    <li><a href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></li>
+    <li class="hardware_list"><a href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></li>
   {% endfor %}
   </ul>
 {% endblock content %}
