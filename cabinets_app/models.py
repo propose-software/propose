@@ -119,7 +119,7 @@ class Project(models.Model):
 
 
 class Room(models.Model):
-    """ Defines a Project within an Account
+    """ Defines a Room within a Project
     """
     name = models.CharField(max_length=128)
     project = models.ForeignKey(
@@ -134,6 +134,14 @@ class Room(models.Model):
         for cabinet in self.cabinets:
             room_total += cabinet.price
         return room_total
+
+    @property
+    def drawer_count(self):
+        cabinets = Cabinet.objects.filter(room=self)
+        count = 0
+        for cab in cabinets:
+            count += cab.drawers.count()
+        return count
 
     def __repr__(self):
         return f'<Room name: {self.name} in {self.project.name}>'
@@ -170,7 +178,7 @@ class Specification(models.Model):
     ]
     construction = models.CharField(
         choices=CONSTRUCTION_CHOICES,
-        default='frameless',
+        default='Frameless',
         max_length=32
     )
     CATALOG_CHOICES = [
@@ -181,7 +189,7 @@ class Specification(models.Model):
     ]
     catalog = models.CharField(
         choices=CATALOG_CHOICES,
-        default='laminate',
+        default='Laminate',
         max_length=32
     )
     FINISH_LEVEL_CHOICES = [
@@ -312,12 +320,21 @@ class Drawer(models.Model):
 
     @property
     def price(self):
+        labor_rate = self.cabinet.project.hourly_rate
+
         width = cabinet.width
         depth = cabinet.depth
 
         sides = depth * height / 144
         front_back = width * height / 144
+        bottom = width * depth / 144
 
+        total_sq_ft = (2 * sides) + (2 * front_back) + bottom
+        drawer_material_price = total_sq_ft * self.material.sq_ft_cost
+
+        drawer_labor_price = Labor.objects.get(item_name='Drawer').minutes / 60 * labor_rate
+
+        total_price = drawer_material_price + drawer_labor_price
 
         return total_price
 

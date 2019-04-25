@@ -30,7 +30,7 @@ def cabinet_create(req, proj_id=None):
             form.instance.project = project
             cabinet = form.save()
             for d in drawer_form:
-                if d.is_valid():
+                if d.is_valid() and d['height'].value() and d['material'].value():
                     instance = d.save(commit=False)
                     instance.cabinet = cabinet
                     instance.save()
@@ -39,7 +39,7 @@ def cabinet_create(req, proj_id=None):
             context = {
                 'form': form,
                 'project': project,
-                'drawer_form': DrawerFormSet(req.POST)
+                'drawer_form': drawer_form
             }
             return render(req, './cabinet/cabinet_create.html', context)
     else:
@@ -77,17 +77,31 @@ def cabinet_update(req, proj_id=None, cab_id=None):
     cabinet = Cabinet.objects.get(pk=cab_id)
     if req.method == 'POST':
         form = CabinetForm(project, req.POST, instance=cabinet)
+        drawers = Drawer.objects.filter(cabinet=cabinet)
+        drawer_form = DrawerFormSet(req.POST, queryset=drawers)
         if form.is_valid():
             cabinet = form.save()
+            for d in drawer_form:
+                if d.is_valid() and d['height'].value() and d['material'].value():
+                    instance = d.save(commit=False)
+                    instance.cabinet = cabinet
+                    instance.save()
             return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
         else:
-            return render(req, './cabinet/cabinet_update.html', {'form': form})
+            context = {
+                'form': form,
+                'project': project,
+                'drawer_form': drawer_form
+            }
+            return render(req, './cabinet/cabinet_update.html', context)
     else:
         form = CabinetForm(project, instance=cabinet)
+        drawer_form = DrawerFormSet(queryset=Drawer.objects.filter(cabinet=cabinet))
         context = {
             'form': form,
             'project': project,
-            'cabinet': cabinet
+            'cabinet': cabinet,
+            'drawer_form': drawer_form
         }
         return render(req, './cabinet/cabinet_update.html', context)
 

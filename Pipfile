@@ -15,6 +15,7 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 django-sass-processor = "*"
 libsass = "*"
+factory-boy = "*"
 
 [requires]
 python_version = "3.7"
