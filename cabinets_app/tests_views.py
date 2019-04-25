@@ -8,7 +8,8 @@ from .models import (
 from .tests_models import (
     get_material_info, get_account_info, get_cabinet_info,
     get_drawer_info, get_material_info, get_project_info,
-    get_spec_info
+    get_spec_info,
+    get_hardware_info
 )
 
 
@@ -109,6 +110,30 @@ class TestHardware(TestCase):
             username=self.user.username,
             password='12345'
         )
+
+    def test_hardware_create_get(self):
+        res = self.client.get('/hardware', follow=True)
+        self.assertIn(b'<title>Create Hardware</title>', res.content)
+
+    def test_hardware_create_post(self):
+        hardware_create = get_hardware_info()
+        res = self.client.post('/hardware', hardware_create, follow=True)
+        self.assertIn('<h1>Create Hardware</h1>', res.content.decode())
+
+    def test_hardware_list(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+
+    def test_hardware_detail(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+        self.assertIn(str(hardware.cost_per).encode(), res.content)
+        self.assertIn(str(hardware.unit_type).encode(), res.content)
+        self.assertIn(str(hardware.markup).encode(), res.content)
+
+
 class TestProjects(TestCase):
     def setUp(self):
         self.user = UserFactory()
@@ -119,6 +144,21 @@ class TestProjects(TestCase):
             username=self.user.username,
             password='12345'
         )
+        pass
+
+    def test_project_create_get(self, proj_id=None):
+        project = Project.objects.create
+
+        res = self.client.get('/account' + str(project.id())/project, follow=True)
+        self.assertIn(b'<h1>Create Project for</h1>', res.content)
+
+
+    # def test_project_create_post():
+
+    # def test_project_detail():
+
+    # def test_project_list():
+
 class TestCabinets(TestCase):
     def setUp(self):
         self.user = UserFactory()
@@ -129,3 +169,4 @@ class TestCabinets(TestCase):
             username=self.user.username,
             password='12345'
         )
+        pass
