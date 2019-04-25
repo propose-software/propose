@@ -8,7 +8,8 @@ from .models import (
 from .tests_models import (
     get_material_info, get_account_info, get_cabinet_info,
     get_drawer_info, get_material_info, get_project_info,
-    get_spec_info
+    get_spec_info,
+    get_hardware_info
 )
 
 
@@ -59,3 +60,127 @@ class TestAccounts(TestCase):
         account_info = get_account_info()
         res = self.client.post('/account/', account_info, follow=True)
         self.assertIn(account_info['name'].encode(), res.content)
+
+class TestMaterials(TestCase):
+
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+
+    def test_material_create_get(self):
+        res = self.client.get('/material', follow=True)
+        self.assertIn(b'<h2>Create Material</h2>', res.content)
+
+
+    def test_material_create_post(self):
+        material_create = get_material_info()
+        res = self.client.post('/material', material_create, follow=True)
+        self.assertIn('<h2>Create Material</h2>', res.content.decode())
+
+    def test_material_list(self):
+        material = Material.objects.create(**get_material_info())
+        res = self.client.get('/material/' + str(material.id), follow=True)
+        self.assertIn(material.name.encode(), res.content)
+
+    def test_material_detail(self):
+        material = Material.objects.create(**get_material_info())
+        res = self.client.get('/material/' + str(material.id), follow=True)
+        self.assertIn(material.name.encode(), res.content)
+        self.assertIn(material.description.encode(), res.content)
+        self.assertIn(str(material.thickness).encode(), res.content)
+        self.assertIn(str(material.width).encode(), res.content)
+        self.assertIn(str(material.length).encode(), res.content)
+        self.assertIn(str(material.sheet_cost).encode(), res.content)
+        self.assertIn(str(material.waste_factor).encode(), res.content)
+        self.assertIn(str(material.markup).encode(), res.content)
+
+class TestHardware(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+
+    def test_hardware_create_get(self):
+        res = self.client.get('/hardware', follow=True)
+        self.assertIn(b'<title>Create Hardware</title>', res.content)
+
+    def test_hardware_create_post(self):
+        hardware_create = get_hardware_info()
+        res = self.client.post('/hardware', hardware_create, follow=True)
+        self.assertIn('<h1>Create Hardware</h1>', res.content.decode())
+
+    def test_hardware_list(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+
+    def test_hardware_detail(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+        self.assertIn(str(hardware.cost_per).encode(), res.content)
+        self.assertIn(str(hardware.unit_type).encode(), res.content)
+        self.assertIn(str(hardware.markup).encode(), res.content)
+
+
+class TestProjects(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+
+    '''
+
+    These Tests need some work
+
+    def test_project_create_get(self):
+        res = self.client.get('/project', follow=True)
+        self.assertIn(b'<h1>Create Project</h1>', res.content)
+
+
+    def test_project_create_post(self):
+        project_info = get_project_info()
+        res = self.client.post('/account/', project_info, follow=True)
+        self.assertIn(project_info['name'].encode(), res.content)
+
+    def test_project_detail(self):
+        project = Project.objects.create(**get_project_info())
+        account = Account.objects.create(**get_account_info())
+        res = self.client.get('/project/' + str(account.id) + '/account/' + str(project.id), follow=True)
+        self.assertIn(project.name.encode(), res.content)
+        self.assertIn(project.physical_address.encode(), res.content)
+        self.assertIn(project.site_contact.encode(), res.content)
+        self.assertIn(project.contact_phone.encode(), res.content)
+        self.assertIn(project.contact_email.encode(), res.content)
+        self.assertIn(str(project.hourly_rate).encode(), res.content)
+
+    def test_project_list():
+    '''
+
+class TestCabinets(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+        pass

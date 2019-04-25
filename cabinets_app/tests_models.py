@@ -129,6 +129,18 @@ def get_drawer_info(cabinet=None, material=None):
         'material': material
     }
 
+def get_hardware_info():
+    ''' Return dictionary for easy creation of Hardware
+    E.g. hardware = Hardware.objects.create(**get_hardware_info())
+    '''
+    return {
+       'name': 'Blum 110+ Hinge',
+       'cost_per': 2.75,
+       'unit_type': 'each',
+       'markup': .2,
+    }
+
+
 
 class AccountTest(TestCase):
 
