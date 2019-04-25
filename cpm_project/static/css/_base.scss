@@ -22,6 +22,7 @@ h2 {
 }
 h3 {
     font-size: 1.4em;
+    margin-top: 1em;
 }
 h4 {
     font-size: 1.2em;
@@ -36,6 +37,7 @@ main ul, aside ul {
 }
 main ul li, aside ul li {
     list-style-type: disc;
+    margin-bottom: .4em;
 }
 
 th {
@@ -43,5 +45,5 @@ th {
     text-align: left;
 }
 td, th {
-    padding: 4px;
+    padding: 4px 8px 4px 0px;
 }
