@@ -27,7 +27,7 @@ urlpatterns = [
          account_update, name='account_update'),
     path('account/<int:account_id>/delete',
          account_delete, name='account_delete'),
-    path('acount/<int:account_id>/project/',
+    path('account/<int:account_id>/project/',
          project_create, name='project_create'),
 
     path('material/all', material_list, name='material_list'),
