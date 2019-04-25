@@ -3,10 +3,12 @@
 {% block title %}Hardware Update{% endblock %}
 
 {% block content %}
-  <h1>Update Hardware</h1>
+  <h2>Update Hardware</h2>
   <form action="{% url 'hardware_update' hardware_id=hardware.id%}" method="POST">
+    <table>
     {% csrf_token %}
     {{ form }}
+    </table>
     <input type="submit" value="Save">
   </form>
 {% endblock content %}
