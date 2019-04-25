@@ -1,57 +1,57 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Project Detail{% endblock %}
+{% block title %}Project Detail{% endblock title %}
 
 {% block content %}
   <section class="project_detail">
     <table>
       <h2>{{ project.name }} Project Detail</h2>
-        <tr><td>Jobsite Address:</td> <td>{{ project.physical_address }}</td></tr>
-        <tr><td>Site Contact:</td> <td>{{ project.site_contact }}</td></tr>
-        <tr><td>Contact Phone:</td> <td>{{ project.contact_phone }}</td></tr>
-        <tr><td>Contact Email:</td> <td>{{ project.contact_email }}</td></tr>
-        <tr><td>Hourly Rate:</td> <td>${{ project.hourly_rate }}</td></tr>
-      </table>
-        <a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a> | 
-        <a href="{% url 'project_update' proj_id=project.id %}">Update</a> | 
-        <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
+      <tr><td>Jobsite Address:</td> <td>{{ project.physical_address }}</td></tr>
+      <tr><td>Site Contact:</td> <td>{{ project.site_contact }}</td></tr>
+      <tr><td>Contact Phone:</td> <td>{{ project.contact_phone }}</td></tr>
+      <tr><td>Contact Email:</td> <td>{{ project.contact_email }}</td></tr>
+      <tr><td>Hourly Rate:</td> <td>${{ project.hourly_rate }}</td></tr>
+    </table>
+    <a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a> |
+    <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
+    <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
   </section>
 
-<section>
-  <h3>Specifications</h3>
-  <p><a href="{% url 'spec_create' proj_id=project.id %}">Create New Specification</a></p>
-  <ul>
-    {% for spec in specs %}
-    <li>{{ spec.name }} | 
-      <a href="{% url 'spec_update' proj_id=project.id spec_id=spec.id %}">Update</a> | 
-      <a href="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}">Delete</a>
-      <table>
-        <tr><td>Construction Style:</td> <td>{{spec.construction}}</td></tr>
-        <tr><td>Catalog:</td> <td>{{spec.catalog}}</td></tr>
-        <tr><td>Interior Material:</td> <td>{{spec.interior_material}}</td></tr>
-        <tr><td>Exterior Material:</td> <td>{{spec.exterior_material}}</td></tr>
-        <tr><td>Finish Level:</td> <td>{{spec.finish_level}}</td></tr>
-      </table>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+  <section>
+    <h3>Specifications</h3>
+    <p><a href="{% url 'spec_create' proj_id=project.id %}">Create New Specification</a></p>
+    <ul>
+      {% for spec in specs %}
+      <li class="spec">{{ spec.name }} |
+        <a href="{% url 'spec_update' proj_id=project.id spec_id=spec.id %}">Update</a> |
+        <a href="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}">Delete</a>
+        <table>
+          <tr><td>Construction Style:</td> <td>{{spec.construction}}</td></tr>
+          <tr><td>Catalog:</td> <td>{{spec.catalog}}</td></tr>
+          <tr><td>Interior Material:</td> <td>{{spec.interior_material}}</td></tr>
+          <tr><td>Exterior Material:</td> <td>{{spec.exterior_material}}</td></tr>
+          <tr><td>Finish Level:</td> <td>{{spec.finish_level}}</td></tr>
+        </table>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
 
-<section>
-  <h3>Rooms</h3>
-  <p><a href="{% url 'room_create' proj_id=project.id %}">Create New Room</a></p>
-  <ul>
-    {% for room in project.rooms.all %}
-    <li>
-      <table>
-        <tr>
-          <td>{{ room.name }}</td>
-          <td><a href="{% url 'room_update' proj_id=project.id room_id=room.id %}">Update</a></td>
-          <td><a href="{% url 'room_delete' proj_id=project.id room_id=room.id %}">Delete</a></td>
-        </tr>
-      </table>
-    </li>
-    {% endfor %}
-  </ul>
-</section>
+  <section>
+    <h3>Rooms</h3>
+    <p><a href="{% url 'room_create' proj_id=project.id %}">Create New Room</a></p>
+    <ul>
+      {% for room in project.rooms.all %}
+      <li class="room">
+        <table>
+          <tr>
+            <td>{{ room.name }}</td>
+            <td><a href="{% url 'room_update' proj_id=project.id room_id=room.id %}">Update</a></td>
+            <td><a href="{% url 'room_delete' proj_id=project.id room_id=room.id %}">Delete</a></td>
+          </tr>
+        </table>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
 {% endblock content %}
