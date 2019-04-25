@@ -118,8 +118,16 @@ class Room(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        related_name='projects'
+        related_name='rooms'
     )
+
+    @property
+    def price(self):
+        cabinets = Cabinet.objects.filter(room=self)
+        room_total = 0
+        for cabinet in cabinets:
+            room_total += cabinet.price
+        return room_total
 
     @property
     def drawer_count(self):

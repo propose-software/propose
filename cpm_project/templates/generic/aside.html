@@ -1,6 +1,6 @@
 <p>Account:
     <a href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account.name }}</a></p>
-{% if not cabinet and not spec %}
+{% if not cabinet and not spec and not room %}
     <p>Related Projects:</p>
     <ul>
     {% for proj in project.account.projects.all %}
@@ -15,6 +15,14 @@
         <ul>
         {% for s in spec.project.specifications.all %}
             <li><a href="{% url 'spec_detail' proj_id=project.id spec_id=s.id %}">{{ s.name }}</a></li>
+        {% endfor %}
+        </ul>
+        <p>Related Rooms:</p>
+        <ul>
+        {% for r in spec.project.rooms.all %}
+            <li>
+            <a href="{% url 'room_update' proj_id=project.id room_id=r.id %}">
+                {{ r.name }}</a></li>
         {% endfor %}
         </ul>
         <p>Related Cabinets:</p>
@@ -32,9 +40,40 @@
             <li><a href="{% url 'spec_detail' proj_id=project.id spec_id=s.id %}">{{ s.name }}</a></li>
         {% endfor %}
         </ul>
+        <p>Related Rooms:</p>
+        <ul>
+        {% for r in cabinet.project.rooms.all %}
+            <li>
+            <a href="{% url 'room_update' proj_id=project.id room_id=r.id %}">
+                {{ r.name }}</a></li>
+        {% endfor %}
+        </ul>
         <p>Related Cabinets:</p>
         <ul>
         {% for c in cabinet.project.cabinets.all %}
+            <li>
+            <a href="{% url 'cabinet_detail' proj_id=project.id cab_id=c.id %}">
+                {{c.cabinet_number}}-{{c.room.name}}: {{ c.specification.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% elif room %}
+        <p>Related Specs:</p>
+        <ul>
+        {% for s in room.project.specifications.all %}
+            <li><a href="{% url 'spec_detail' proj_id=project.id spec_id=s.id %}">{{ s.name }}</a></li>
+        {% endfor %}
+        </ul>
+        <p>Related Rooms:</p>
+        <ul>
+        {% for r in room.project.rooms.all %}
+            <li>
+            <a href="{% url 'room_update' proj_id=project.id room_id=r.id %}">
+                {{ r.name }}</a></li>
+        {% endfor %}
+        </ul>
+        <p>Related Cabinets:</p>
+        <ul>
+        {% for c in room.project.cabinets.all %}
             <li>
             <a href="{% url 'cabinet_detail' proj_id=project.id cab_id=c.id %}">
                 {{c.cabinet_number}}-{{c.room.name}}: {{ c.specification.name }}</a></li>
