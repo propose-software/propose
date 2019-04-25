@@ -7,7 +7,7 @@
 
   <p class="warning">Are you certain you want to delete this Labor Item? This could have some unforeseen consequences that cause the entire site to go down.</p>
 
-  <p>Labor Name: {{ labor.name }}</p>
+  <p>Labor Name: {{ labor.item_name }}</p>
 
   <form action="{% url 'labor_delete' labor_id=labor.id %}" method="POST">
     <table>

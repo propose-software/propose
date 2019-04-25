@@ -6,9 +6,14 @@
   <div class="hardware_detail">
     <table>
       <h2>Labor Item Detail</h2>
-      <tr><td>Labor Name:</td> <td>{{ labor.name }} </td></tr>
-      <tr><td>Cost Per {{labor.unit_type }}:</td> <td>${{ labor.cost_per }}</td></tr>
-      <tr><td>Markup:</td> <td>{{ labor.markup }}</td></tr>
+      <tr>
+        <td>Labor Name:</td>
+        <td>{{ labor.item_name }}</td>
+      </tr>
+      <tr>
+        <td>Minutes Per {{labor.unit_type }}:</td>
+        <td>{{ labor.minutes }}</td>
+      </tr>
     </table>
 
     <p><a href="{% url 'labor_update' labor_id=labor.id %}">Update</a></p>

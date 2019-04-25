@@ -51,6 +51,16 @@ urlpatterns = [
     path('hardware/<int:hardware_id>/delete',
          hardware_delete, name='hardware_delete'),
 
+    path('labor/all', labor_list, name='labor_list'),
+    path('labor/',
+         labor_create, name='labor_create'),
+    path('labor/<int:labor_id>',
+         labor_detail, name='labor_detail'),
+    path('labor/<int:labor_id>/update',
+         labor_update, name='labor_update'),
+    path('labor/<int:labor_id>/delete',
+         labor_delete, name='labor_delete'),
+
     path('project/<int:proj_id>',
          project_home, name='project_home'),
     path('project/<int:proj_id>/detail',

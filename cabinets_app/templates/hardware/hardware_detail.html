@@ -6,9 +6,18 @@
   <div class="hardware_detail">
     <table>
       <h2>Hardware Detail</h2>
-      <tr><td>Hardware Name:</td> <td>{{ hardware.name }} </td></tr>
-      <tr><td>Cost Per {{hardware.unit_type }}:</td> <td>${{ hardware.cost_per }}</td></tr>
-      <tr><td>Markup:</td> <td>{{ hardware.markup }}</td></tr>
+      <tr>
+        <td>Hardware Name:</td>
+        <td>{{ hardware.name }}</td>
+      </tr>
+      <tr>
+        <td>Cost Per {{hardware.unit_type }}:</td>
+        <td>${{ hardware.cost_per }}</td>
+      </tr>
+      <tr>
+        <td>Markup:</td>
+        <td>{{ hardware.markup }}</td>
+      </tr>
     </table>
 
     <p><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>

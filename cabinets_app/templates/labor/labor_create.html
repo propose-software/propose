@@ -3,7 +3,7 @@
 {% block title %}Create Labor{% endblock %}
 
 {% block content %}
-  <h1>Create Labor Item</h1>
+  <h2>Create Labor Item</h2>
   <form action="{% url 'labor_create' %}" method="POST">
     <table>
     {% csrf_token %}
