@@ -16,6 +16,8 @@ phonenumbers = "*"
 django-sass-processor = "*"
 libsass = "*"
 factory-boy = "*"
+boto3 = "*"
+django-storages = "*"
 
 [requires]
 python_version = "3.7"

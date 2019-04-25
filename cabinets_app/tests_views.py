@@ -119,7 +119,7 @@ class TestHardware(TestCase):
     def test_hardware_create_post(self):
         hardware_create = get_hardware_info()
         res = self.client.post('/hardware', hardware_create, follow=True)
-        self.assertIn('<h1>Create Hardware</h1>', res.content.decode())
+        self.assertIn('<h2>Create Hardware</h2>', res.content.decode())
 
     def test_hardware_list(self):
         hardware = Hardware.objects.create(**get_hardware_info())
