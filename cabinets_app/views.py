@@ -53,7 +53,7 @@ def account_update(req, account_id=None):
         form = AccountForm(req.POST, instance=account)
         if form.is_valid():
             account = form.save()
-            return redirect('/account/detail/' + str(account.id))
+            return redirect('account_detail', account_id=account_id)
         else:
             return render(req, './account/account_update.html', {'form': form})
     else:
@@ -70,7 +70,7 @@ def account_delete(req, account_id=None):
     if req.method == 'POST':
         account = Account.objects.get(pk=account_id)
         account.delete()
-        return redirect('/')
+        return redirect('account')
     else:
         context = {
             'account': Account.objects.get(pk=account_id)
@@ -94,7 +94,7 @@ def material_create(req):
         form = MaterialForm(req.POST)
         if form.is_valid():
             new_material = form.save()
-            return redirect('/material/' + str(new_material.id))
+            return redirect('material_detail', material_id=new_material.id)
         else:
             return render(req, './material/material_create.html', {'form': form})
     else:
@@ -136,7 +136,7 @@ def material_delete(req, material_id=None):
     if req.method == 'POST':
         material = Material.objects.get(pk=material_id)
         material.delete()
-        return redirect('/material/all')
+        return redirect('material_list')
     else:
         context = {
             'material': Material.objects.get(pk=material_id)
@@ -160,7 +160,7 @@ def hardware_create(req):
         form = HardwareForm(req.POST)
         if form.is_valid():
             new_hardware = form.save()
-            return redirect('/hardware/' + str(new_hardware.id))
+            return redirect('hardware_detail', hardware_id=new_hardware.id)
         else:
             return render(req, './hardware/hardware_create.html', {'form': form})
     else:
@@ -184,7 +184,7 @@ def hardware_update(req, hardware_id=None):
         form = HardwareForm(req.POST, instance=hardware)
         if form.is_valid():
             hardware = form.save()
-            return redirect('/hardware/' + str(hardware.id))
+            return redirect('hardware_detail', hardware_id=hardware_id)
         else:
             return render(req, './hardware/hardware_update.html', {'form': form})
     else:
@@ -201,7 +201,7 @@ def hardware_delete(req, hardware_id=None):
     if req.method == 'POST':
         hardware = Hardware.objects.get(pk=hardware_id)
         hardware.delete()
-        return redirect('/hardware/all')
+        return redirect('hardware_list')
     else:
         context = {
             'hardware': Hardware.objects.get(pk=hardware_id)
@@ -225,7 +225,7 @@ def labor_create(req):
         form = LaborForm(req.POST)
         if form.is_valid():
             new_labor = form.save()
-            return redirect('/labor/' + str(new_labor.id))
+            return redirect('labor_detail', labor_id=new_labor.id)
         else:
             return render(req, './labor/labor_create.html', {'form': form})
     else:
@@ -249,7 +249,7 @@ def labor_update(req, labor_id=None):
         form = LaborForm(req.POST, instance=labor)
         if form.is_valid():
             labor = form.save()
-            return redirect('/labor/' + str(labor.id))
+            return redirect('labor_detail', labor_id=labor_id)
         else:
             return render(req, './labor/labor_update.html', {'form': form})
     else:
@@ -266,7 +266,7 @@ def labor_delete(req, labor_id=None):
     if req.method == 'POST':
         labor = Labor.objects.get(pk=labor_id)
         labor.delete()
-        return redirect('/labor/all')
+        return redirect('labor_list')
     else:
         context = {
             'labor': Labor.objects.get(pk=labor_id)

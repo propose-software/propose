@@ -228,11 +228,11 @@ def room_update(req, proj_id=None, room_id=None):
 
 
 @login_required
-def room_delete(req, room_id=None, proj_id=None):
+def room_delete(req, proj_id=None, room_id=None):
     if req.method == 'POST':
         room = Room.objects.get(pk=room_id)
         room.delete()
-        return redirect('/project/' + str(proj_id))
+        return redirect('project_detail', proj_id=proj_id)
     else:
         context = {
             'room': Room.objects.get(pk=room_id),
