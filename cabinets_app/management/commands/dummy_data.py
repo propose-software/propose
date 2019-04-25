@@ -9,11 +9,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         Account.objects.all().delete()
+        Project.objects.all().delete()
         Material.objects.all().delete()
         Hardware.objects.all().delete()
         Labor.objects.all().delete()
 
-        with open('dummy_accounts.csv') as f:
+        with open('dummy_data/dummy_accounts.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 p = Account(
@@ -26,7 +27,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_projects.csv') as f:
+        with open('dummy_data/dummy_projects.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 account = Account.objects.get(name=row['Account'])
@@ -41,7 +42,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_materials.csv') as f:
+        with open('dummy_data/dummy_materials.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 p = Material(
@@ -56,7 +57,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_hardware.csv') as f:
+        with open('dummy_data/dummy_hardware.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 p = Hardware(
@@ -67,7 +68,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_labor.csv') as f:
+        with open('dummy_data/dummy_labor.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 p = Labor(
@@ -77,7 +78,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_specs.csv') as f:
+        with open('dummy_data/dummy_specs.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 project = Project.objects.get(name=row['Project'])
@@ -91,7 +92,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_rooms.csv') as f:
+        with open('dummy_data/dummy_rooms.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 project = Project.objects.get(name=row['Project'])
@@ -101,7 +102,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_cabinets.csv') as f:
+        with open('dummy_data/dummy_cabinets.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 project = Project.objects.get(name=row['\ufeffProject'])
@@ -136,7 +137,7 @@ class Command(BaseCommand):
                 )
                 p.save()
 
-        with open('dummy_drawers.csv') as f:
+        with open('dummy_data/dummy_drawers.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
                 project = Project.objects.get(name=row['\ufeffProject'])

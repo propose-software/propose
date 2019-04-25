@@ -5,8 +5,10 @@
 {% block content %}
 <h2>Create Project for </h2>
 <form action="{% url 'project_create' account_id=account.id %}" method="POST">
+  <table>
   {% csrf_token %}
   {{ form }}
+  </table>
   <input type="submit" value="Submit">
 </form>
 {% endblock content %}
