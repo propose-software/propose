@@ -7,7 +7,7 @@
     <p><a href="{% url 'material_create' %}">Create New Material</a></p>
     <ul>
     {% for material in materials %}
-      <li><a href="{% url 'material_detail' material_id=material.id %}">{{material.name}}</a></li>
+      <li class="material_list"><a href="{% url 'material_detail' material_id=material.id %}">{{material.name}}</a></li>
     {% endfor %}
     </ul>
 {% endblock content %}

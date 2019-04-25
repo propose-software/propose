@@ -4,10 +4,10 @@
 
 {% block content %}
     <h2>Existing Accounts</h2>
-    <p><a href="{% url 'account_create' %}">Create Account</a></p>
+    <p id="create_account_link"><a href="{% url 'account_create' %}">Create Account</a></p>
     <ul>
     {% for account in accounts %}
-      <li><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></li>
+      <li id="existing_account_name"><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></li>
     {% endfor %}
     </ul>
 {% endblock content %}
