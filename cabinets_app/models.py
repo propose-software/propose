@@ -16,10 +16,10 @@ class Account(models.Model):
     discount = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __repr__(self):
-        return f'<Account name: {self.name}>'
+        return f'<Account: {self.name}>'
 
     def __str__(self):
-        return f'Account name: {self.name}'
+        return f'{self.name}'
 
 
 class Material(models.Model):
@@ -112,10 +112,10 @@ class Project(models.Model):
         return project_total
 
     def __repr__(self):
-        return f'<Project name: {self.name}>'
+        return f'<{self.name}>'
 
     def __str__(self):
-        return f'Project: {self.name}'
+        return f'{self.name}'
 
 
 class Room(models.Model):
@@ -145,10 +145,10 @@ class Room(models.Model):
         return count
 
     def __repr__(self):
-        return f'<Room name: {self.name} in {self.project.name}>'
+        return f'<{self.project.name}: {self.name}>'
 
     def __str__(self):
-        return f'Room name: {self.name} in {self.project.name}'
+        return f'{self.project.name}: {self.name}'
 
 
 class Specification(models.Model):
@@ -213,10 +213,10 @@ class Specification(models.Model):
     )
 
     def __repr__(self):
-        return f'<Specification name: {self.name}>'
+        return f'<Spec: {self.name}>'
 
     def __str__(self):
-        return f'Project: {self.project.name} | Specification: {self.name}'
+        return f'Spec: {self.name}'
 
 
 class Cabinet(models.Model):
@@ -302,10 +302,10 @@ class Cabinet(models.Model):
         return total_price
 
     def __repr__(self):
-        return f'<Cabinet project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number} >'
+        return f'<Cab No: {self.cabinet_number}>'
 
     def __str__(self):
-        return f'Cabinet for project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number}'
+        return f'Cab No: {self.cabinet_number}'
 
 
 class Drawer(models.Model):
@@ -328,8 +328,8 @@ class Drawer(models.Model):
     def price(self):
         labor_rate = self.cabinet.project.hourly_rate
 
-        sides = self.cabinet.depth * height / 144
-        front_back = self.cabinet.width * height / 144
+        sides = self.cabinet.depth * self.height / 144
+        front_back = self.cabinet.width * self.height / 144
         bottom = self.cabinet.width * self.cabinet.depth / 144
 
         total_sq_ft = (2 * sides) + (2 * front_back) + bottom
@@ -342,7 +342,7 @@ class Drawer(models.Model):
         return total_price
 
     def __repr__(self):
-        return f'<Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}>'
+        return f'<Drawer for {self.cabinet.cabinet_number}>'
 
     def __str__(self):
-        return f'Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}'
+        return f'Drawer for {self.cabinet.cabinet_number}'
