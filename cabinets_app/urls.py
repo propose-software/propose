@@ -1,15 +1,19 @@
 from .views import (
-    account, project_list,
-    account_create, account_detail, account_update, account_delete,
-    project_create, project_detail, project_update, project_delete, project_home,
-    spec_create, spec_detail, spec_delete, spec_update,
-    material_create, material_delete, material_detail, material_list, material_update,
-    hardware_create, hardware_delete, hardware_detail, hardware_list, hardware_update,
-    room_create, room_update, room_delete,
+    account, account_create, account_detail, account_update, account_delete,
+    material_create, material_delete, material_detail,
+    material_list, material_update,
+    hardware_create, hardware_delete, hardware_detail,
+    hardware_list, hardware_update,
 )
 from .views_cab import (
     cabinet_create, drawer_form, cabinet_detail,
     cabinet_update, cabinet_delete, cabinet_list
+)
+from .views_proj import (
+     project_list, project_create, project_detail, project_update, 
+     project_delete, project_home,
+     spec_create, spec_detail, spec_delete, spec_update,
+     room_create, room_update, room_delete,
 )
 from django.urls import path
 

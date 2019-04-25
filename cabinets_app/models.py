@@ -112,7 +112,7 @@ class Project(models.Model):
 
 
 class Room(models.Model):
-    """ Defines a Project within an Account
+    """ Defines a Room within a Project
     """
     name = models.CharField(max_length=128)
     project = models.ForeignKey(
