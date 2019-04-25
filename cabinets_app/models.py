@@ -112,7 +112,7 @@ class Project(models.Model):
 
 
 class Room(models.Model):
-    """ Defines a Project within an Account
+    """ Defines a Room within a Project
     """
     name = models.CharField(max_length=128)
     project = models.ForeignKey(
@@ -120,6 +120,14 @@ class Room(models.Model):
         on_delete=models.CASCADE,
         related_name='projects'
     )
+
+    @property
+    def drawer_count(self):
+        cabinets = Cabinet.objects.filter(room=self)
+        count = 0
+        for cab in cabinets:
+            count += cab.drawers.count()
+        return count
 
     def __repr__(self):
         return f'<Room name: {self.name} in {self.project.name}>'

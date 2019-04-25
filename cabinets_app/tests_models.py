@@ -1,7 +1,7 @@
 from django.test import TestCase
 from .models import (
     Material, Hardware, Labor, Account,
-    Project, Cabinet, Drawer, Specification
+    Project, Cabinet, Drawer, Specification, Room
 )
 
 
@@ -76,7 +76,18 @@ def get_spec_info(project=None, int_material=None, ext_material=None):
     }
 
 
-def get_cabinet_info(project=None, spec=None):
+def get_room_info(project=None):
+    """ Return a dictionary for easy creation of Room objects
+    """
+    if not project:
+        project = Project.objects.create(**get_project_info())
+    return {
+        'name': 'Kitchen',
+        'project': project
+    }
+
+
+def get_cabinet_info(project=None, spec=None, room=None):
     """ Return dictionary for easy creation of Cabinet
     E.g. cabinet = Cabinet.objects.create(**get_cabinet_info())
     """
@@ -84,10 +95,12 @@ def get_cabinet_info(project=None, spec=None):
         project = Project.objects.create(**get_project_info())
     if not spec:
         spec = Specification.objects.create(**get_spec_info())
+    if not room:
+        room = Room.objects.create(**get_room_info())
     return {
         'project': project,
         'specification': spec,
-        'room': 'Kitchen',
+        'room': room,
         'cabinet_number': 1,
         'width': 9,
         'height': 31,

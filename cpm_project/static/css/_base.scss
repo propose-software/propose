@@ -1,3 +1,11 @@
+body {
+    font-family: sans-serif;
+}
+
+header, nav, aside, main, footer {
+    padding: 10px;
+}
+
 nav ul li {
     display: inline;
 }
@@ -28,4 +36,12 @@ main ul, aside ul {
 }
 main ul li, aside ul li {
     list-style-type: disc;
+}
+
+th {
+    font-weight: bold;
+    text-align: left;
+}
+td, th {
+    padding: 4px;
 }

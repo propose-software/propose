@@ -11,6 +11,8 @@ from .forms import (
 )
 
 
+# ----- ACCOUNTS ----- #
+
 @login_required
 def account(req):
     context = {
@@ -20,99 +22,12 @@ def account(req):
 
 
 @login_required
-def project_list(req, account_id=None):
-    context = {
-        'projects': Project.objects.filter(account__id=account_id)
-    }
-    return render(req, './project/project_list.html', context)
-
-
-@login_required
-def project_home(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    rooms = Room.objects.filter(project=project)
-    cabinets = Cabinet.objects.filter(project=project)
-    context = {
-        'project': project,
-        'rooms': rooms,
-        'cabinets': cabinets,
-    }
-    return render(req, './project/project_home.html', context)
-
-
-@login_required
-def project_create(req, account_id=None):
-    account = Account.objects.get(pk=account_id)
-    if req.method == 'POST':
-        form = ProjectForm(req.POST)
-        if form.is_valid():
-            form.instance.account = account
-            new_project = form.save()
-            return redirect('/project/' + str(new_project.id))
-        else:
-            return render(req, './project/project_create.html', {'form': form})
-    else:
-        form = ProjectForm()
-        context = {
-            'form': form,
-            'account': account,
-        }
-        return render(req, './project/project_create.html', context)
-
-
-@login_required
-def project_detail(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    account = Account.objects.get(pk=project.account.id)
-    specs = Specification.objects.filter(project=project)
-    context = {
-        'project': project,
-        'account': account,
-        'specs': specs,
-    }
-    return render(req, './project/project_detail.html', context)
-
-
-@login_required
-def project_update(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = ProjectForm(req.POST, instance=project)
-        if form.is_valid():
-            project = form.save()
-            return redirect('/project/' + str(project.id))
-        else:
-            return render(req, './project/project_update.html', {'form': form})
-    else:
-        form = ProjectForm(instance=project)
-        context = {
-            'form': form,
-            'project': project
-        }
-        return render(req, './project/project_update.html', context)
-
-
-@login_required
-def project_delete(req, proj_id=None):
-    if req.method == 'POST':
-        project = Project.objects.get(pk=proj_id)
-        account_id = project.account.id
-        project.delete()
-        return redirect('/account/' + str(account_id))
-    else:
-        context = {
-            'project': Project.objects.get(pk=proj_id)
-        }
-        return render(req, './project/project_delete.html', context)
-
-
-@login_required
 def account_create(req):
     if req.method == 'POST':
         form = AccountForm(req.POST)
         if form.is_valid():
             new_account = form.save()
-            return redirect('/account/detail/' + str(new_account.id))
+            return redirect('account_detail', account_id=new_account.id)
         else:
             return render(req, './account/account_create.html', {'form': form})
     else:
@@ -141,7 +56,6 @@ def account_update(req, account_id=None):
             return redirect('/account/detail/' + str(account.id))
         else:
             return render(req, './account/account_update.html', {'form': form})
-            # Where do we want to go if it gets updated?
     else:
         form = AccountForm(instance=account)
         context = {
@@ -163,6 +77,8 @@ def account_delete(req, account_id=None):
         }
         return render(req, './account/account_delete.html', context)
 
+
+# ----- MATERIALS ----- #
 
 @login_required
 def material_list(req):
@@ -228,76 +144,7 @@ def material_delete(req, material_id=None):
         return render(req, './material/material_delete.html', context)
 
 
-@login_required
-def spec_create(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = SpecForm(req.POST)
-        if form.is_valid():
-            new_spec = form.save()
-            return redirect('/spec/' + str(new_spec.id))
-        else:
-            context = {
-                'form': form,
-                'project': project
-            }
-            return render(req, './specifications/spec_create.html', context)
-    else:
-        context = {
-            'form': SpecForm(),
-            'project': project
-        }
-        return render(req, './specifications/spec_create.html', context)
-
-
-@login_required
-def spec_detail(req, proj_id=None, spec_id=None):
-    context = {
-        'spec': Specification.objects.get(pk=spec_id),
-        'project': Project.objects.get(pk=proj_id)
-    }
-    return render(req, './specifications/spec_detail.html', context)
-
-
-@login_required
-def spec_update(req, proj_id=None, spec_id=None):
-    spec = Specification.objects.get(pk=spec_id)
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = SpecForm(req.POST, instance=spec)
-        if form.is_valid():
-            account = form.save()
-            return redirect('/spec/' + str(spec.id))
-        else:
-            context = {
-                'form': form,
-                'spec': spec,
-                'project': project
-            }
-            return render(req, './specifications/spec_update.html', context)
-    else:
-        context = {
-            'form': SpecForm(instance=spec),
-            'spec': spec,
-            'project': project
-        }
-        return render(req, './specifications/spec_update.html', context)
-
-
-@login_required
-def spec_delete(req, proj_id=None, spec_id=None):
-    if req.method == 'POST':
-        spec = Specification.objects.get(pk=spec_id)
-        project = Project.objects.get(pk=proj_id)
-        spec.delete()
-        return redirect('/')
-    else:
-        context = {
-            'spec': Specification.objects.get(pk=spec_id),
-            'project': Project.objects.get(pk=proj_id)
-        }
-        return render(req, './specifications/spec_delete.html', context)
-
+# ----- HARDWARE ----- #
 
 @login_required
 def hardware_list(req):
@@ -360,56 +207,3 @@ def hardware_delete(req, hardware_id=None):
             'hardware': Hardware.objects.get(pk=hardware_id)
         }
         return render(req, './hardware/hardware_delete.html', context)
-
-
-@login_required
-def room_create(req, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = RoomForm(req.POST)
-        if form.is_valid():
-            form.instance.project = project
-            form.save()
-            return redirect('/project/' + str(proj_id))
-        else:
-            return render(req, './room/room_create.html', {'form': form})
-    else:
-        form = RoomForm()
-        context = {
-            'form': form,
-            'project': project
-        }
-        return render(req, './room/room_create.html', context)
-
-
-@login_required
-def room_update(req, room_id=None, proj_id=None):
-    project = Project.objects.get(pk=proj_id)
-    if req.method == 'POST':
-        form = RoomForm(req.POST, instance=room)
-        if form.is_valid():
-            form.instance.project = project
-            room = form.save()
-            return redirect('/project/' + str(proj_id))
-        else:
-            return render(req, './room/room_update.html', {'form': form})
-    else:
-        form = RoomForm(instance=room)
-        context = {
-            'form': form,
-            'room': room
-        }
-        return render(req, './room/room_update.html', context)
-
-
-@login_required
-def room_delete(req, room_id=None, proj_id=None):
-    if req.method == 'POST':
-        room = Room.objects.get(pk=room_id)
-        room.delete()
-        return redirect('/project/' + str(proj_id))
-    else:
-        context = {
-            'room': Room.objects.get(pk=room_id)
-        }
-        return render(req, './room/room_delete.html', context)
