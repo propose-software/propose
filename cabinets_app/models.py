@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from django.contrib.auth.models import User
+from decimal import Decimal
 
 
 class Account(models.Model):
@@ -39,7 +40,10 @@ class Material(models.Model):
 
     @property
     def sq_ft_cost(self):
-        return self.sheet_cost / ((self.width / 12) * (self.length / 12))
+        sq_ft = ((self.width / 12) * (self.length / 12))
+        before_markup = self.sheet_cost / sq_ft
+        after_markup = before_markup + (before_markup * self.markup)
+        return after_markup
 
     def __repr__(self):
         return f'<Material: {self.name}>'
@@ -222,6 +226,35 @@ class Cabinet(models.Model):
     finished_right_end = models.BooleanField(default=False)
     finished_top = models.BooleanField(default=False)
     finished_bottom = models.BooleanField(default=False)
+
+    @property
+    def price(self):
+        vertical = self.height * self.depth / 144
+        horizontal = self.width * self.depth / 144
+        int_waste = Decimal.from_float(1.2)
+        ext_waste = Decimal.from_float(1.2)
+        int_sq_ft_cost = self.specification.interior_material.sq_ft_cost * int_waste
+        ext_sq_ft_cost = self.specification.exterior_material.sq_ft_cost * ext_waste
+
+        left_side = vertical * ext_sq_ft_cost if self.finished_left_end else vertical * int_sq_ft_cost
+        right_side = vertical * ext_sq_ft_cost if self.finished_right_end else vertical * int_sq_ft_cost
+        top = horizontal * ext_sq_ft_cost if self.finished_top else horizontal * int_sq_ft_cost
+        bottom = horizontal * ext_sq_ft_cost if self.finished_bottom else horizontal * int_sq_ft_cost
+
+        if self.finished_interior:
+            left_side = vertical * ext_sq_ft_cost
+            right_side = vertical * ext_sq_ft_cost
+            top = horizontal * ext_sq_ft_cost
+            bottom = horizontal * ext_sq_ft_cost
+            back = self.width * self.height / 144 * ext_sq_ft_cost
+            shelves = horizontal * ext_sq_ft_cost
+        else:
+            shelves = horizontal * int_sq_ft_cost
+            back = self.width * self.height / 144 * int_sq_ft_cost
+
+        case_material = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
+
+        return case_material
 
     def __repr__(self):
         return f'<Cabinet project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number} >'
