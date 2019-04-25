@@ -34,7 +34,7 @@ class Material(models.Model):
     waste_factor = models.DecimalField(max_digits=3, decimal_places=2)
     markup = models.DecimalField(max_digits=3, decimal_places=2)
     date_updated = models.DateTimeField(
-        default=datetime.now,
+        default=timezone.now,
         blank=True
     )
 
