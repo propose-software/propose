@@ -61,6 +61,7 @@ class TestAccounts(TestCase):
         res = self.client.post('/account/', account_info, follow=True)
         self.assertIn(account_info['name'].encode(), res.content)
 
+
 class TestMaterials(TestCase):
 
     def setUp(self):
@@ -76,7 +77,6 @@ class TestMaterials(TestCase):
     def test_material_create_get(self):
         res = self.client.get('/material', follow=True)
         self.assertIn(b'<h2>Create Material</h2>', res.content)
-
 
     def test_material_create_post(self):
         material_create = get_material_info()
@@ -99,6 +99,7 @@ class TestMaterials(TestCase):
         self.assertIn(str(material.sheet_cost).encode(), res.content)
         self.assertIn(str(material.waste_factor).encode(), res.content)
         self.assertIn(str(material.markup).encode(), res.content)
+
 
 class TestHardware(TestCase):
     def setUp(self):
@@ -145,14 +146,11 @@ class TestProjects(TestCase):
             password='12345'
         )
 
-    '''
-
-    These Tests need some work
-
     def test_project_create_get(self):
-        res = self.client.get('/project', follow=True)
-        self.assertIn(b'<h1>Create Project</h1>', res.content)
-
+        account = Account.objects.create(**get_account_info())
+        res = self.client.get('/account/' + str(account.id) + '/project', follow=True)
+        check = '<h2>Create Project for {}</h2>'.format(account.name)
+        self.assertIn(check.encode(), res.content)
 
     def test_project_create_post(self):
         project_info = get_project_info()
@@ -161,8 +159,8 @@ class TestProjects(TestCase):
 
     def test_project_detail(self):
         project = Project.objects.create(**get_project_info())
-        account = Account.objects.create(**get_account_info())
-        res = self.client.get('/project/' + str(account.id) + '/account/' + str(project.id), follow=True)
+        res = self.client.get('/project/' + str(project.id) +
+                              '/detail', follow=True)
         self.assertIn(project.name.encode(), res.content)
         self.assertIn(project.physical_address.encode(), res.content)
         self.assertIn(project.site_contact.encode(), res.content)
@@ -170,8 +168,8 @@ class TestProjects(TestCase):
         self.assertIn(project.contact_email.encode(), res.content)
         self.assertIn(str(project.hourly_rate).encode(), res.content)
 
-    def test_project_list():
-    '''
+    # def test_project_list():
+
 
 class TestCabinets(TestCase):
     def setUp(self):
