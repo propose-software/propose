@@ -6,19 +6,6 @@ from .models import (
 )
 
 
-class ProjectForm(forms.ModelForm):
-    class Meta:
-        model = Project
-        fields = [
-            'name',
-            'physical_address',
-            'site_contact',
-            'contact_phone',
-            'contact_email',
-            'hourly_rate'
-        ]
-
-
 class AccountForm(forms.ModelForm):
     class Meta:
         model = Account
@@ -32,11 +19,23 @@ class AccountForm(forms.ModelForm):
         ]
 
 
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = [
+            'name',
+            'physical_address',
+            'site_contact',
+            'contact_phone',
+            'contact_email',
+            'hourly_rate'
+        ]
+
+
 class SpecForm(forms.ModelForm):
     class Meta:
         model = Specification
         fields = [
-            'project',
             'name',
             'interior_material',
             'exterior_material',

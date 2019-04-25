@@ -15,12 +15,6 @@
 
 <p><a href="{% url 'account_update' account_id=account.id %}">Update</a> | 
 <a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
-
-<h3>Existing Projects</h3>
 <p><a href="{% url 'project_create' account_id=account.id %}">Create New Project</a></p>
-<ul>
-  {% for project in projects %}
-  <li><a href="{% url 'project_home' proj_id=project.id %}">{{project.name}}</a></li>
-  {% endfor %}
-</ul>
+
 {% endblock content %}
