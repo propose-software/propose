@@ -104,6 +104,13 @@ class Project(models.Model):
     contact_email = models.EmailField(max_length=256)
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2)
 
+    @property
+    def price(self):
+        project_total = 0
+        for room in self.rooms:
+            project_total += room.price
+        return project_total
+
     def __repr__(self):
         return f'<Project name: {self.name}>'
 
@@ -118,8 +125,15 @@ class Room(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        related_name='projects'
+        related_name='rooms'
     )
+
+    @property
+    def price(self):
+        room_total = 0
+        for cabinet in self.cabinets:
+            room_total += cabinet.price
+        return room_total
 
     def __repr__(self):
         return f'<Room name: {self.name} in {self.project.name}>'
@@ -229,8 +243,12 @@ class Cabinet(models.Model):
 
     @property
     def price(self):
+
+        labor_rate = self.project.hourly_rate
+
         vertical = self.height * self.depth / 144
         horizontal = self.width * self.depth / 144
+        face_back = self.width * self.height / 144
         int_waste = Decimal.from_float(1.2)
         ext_waste = Decimal.from_float(1.2)
         int_sq_ft_cost = self.specification.interior_material.sq_ft_cost * int_waste
@@ -246,15 +264,28 @@ class Cabinet(models.Model):
             right_side = vertical * ext_sq_ft_cost
             top = horizontal * ext_sq_ft_cost
             bottom = horizontal * ext_sq_ft_cost
-            back = self.width * self.height / 144 * ext_sq_ft_cost
+            back = face_back * ext_sq_ft_cost
             shelves = horizontal * ext_sq_ft_cost
         else:
             shelves = horizontal * int_sq_ft_cost
-            back = self.width * self.height / 144 * int_sq_ft_cost
+            back = face_back * int_sq_ft_cost
 
-        case_material = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
+        cabinet_material_price = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
 
-        return case_material
+        cabinet_labor_price = Labor.objects.get(item_name='Cabinet').minutes / 60 * labor_rate
+
+        per_hinge_cost = Hardware.objects.get(name='Blum 110+ Hinge').cost_per
+        hinges_per_door = 2
+        total_hinge_price = self.number_of_doors * per_hinge_cost * hinges_per_door
+
+        door_material_price = face_back * ext_sq_ft_cost
+
+        per_door_labor_cost = Labor.objects.get(item_name='Door').minutes / 60 * labor_rate
+        total_door_labor_price = per_door_labor_cost * self.number_of_doors
+
+        total_price = cabinet_material_price + cabinet_labor_price + total_hinge_price + door_material_cost + total_door_labor_price
+
+        return total_price
 
     def __repr__(self):
         return f'<Cabinet project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number} >'
@@ -278,6 +309,17 @@ class Drawer(models.Model):
         null=True,
         related_name='drawer_material'
     )
+
+    @property
+    def price(self):
+        width = cabinet.width
+        depth = cabinet.depth
+
+        sides = depth * height / 144
+        front_back = width * height / 144
+
+
+        return total_price
 
     def __repr__(self):
         return f'<Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}>'
