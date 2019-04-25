@@ -41,13 +41,16 @@ def project_create(req, account_id=None):
         if form.is_valid():
             form.instance.account = account
             new_project = form.save()
-            return redirect('/project/' + str(new_project.id))
+            return redirect('project_detail', proj_id=new_project.id)
         else:
-            return render(req, './project/project_create.html', {'form': form})
+            context = {
+                'form': form,
+                'account': account
+            }
+            return render(req, './project/project_create.html', context)
     else:
-        form = ProjectForm()
         context = {
-            'form': form,
+            'form': ProjectForm(),
             'account': account,
         }
         return render(req, './project/project_create.html', context)
@@ -73,7 +76,7 @@ def project_update(req, proj_id=None):
         form = ProjectForm(req.POST, instance=project)
         if form.is_valid():
             project = form.save()
-            return redirect('/project/' + str(project.id))
+            return redirect('project_detail', proj_id=project.id)
         else:
             return render(req, './project/project_update.html', {'form': form})
     else:
@@ -89,9 +92,8 @@ def project_update(req, proj_id=None):
 def project_delete(req, proj_id=None):
     if req.method == 'POST':
         project = Project.objects.get(pk=proj_id)
-        account_id = project.account.id
         project.delete()
-        return redirect('/account/' + str(account_id))
+        return redirect('account_detail', account_id=project.account.id)
     else:
         context = {
             'project': Project.objects.get(pk=proj_id)
@@ -139,8 +141,8 @@ def spec_update(req, proj_id=None, spec_id=None):
     if req.method == 'POST':
         form = SpecForm(req.POST, instance=spec)
         if form.is_valid():
-            account = form.save()
-            return redirect('/spec/' + str(spec.id))
+            form.save()
+            return redirect('spec_detail', proj_id=proj_id, spec_id=spec_id)
         else:
             context = {
                 'form': form,
