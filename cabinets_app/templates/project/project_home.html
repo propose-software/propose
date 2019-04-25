@@ -6,6 +6,13 @@
   <section class="project-detail">
     <h2>{{ project.name }} Project Invoice</h2>
     <p><a href="{% url 'project_detail' proj_id=project.id %}">Project Detail</a></p>
+    {% if not rooms or project.specifications.all|length == 0 %}
+    <p>You must create at least one Room and one Specification before you can add Cabinets to a Project</p>
+    <p>
+      <a href="{% url 'room_create' proj_id=project.id %}">Create Room</a> |
+      <a href="{% url 'spec_create' proj_id=project.id %}">Create Specification</a>
+    </p>
+    {% else %}
     <table>
       {% for room in rooms %}
       <thead>
@@ -65,5 +72,6 @@
       </tbody>
       {% endfor %}
       </table>
+    {% endif %}
   </section>
 {% endblock content %}
