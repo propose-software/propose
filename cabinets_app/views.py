@@ -112,7 +112,7 @@ def account_create(req):
         form = AccountForm(req.POST)
         if form.is_valid():
             new_account = form.save()
-            return redirect('/account/detail/' + str(new_account.id))
+            return redirect('account_detail', account_id=new_account.id)
         else:
             return render(req, './account/account_create.html', {'form': form})
     else:
