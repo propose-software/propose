@@ -130,8 +130,9 @@ class Room(models.Model):
 
     @property
     def price(self):
+        cabinets = Cabinet.objects.filter(room=self)
         room_total = 0
-        for cabinet in self.cabinets:
+        for cabinet in cabinets:
             room_total += cabinet.price
         return room_total
 
@@ -280,7 +281,7 @@ class Cabinet(models.Model):
 
         cabinet_material_price = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
 
-        cabinet_labor_price = Labor.objects.get(item_name='Cabinet').minutes / 60 * labor_rate
+        cabinet_labor_price = Decimal(Labor.objects.get(item_name='Cabinet').minutes / 60) * labor_rate
 
         per_hinge_cost = Hardware.objects.get(name='Blum 110+ Hinge').cost_per
         hinges_per_door = 2
@@ -288,10 +289,15 @@ class Cabinet(models.Model):
 
         door_material_price = face_back * ext_sq_ft_cost
 
-        per_door_labor_cost = Labor.objects.get(item_name='Door').minutes / 60 * labor_rate
+        per_door_labor_cost = Decimal(Labor.objects.get(item_name='Door').minutes / 60) * labor_rate
         total_door_labor_price = per_door_labor_cost * self.number_of_doors
 
-        total_price = cabinet_material_price + cabinet_labor_price + total_hinge_price + door_material_cost + total_door_labor_price
+        drawers = Drawer.objects.filter(cabinet=self)
+        total_drawer_price = 0
+        for drawer in drawers:
+            total_drawer_price += drawer.price
+
+        total_price = cabinet_material_price + cabinet_labor_price + total_hinge_price + door_material_price + total_door_labor_price + total_drawer_price
 
         return total_price
 
@@ -322,17 +328,14 @@ class Drawer(models.Model):
     def price(self):
         labor_rate = self.cabinet.project.hourly_rate
 
-        width = cabinet.width
-        depth = cabinet.depth
-
-        sides = depth * height / 144
-        front_back = width * height / 144
-        bottom = width * depth / 144
+        sides = self.cabinet.depth * height / 144
+        front_back = self.cabinet.width * height / 144
+        bottom = self.cabinet.width * self.cabinet.depth / 144
 
         total_sq_ft = (2 * sides) + (2 * front_back) + bottom
         drawer_material_price = total_sq_ft * self.material.sq_ft_cost
 
-        drawer_labor_price = Labor.objects.get(item_name='Drawer').minutes / 60 * labor_rate
+        drawer_labor_price = Decimal(Labor.objects.get(item_name='Drawer').minutes / 60) * labor_rate
 
         total_price = drawer_material_price + drawer_labor_price
 
