@@ -109,7 +109,8 @@ def spec_create(req, proj_id=None):
     if req.method == 'POST':
         form = SpecForm(req.POST)
         if form.is_valid():
-            new_spec = form.save()
+            form.instance.project = project
+            form.save()
             return redirect('project_detail', proj_id=proj_id)
         else:
             context = {
@@ -142,7 +143,7 @@ def spec_update(req, proj_id=None, spec_id=None):
         form = SpecForm(req.POST, instance=spec)
         if form.is_valid():
             form.save()
-            return redirect('spec_detail', proj_id=proj_id, spec_id=spec_id)
+            return redirect('project_detail', proj_id=proj_id)
         else:
             context = {
                 'form': form,
