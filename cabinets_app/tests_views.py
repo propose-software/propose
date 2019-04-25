@@ -144,20 +144,34 @@ class TestProjects(TestCase):
             username=self.user.username,
             password='12345'
         )
-        pass
 
-    def test_project_create_get(self, proj_id=None):
-        project = Project.objects.create
+    '''
 
-        res = self.client.get('/account' + str(project.id())/project, follow=True)
-        self.assertIn(b'<h1>Create Project for</h1>', res.content)
+    These Tests need some work
+
+    def test_project_create_get(self):
+        res = self.client.get('/project', follow=True)
+        self.assertIn(b'<h1>Create Project</h1>', res.content)
 
 
-    # def test_project_create_post():
+    def test_project_create_post(self):
+        project_info = get_project_info()
+        res = self.client.post('/account/', project_info, follow=True)
+        self.assertIn(project_info['name'].encode(), res.content)
 
-    # def test_project_detail():
+    def test_project_detail(self):
+        project = Project.objects.create(**get_project_info())
+        account = Account.objects.create(**get_account_info())
+        res = self.client.get('/project/' + str(account.id) + '/account/' + str(project.id), follow=True)
+        self.assertIn(project.name.encode(), res.content)
+        self.assertIn(project.physical_address.encode(), res.content)
+        self.assertIn(project.site_contact.encode(), res.content)
+        self.assertIn(project.contact_phone.encode(), res.content)
+        self.assertIn(project.contact_email.encode(), res.content)
+        self.assertIn(str(project.hourly_rate).encode(), res.content)
 
-    # def test_project_list():
+    def test_project_list():
+    '''
 
 class TestCabinets(TestCase):
     def setUp(self):
