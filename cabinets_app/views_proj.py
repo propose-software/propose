@@ -108,7 +108,7 @@ def spec_create(req, proj_id=None):
         form = SpecForm(req.POST)
         if form.is_valid():
             new_spec = form.save()
-            return redirect('/spec/' + str(new_spec.id))
+            return redirect('project_detail', proj_id=proj_id)
         else:
             context = {
                 'form': form,
