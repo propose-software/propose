@@ -182,34 +182,44 @@ def room_create(req, proj_id=None):
         if form.is_valid():
             form.instance.project = project
             form.save()
-            return redirect('/project/' + str(proj_id))
+            return redirect('project_detail', proj_id=proj_id)
         else:
-            return render(req, './room/room_create.html', {'form': form})
+            context = {
+                'form': form,
+                'project': project
+            }
+            return render(req, './room/room_create.html', context)
     else:
-        form = RoomForm()
         context = {
-            'form': form,
+            'form': RoomForm(),
             'project': project
         }
         return render(req, './room/room_create.html', context)
 
 
 @login_required
-def room_update(req, room_id=None, proj_id=None):
+def room_update(req, proj_id=None, room_id=None):
     project = Project.objects.get(pk=proj_id)
+    room = Room.objects.get(pk=room_id)
     if req.method == 'POST':
         form = RoomForm(req.POST, instance=room)
         if form.is_valid():
             form.instance.project = project
             room = form.save()
-            return redirect('/project/' + str(proj_id))
+            return redirect('project_detail', proj_id=proj_id)
         else:
+            context = {
+                'form': form,
+                'room': room,
+                'project': project
+            }
             return render(req, './room/room_update.html', {'form': form})
     else:
         form = RoomForm(instance=room)
         context = {
             'form': form,
-            'room': room
+            'room': room,
+            'project': project
         }
         return render(req, './room/room_update.html', context)
 
@@ -222,6 +232,7 @@ def room_delete(req, room_id=None, proj_id=None):
         return redirect('/project/' + str(proj_id))
     else:
         context = {
-            'room': Room.objects.get(pk=room_id)
+            'room': Room.objects.get(pk=room_id),
+            'project': Project.objects.get(pk=proj_id)
         }
         return render(req, './room/room_delete.html', context)

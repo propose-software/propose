@@ -4,7 +4,8 @@
 
 {% block content %}
   <section class="project-detail">
-    <h2>{{ project.name }} Project</h2>
+    <h2>{{ project.name }} Project Invoice</h2>
+    <p><a href="{% url 'project_detail' proj_id=project.id %}">Project Detail</a></p>
     <table>
       {% for room in rooms %}
       <thead>
@@ -39,9 +40,9 @@
             Delete</a></td>
           <td>{{ cab.cabinet_number }}</td>
           <td><a href="{% url 'spec_detail' proj_id=cab.project.id spec_id=cab.specification.id %}">{{ cab.specification.name }}</a></td>
-          <td>{{ cab.width }}</td>
-          <td>{{ cab.height }}</td>
-          <td>{{ cab.depth }}</td>
+          <td>{{ cab.width }}"</td>
+          <td>{{ cab.height }}"</td>
+          <td>{{ cab.depth }}"</td>
           <td>{{ cab.number_of_doors }}</td>
           <td>{{ cab.number_of_shelves }}</td>
           <td>{{ cab.finished_interior }}</td>
@@ -49,12 +50,14 @@
           <td>{{ cab.finished_right_end }}</td>
           <td>{{ cab.finished_top }}</td>
           <td>{{ cab.finished_bottom }}</td>
-          <td>{{ cab.price|floatformat:2 }}</td>
+          <td>${{ cab.price|floatformat:2 }}</td>
         </tr>
         {% endfor %}
         <tr>
           <td>{{ room.cabinets.all|length }} Cabinets</td>
           <td>{{ room.drawer_count }} Drawers</td>
+          <td colspan="11"></td>
+          <td>${{ room.price|floatformat:2 }}</td>
         </tr>
       </tbody>
       {% endfor %}

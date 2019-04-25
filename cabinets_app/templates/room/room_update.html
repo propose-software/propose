@@ -4,9 +4,11 @@
 
 {% block content %}
   <h2>Update Room</h2>
-  <form action="{% url 'room_update' room_id=room.id%}" method="POST">
+  <form action="{% url 'room_update' proj_id=room.project.id room_id=room.id%}" method="POST">
+    <table>
     {% csrf_token %}
     {{ form }}
+    </table>
     <input type="submit" value="Submit">
   </form>
 {% endblock content %}
