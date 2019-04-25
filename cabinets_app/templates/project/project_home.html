@@ -59,6 +59,9 @@
           <td colspan="11"></td>
           <td>${{ room.price|floatformat:2 }}</td>
         </tr>
+        <tr>
+          <td><a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a></td>
+        </tr>
       </tbody>
       {% endfor %}
       </table>
