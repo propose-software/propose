@@ -3,11 +3,70 @@
 {% block title %}Cabinet Detail{% endblock %}
 
 {% block content %}
-<div class="cabinet_detail">
-  <table>
-    <th>{{ cabinet.project.name }}: Cabinet No. {{ cabinet.cabinet_number }}</th>
-    <tr><td> {{ cabinet.specification.name }} </td></tr>
-    <tr><td> Drawers: </td></tr>
-  </table>
-</div>
+<h2>{{ cabinet.project.name }} Cabinet No. {{ cabinet.cabinet_number }}</h2>
+<a href="{% url 'cabinet_update' proj_id=cabinet.project.id cab_id=cabinet.id%}">Update</a> |
+<a href="{% url 'cabinet_delete' proj_id=cabinet.project.id cab_id=cabinet.id%}">Delete</a>
+<table>
+  <tr>
+    <td>Room</td>
+    <td>{{ cabinet.room.name }}</td>
+  </tr>
+  <tr>
+    <td>Specification</td>
+    <td>{{ cabinet.specification.name }}</td>
+  </tr>
+  <tr>
+    <td>Width</td>
+    <td>{{ cabinet.width }}</td>
+  </tr>
+  <tr>
+    <td>Height</td>
+    <td>{{ cabinet.height }}</td>
+  </tr>
+  <tr>
+    <td>Depth</td>
+    <td>{{ cabinet.depth }}</td>
+  </tr>
+  <tr>
+    <td>Number of Doors</td>
+    <td>{{ cabinet.number_of_doors }}</td>
+  </tr>
+  <tr>
+    <td>Number of Shelves</td>
+    <td>{{ cabinet.number_of_shelves }}</td>
+  </tr>
+  <tr>
+    <td>Finished Interior</td>
+    <td>{{ cabinet.finished_interior }}</td>
+  </tr>
+  <tr>
+    <td>Finished Left End</td>
+    <td>{{ cabinet.finished_left_end }}</td>
+  </tr>
+  <tr>
+    <td>Finished Right End</td>
+    <td>{{ cabinet.finished_right_end }}</td>
+  </tr>
+  <tr>
+    <td>Finished Top</td>
+    <td>{{ cabinet.finished_top }}</td>
+  </tr>
+  <tr>
+    <td>Finished Bottom</td>
+    <td>{{ cabinet.finished_bottom }}</td>
+  </tr>
+</table>
+<h3>Drawers ({{ cabinet.drawers.all|length }})</h3>
+{% for d in cabinet.drawers.all %}
+<table>
+  <tr>
+    <td>Height</td>
+    <td>{{ d.height }}</td>
+  </tr>
+  <tr>
+    <td>Material</td>
+    <td>{{ d.material.name }}</td>
+  </tr>
+</table>
+{% endfor %}
 {% endblock content %}
