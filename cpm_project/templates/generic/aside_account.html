@@ -1,0 +1,6 @@
+<p>Related Projects:</p>
+<ul>
+{% for proj in account.projects.all %}
+  <li><a href="{% url 'project_home' proj_id=proj.id %}">{{ proj.name }}</a></li>
+{% endfor %}
+</ul>
