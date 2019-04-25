@@ -4,13 +4,14 @@ from .views import (
     material_list, material_update,
     hardware_create, hardware_delete, hardware_detail,
     hardware_list, hardware_update,
+    labor_create, labor_delete, labor_detail, labor_list, labor_update
 )
 from .views_cab import (
     cabinet_create, drawer_form, cabinet_detail,
     cabinet_update, cabinet_delete, cabinet_list
 )
 from .views_proj import (
-     project_list, project_create, project_detail, project_update, 
+     project_list, project_create, project_detail, project_update,
      project_delete, project_home,
      spec_create, spec_detail, spec_delete, spec_update,
      room_create, room_update, room_delete,
@@ -49,6 +50,16 @@ urlpatterns = [
          hardware_update, name='hardware_update'),
     path('hardware/<int:hardware_id>/delete',
          hardware_delete, name='hardware_delete'),
+
+    path('labor/all', labor_list, name='labor_list'),
+    path('labor/',
+         labor_create, name='labor_create'),
+    path('labor/<int:labor_id>',
+         labor_detail, name='labor_detail'),
+    path('labor/<int:labor_id>/update',
+         labor_update, name='labor_update'),
+    path('labor/<int:labor_id>/delete',
+         labor_delete, name='labor_delete'),
 
     path('project/<int:proj_id>',
          project_home, name='project_home'),

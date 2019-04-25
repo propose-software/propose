@@ -1,0 +1,23 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Labor Detail{% endblock %}
+
+{% block content %}
+  <div class="hardware_detail">
+    <table>
+      <h2>Labor Item Detail</h2>
+      <tr>
+        <td>Labor Name:</td>
+        <td>{{ labor.item_name }}</td>
+      </tr>
+      <tr>
+        <td>Minutes Per {{labor.unit_type }}:</td>
+        <td>{{ labor.minutes }}</td>
+      </tr>
+    </table>
+
+    <p><a href="{% url 'labor_update' labor_id=labor.id %}">Update</a></p>
+    <p><a href="{% url 'labor_delete' labor_id=labor.id %}">Delete</a></p>
+  </div>
+
+{% endblock content %}

@@ -58,9 +58,9 @@ class Hardware(models.Model):
     name = models.CharField(max_length=128)
     cost_per = models.DecimalField(max_digits=6, decimal_places=2)
     UNIT_TYPE_CHOICES = [
-        ('each', 'Each'),
-        ('pair', 'Pair'),
-        ('set', 'Set')
+        ('Each', 'Each'),
+        ('Pair', 'Pair'),
+        ('Set', 'Set')
     ]
     unit_type = models.CharField(
         choices=UNIT_TYPE_CHOICES,
@@ -80,7 +80,16 @@ class Labor(models.Model):
     """
     item_name = models.CharField(max_length=128)
     minutes = models.IntegerField()
-    units = models.CharField(max_length=32)
+    UNIT_TYPE_CHOICES = [
+        ('Each', 'Each'),
+        ('Pair', 'Pair'),
+        ('Set', 'Set'),
+        ('Sq Ft', 'Sq Ft'),
+    ]
+    unit_type = models.CharField(
+        choices=UNIT_TYPE_CHOICES,
+        max_length=16
+    )
 
     def __repr__(self):
         return f'<Labor: {self.item_name}>'

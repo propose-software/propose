@@ -74,7 +74,7 @@ class Command(BaseCommand):
                 p = Labor(
                     item_name=row['\ufeffItem_Name'],
                     minutes=row['Minutes'],
-                    units=row['Units'],
+                    unit_type=row['Units'],
                 )
                 p.save()
 

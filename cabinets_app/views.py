@@ -7,7 +7,7 @@ from .models import (
 )
 from .forms import (
     ProjectForm, AccountForm, CabinetForm, SpecForm,
-    MaterialForm, HardwareForm, RoomForm
+    MaterialForm, HardwareForm, RoomForm, LaborForm
 )
 
 
@@ -207,3 +207,68 @@ def hardware_delete(req, hardware_id=None):
             'hardware': Hardware.objects.get(pk=hardware_id)
         }
         return render(req, './hardware/hardware_delete.html', context)
+
+
+# ----- LABOR ----- #
+
+@login_required
+def labor_list(req):
+    context = {
+        'labor': Labor.objects.all()
+    }
+    return render(req, './labor/labor_list.html', context)
+
+
+@login_required
+def labor_create(req):
+    if req.method == 'POST':
+        form = LaborForm(req.POST)
+        if form.is_valid():
+            new_labor = form.save()
+            return redirect('/labor/' + str(new_labor.id))
+        else:
+            return render(req, './labor/labor_create.html', {'form': form})
+    else:
+        form = LaborForm()
+        return render(req, './labor/labor_create.html', {'form': form})
+
+
+@login_required
+def labor_detail(req, labor_id=None):
+    labor = Labor.objects.get(pk=labor_id)
+    context = {
+        'labor': labor,
+    }
+    return render(req, './labor/labor_detail.html', context)
+
+
+@login_required
+def labor_update(req, labor_id=None):
+    labor = Labor.objects.get(pk=labor_id)
+    if req.method == 'POST':
+        form = LaborForm(req.POST, instance=labor)
+        if form.is_valid():
+            labor = form.save()
+            return redirect('/labor/' + str(labor.id))
+        else:
+            return render(req, './labor/labor_update.html', {'form': form})
+    else:
+        form = LaborForm(instance=labor)
+        context = {
+            'form': form,
+            'labor': labor
+        }
+        return render(req, './labor/labor_update.html', context)
+
+
+@login_required
+def labor_delete(req, labor_id=None):
+    if req.method == 'POST':
+        labor = Labor.objects.get(pk=labor_id)
+        labor.delete()
+        return redirect('/labor/all')
+    else:
+        context = {
+            'labor': Labor.objects.get(pk=labor_id)
+        }
+        return render(req, './labor/labor_delete.html', context)
