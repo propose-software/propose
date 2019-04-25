@@ -1,0 +1,13 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Labor List{% endblock %}
+
+{% block content %}
+  <div>
+    <h2>Existing Labor Items</h2>
+    <p><a href="{% url 'labor_create' %}">Create Labor Item</a></p>
+    {% for labor in labor %}
+      <p><a href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.name }}</a></p>
+    {% endfor %}
+  </div>
+{% endblock content %}

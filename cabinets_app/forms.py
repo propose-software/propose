@@ -105,6 +105,16 @@ class HardwareForm(forms.ModelForm):
         ]
 
 
+class LaborForm(forms.ModelForm):
+    class Meta:
+        model = Labor
+        fields = [
+            'item_name',
+            'minutes',
+            'unit_type',
+        ]
+
+
 class RoomForm(forms.ModelForm):
     class Meta:
         model = Room

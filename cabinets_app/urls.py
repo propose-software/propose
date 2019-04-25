@@ -4,13 +4,14 @@ from .views import (
     material_list, material_update,
     hardware_create, hardware_delete, hardware_detail,
     hardware_list, hardware_update,
+    labor_create, labor_delete, labor_detail, labor_list, labor_update
 )
 from .views_cab import (
     cabinet_create, drawer_form, cabinet_detail,
     cabinet_update, cabinet_delete, cabinet_list
 )
 from .views_proj import (
-     project_list, project_create, project_detail, project_update, 
+     project_list, project_create, project_detail, project_update,
      project_delete, project_home,
      spec_create, spec_detail, spec_delete, spec_update,
      room_create, room_update, room_delete,
