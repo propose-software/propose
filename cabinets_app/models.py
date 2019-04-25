@@ -16,10 +16,10 @@ class Account(models.Model):
     discount = models.DecimalField(max_digits=3, decimal_places=2)
 
     def __repr__(self):
-        return f'<Account name: {self.name}>'
+        return f'<Account: {self.name}>'
 
     def __str__(self):
-        return f'Account name: {self.name}'
+        return f'{self.name}'
 
 
 class Material(models.Model):
@@ -104,11 +104,18 @@ class Project(models.Model):
     contact_email = models.EmailField(max_length=256)
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2)
 
+    @property
+    def price(self):
+        project_total = 0
+        for room in self.rooms:
+            project_total += room.price
+        return project_total
+
     def __repr__(self):
-        return f'<Project name: {self.name}>'
+        return f'<{self.name}>'
 
     def __str__(self):
-        return f'Project: {self.name}'
+        return f'{self.name}'
 
 
 class Room(models.Model):
@@ -138,10 +145,10 @@ class Room(models.Model):
         return count
 
     def __repr__(self):
-        return f'<Room name: {self.name} in {self.project.name}>'
+        return f'<{self.project.name}: {self.name}>'
 
     def __str__(self):
-        return f'Room name: {self.name} in {self.project.name}'
+        return f'{self.project.name}: {self.name}'
 
 
 class Specification(models.Model):
@@ -172,7 +179,7 @@ class Specification(models.Model):
     ]
     construction = models.CharField(
         choices=CONSTRUCTION_CHOICES,
-        default='frameless',
+        default='Frameless',
         max_length=32
     )
     CATALOG_CHOICES = [
@@ -183,7 +190,7 @@ class Specification(models.Model):
     ]
     catalog = models.CharField(
         choices=CATALOG_CHOICES,
-        default='laminate',
+        default='Laminate',
         max_length=32
     )
     FINISH_LEVEL_CHOICES = [
@@ -206,10 +213,10 @@ class Specification(models.Model):
     )
 
     def __repr__(self):
-        return f'<Specification name: {self.name}>'
+        return f'<Spec: {self.name}>'
 
     def __str__(self):
-        return f'Project: {self.project.name} | Specification: {self.name}'
+        return f'Spec: {self.name}'
 
 
 class Cabinet(models.Model):
@@ -245,8 +252,12 @@ class Cabinet(models.Model):
 
     @property
     def price(self):
+
+        labor_rate = self.project.hourly_rate
+
         vertical = self.height * self.depth / 144
         horizontal = self.width * self.depth / 144
+        face_back = self.width * self.height / 144
         int_waste = Decimal.from_float(1.2)
         ext_waste = Decimal.from_float(1.2)
         int_sq_ft_cost = self.specification.interior_material.sq_ft_cost * int_waste
@@ -262,21 +273,39 @@ class Cabinet(models.Model):
             right_side = vertical * ext_sq_ft_cost
             top = horizontal * ext_sq_ft_cost
             bottom = horizontal * ext_sq_ft_cost
-            back = self.width * self.height / 144 * ext_sq_ft_cost
+            back = face_back * ext_sq_ft_cost
             shelves = horizontal * ext_sq_ft_cost
         else:
             shelves = horizontal * int_sq_ft_cost
-            back = self.width * self.height / 144 * int_sq_ft_cost
+            back = face_back * int_sq_ft_cost
 
-        case_material = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
+        cabinet_material_price = left_side + right_side + top + bottom + back + (self.number_of_shelves * shelves)
 
-        return case_material
+        cabinet_labor_price = Decimal(Labor.objects.get(item_name='Cabinet').minutes / 60) * labor_rate
+
+        per_hinge_cost = Hardware.objects.get(name='Blum 110+ Hinge').cost_per
+        hinges_per_door = 2
+        total_hinge_price = self.number_of_doors * per_hinge_cost * hinges_per_door
+
+        door_material_price = face_back * ext_sq_ft_cost
+
+        per_door_labor_cost = Decimal(Labor.objects.get(item_name='Door').minutes / 60) * labor_rate
+        total_door_labor_price = per_door_labor_cost * self.number_of_doors
+
+        drawers = Drawer.objects.filter(cabinet=self)
+        total_drawer_price = 0
+        for drawer in drawers:
+            total_drawer_price += drawer.price
+
+        total_price = cabinet_material_price + cabinet_labor_price + total_hinge_price + door_material_price + total_door_labor_price + total_drawer_price
+
+        return total_price
 
     def __repr__(self):
-        return f'<Cabinet project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number} >'
+        return f'<Cab No: {self.cabinet_number}>'
 
     def __str__(self):
-        return f'Cabinet for project: {str(self.project.id)} | Room: {self.room.name} | Cab No: {self.cabinet_number}'
+        return f'Cab No: {self.cabinet_number}'
 
 
 class Drawer(models.Model):
@@ -295,8 +324,25 @@ class Drawer(models.Model):
         related_name='drawer_material'
     )
 
+    @property
+    def price(self):
+        labor_rate = self.cabinet.project.hourly_rate
+
+        sides = self.cabinet.depth * self.height / 144
+        front_back = self.cabinet.width * self.height / 144
+        bottom = self.cabinet.width * self.cabinet.depth / 144
+
+        total_sq_ft = (2 * sides) + (2 * front_back) + bottom
+        drawer_material_price = total_sq_ft * self.material.sq_ft_cost
+
+        drawer_labor_price = Decimal(Labor.objects.get(item_name='Drawer').minutes / 60) * labor_rate
+
+        total_price = drawer_material_price + drawer_labor_price
+
+        return total_price
+
     def __repr__(self):
-        return f'<Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}>'
+        return f'<Drawer for {self.cabinet.cabinet_number}>'
 
     def __str__(self):
-        return f'Drawer for Cab No: {self.cabinet.cabinet_number} in {self.cabinet.project.name}'
+        return f'Drawer for {self.cabinet.cabinet_number}'
