@@ -12,7 +12,6 @@
         <table >
           <thead>
             <tr>
-              <th></th>
               <th>Cab No.</th>
               <th>Spec.</th>
               <th>Width</th>
@@ -31,9 +30,6 @@
           <tbody>
             {% for cab in room.cabinets.all %}
             <tr>
-              <td><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
-                Edit</a> | <a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
-                Delete</a></td>
               <td>{{ cab.cabinet_number }}</td>
               <td><a href="{% url 'spec_detail' proj_id=cab.project.id spec_id=cab.specification.id %}">{{ cab.specification.name }}</a></td>
               <td>{{ cab.width }}"</td>
@@ -48,6 +44,10 @@
               <td>{{ cab.finished_bottom }}</td>
               <td>${{ cab.price|floatformat:2 }}</td>
             </tr>
+            <p class='update'><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
+                Edit</a></p>
+            <p class='delete'><a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
+                Delete</a></p>
             {% endfor %}
           </tbody>
         </table>
