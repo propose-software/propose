@@ -60,7 +60,7 @@ section h2 {
 
 a:visited {
     text-decoration: none;
-    color: $font-color;
+    // color: $font-color;
 }
 
 aside {
@@ -151,8 +151,13 @@ aside li {
     width: 150px;
 }
 
-.room th, .cabinet th {
+.room th, .cabinet th, .item_list th {
     border-bottom: 1px solid white;
+}
+
+.item_list th, .item_list td {
+    min-width: 130px;
+    padding: .5em 20px;
 }
 
 .room p {
@@ -192,8 +197,32 @@ ul a {
     // box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
+.item_list td:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.item_list td:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.item_list tbody tr:hover {
+    background-color: $white;
+    transition: 400ms;
+    color: rgb(16, 77, 47);
+}
+
 section li:hover {
     background-color: $white;
-    transition: 200ms;
+    transition: 400ms;
     color: rgb(16, 77, 47);
+}
+
+section tr > td > a {
+    color: inherit;
+}
+
+.item_link {
+    display: block;
 }

@@ -172,8 +172,7 @@ section h2 {
   margin: 0 0 20px; }
 
 a:visited {
-  text-decoration: none;
-  color: #FBFBFA; }
+  text-decoration: none; }
 
 aside {
   border: 1px solid #FBFBFA;
@@ -250,8 +249,12 @@ aside li {
   text-align: left;
   width: 150px; }
 
-.room th, .cabinet th {
+.room th, .cabinet th, .item_list th {
   border-bottom: 1px solid white; }
+
+.item_list th, .item_list td {
+  min-width: 130px;
+  padding: .5em 20px; }
 
 .room p {
   margin: 2px; }
@@ -280,10 +283,29 @@ ul a {
   display: block;
   font-size: 18px; }
 
+.item_list td:first-child {
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px; }
+
+.item_list td:last-child {
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px; }
+
+.item_list tbody tr:hover {
+  background-color: #FBFBFA;
+  transition: 400ms;
+  color: #104d2f; }
+
 section li:hover {
   background-color: #FBFBFA;
-  transition: 200ms;
+  transition: 400ms;
   color: #104d2f; }
+
+section tr > td > a {
+  color: inherit; }
+
+.item_link {
+  display: block; }
 
 .project-detail table thead::before {
   content: '';

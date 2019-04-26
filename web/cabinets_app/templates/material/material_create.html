@@ -3,12 +3,14 @@
 {% block title %}Material Create{% endblock %}
 
 {% block content %}
-<h2>Create Material</h2>
-<form action="{% url 'material_create' %}" method="POST">
-  <table>
-  {% csrf_token %}
-  {{ form }}
-  </table>
-  <input class="create" type="submit" value="Submit">
-</form>
+  <section>
+    <h2>Create Material</h2>
+    <form action="{% url 'material_create' %}" method="POST">
+      <table>
+      {% csrf_token %}
+      {{ form }}
+      </table>
+      <input class="create" type="submit" value="Submit">
+    </form>
+  </section>
 {% endblock content %}

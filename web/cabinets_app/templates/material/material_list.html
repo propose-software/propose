@@ -5,13 +5,28 @@
 {% block content %}
   <section>
     <h2>Existing Materials</h2>
-    <ul>
-      {% for material in materials %}
-      <a href="{% url 'material_detail' material_id=material.id %}">
-        <li class="material_list">{{material.name}}</li>
-      </a>
-      {% endfor %}
-    </ul>
+    <table class="item_list">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Thickness</th>
+          <th>Width</th>
+          <th>Length</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for material in materials %}
+          <tr class="item">
+            <td><a class="item_link" href="{% url 'material_detail' material_id=material.id %}">{{ material.name }}</a></td>
+            <td>{{ material.thickness }}"</td>
+            <td>{{ material.width }}"</td>
+            <td>{{ material.length }}"</td>
+            <td>${{ material.sheet_cost }} / sheet</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     <a class='create' href="{% url 'material_create' %}">Create New Material</a>
   </section>
 {% endblock content %}

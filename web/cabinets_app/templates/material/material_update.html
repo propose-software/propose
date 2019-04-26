@@ -3,12 +3,14 @@
 {% block title %}Material Update{% endblock %}
 
 {% block content %}
-<h2>Update Material</h2>
-<form action="{% url 'material_update' material_id=material.id%}" method="POST">
-    <table>
-    {% csrf_token %}
-    {{ form }}
-    </table>
-    <input class="update" type="submit" value="Save">
-</form>
+  <section>
+    <h2>Update Material</h2>
+    <form action="{% url 'material_update' material_id=material.id%}" method="POST">
+        <table>
+        {% csrf_token %}
+        {{ form }}
+        </table>
+        <input class="update" type="submit" value="Save">
+    </form>
+  </section>
 {% endblock content %}

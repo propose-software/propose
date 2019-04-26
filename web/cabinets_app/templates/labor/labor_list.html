@@ -5,11 +5,22 @@
 {% block content %}
   <section>
     <h2>Existing Labor Items</h2>
-    <ul>
-      {% for l in labor %}
-      <a href="{% url 'labor_detail' labor_id=l.id %}"><li class="labor_list">{{ l.item_name }}</li></a>
-      {% endfor %}
-    </ul>
+    <table class="item_list">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Minutes per Unit Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for labor in labor %}
+          <tr class="item">
+            <td><a class="item_link" href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.item_name }}</a></td>
+            <td>{{ labor.minutes }} min / {{ labor.unit_type }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     <a class='create' href="{% url 'labor_create' %}">Create Labor Item</a>
   </section>
 {% endblock content %}
