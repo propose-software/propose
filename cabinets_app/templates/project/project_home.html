@@ -1,30 +1,34 @@
 {% extends "generic/base.html" %}
+{% load humanize %}
 
 {% block title %}Project Home{% endblock %}
 
 {% block content %}
   <section class="project-detail">
-    <h2>{{ project.name }} Project Invoice</h2>
+    <h2>{{ project.name }} Project Invoice  -  ${{ project.price|floatformat:2|intcomma }}</h2>
     <p><a href="{% url 'project_detail' proj_id=project.id %}">Project Detail</a></p>
     {% for room in rooms %}
       <section class="room">
         <h4>{{ room.name }}</h4>
+        <h5>${{ room.price|floatformat:2|intcomma }}</h5>
         <table >
           <thead>
             <tr>
-              <th>Cab No.</th>
+              <th>Cabinet</br>Number</th>
               <th>Spec.</th>
               <th>Width</th>
               <th>Height</th>
               <th>Depth</th>
-              <th># Doors</th>
-              <th># Shelves</th>
-              <th>Interior</th>
-              <th>Left</th>
-              <th>Right</th>
-              <th>Top</th>
-              <th>Bottom</th>
-              <th>Price</th>
+              <th>Number</br>Doors</th>
+              <th>Number</br>Shelves</th>
+              <th>Finished</br>Interior</th>
+              <th>Finished</br>Left End</th>
+              <th>Finished</br>Right End</th>
+              <th>Finished</br>Top</th>
+              <th>Finished</br>Bottom</th>
+              <th>Cabinet</br>Price</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -36,25 +40,27 @@
               <td>{{ cab.height }}"</td>
               <td>{{ cab.depth }}"</td>
               <td>{{ cab.number_of_doors }}</td>
-              <td>{{ cab.number_of_shelves }}</td>
-              <td>{{ cab.finished_interior }}</td>
-              <td>{{ cab.finished_left_end }}</td>
-              <td>{{ cab.finished_right_end }}</td>
-              <td>{{ cab.finished_top }}</td>
-              <td>{{ cab.finished_bottom }}</td>
-              <td>${{ cab.price|floatformat:2 }}</td>
+              <td>{{ cab.number_of_shelves }} </td>
+              <td>{% if cab.finished_interior == True %}✔{% endif %}</td>
+              <td>{% if cab.finished_left_end == True %}✔{% endif %}</td>
+              <td>{% if cab.finished_right_end == True %}✔{% endif %}</td>
+              <td>{% if cab.finished_top == True %}✔{% endif %}</td>
+              <td>{% if cab.finished_bottom == True %}✔{% endif %}</td>
+              <td>${{ cab.price|floatformat:2|intcomma }}</td>
+              <td><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
+                Edit</a></td>
+              <td><a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
+                Delete</a></td>
+              </td>
             </tr>
-            <p class='update'><a href="{% url 'cabinet_update' proj_id=cab.project.id cab_id=cab.id %}">
-                Edit</a></p>
-            <p class='delete'><a href="{% url 'cabinet_delete' proj_id=cab.project.id cab_id=cab.id %}">
-                Delete</a></p>
             {% endfor %}
           </tbody>
         </table>
-        <p>{{ room.cabinets.all|length }} Cabinets</p>
-        <p>{{ room.drawer_count }} Drawers</p>
-        <a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a>
-        <p>${{ room.price|floatformat:2 }}</p>
+        <p class='create'><a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a></p>
+        <section class='counts'>
+          <p class='cabinet_count'>{{ room.cabinets.all|length }} Cabinets</p>
+          <p class='drawer_count'>{{ room.drawer_count }} Drawers</p>
+        </section>
       </section>
     {% endfor %}
 

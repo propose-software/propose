@@ -6,19 +6,35 @@
   <section class="project_detail">
     <h2>{{ project.name }} Project Detail</h2>
     <table>
-      <tr><td>Jobsite Address:</td> <td>{{ project.physical_address }}</td></tr>
-      <tr><td>Site Contact:</td> <td>{{ project.site_contact }}</td></tr>
-      <tr><td>Contact Phone:</td> <td>{{ project.contact_phone }}</td></tr>
-      <tr><td>Contact Email:</td> <td>{{ project.contact_email }}</td></tr>
-      <tr><td>Hourly Rate:</td> <td>${{ project.hourly_rate }}</td></tr>
+      <tr>
+        <td>Jobsite Address:</td>
+        <td colspan="2">{{ project.physical_address }}</td>
+      </tr>
+      <tr>
+        <td>Site Contact:</td>
+        <td colspan="2">{{ project.site_contact }}</td>
+      </tr>
+      <tr>
+        <td>Contact Phone:</td>
+        <td>{{ project.contact_phone }}</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Contact Email:</td>
+        <td colspan="2">{{ project.contact_email }}</td>
+      </tr>
+      <tr>
+        <td>Hourly Rate:</td>
+        <td>${{ project.hourly_rate }}</td>
+        <td></td>
+      </tr>
     </table>
     <p class='invoice'><a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a></p>
     <p class='update'><a href="{% url 'project_update' proj_id=project.id %}">Update</a></p>
     <p class='delete'><a href="{% url 'project_delete' proj_id=project.id %}">Delete</a></p>
   </section>
-
-  <section>
-    <h3>Specifications</h3>
+  <section id='specifications'>
+    <h4>Specifications</h4>
     <p><a href="{% url 'spec_create' proj_id=project.id %}">Create New Specification</a></p>
     <ul>
       {% for spec in specs %}
@@ -26,11 +42,26 @@
         <a href="{% url 'spec_update' proj_id=project.id spec_id=spec.id %}">Update</a> |
         <a href="{% url 'spec_delete' proj_id=project.id spec_id=spec.id %}">Delete</a>
         <table>
-          <tr><td>Construction Style:</td> <td>{{spec.construction}}</td></tr>
-          <tr><td>Catalog:</td> <td>{{spec.catalog}}</td></tr>
-          <tr><td>Interior Material:</td> <td>{{spec.interior_material}}</td></tr>
-          <tr><td>Exterior Material:</td> <td>{{spec.exterior_material}}</td></tr>
-          <tr><td>Finish Level:</td> <td>{{spec.finish_level}}</td></tr>
+          <tr>
+            <td>Construction Style:</td>
+            <td>{{spec.construction}}</td>
+          </tr>
+          <tr>
+            <td>Catalog:</td>
+            <td>{{spec.catalog}}</td>
+          </tr>
+          <tr>
+            <td>Interior Material:</td>
+            <td>{{spec.interior_material}}</td>
+          </tr>
+          <tr>
+            <td>Exterior Material:</td>
+            <td>{{spec.exterior_material}}</td>
+          </tr>
+          <tr>
+            <td>Finish Level:</td>
+            <td>{{spec.finish_level}}</td>
+          </tr>
         </table>
       </li>
       {% endfor %}

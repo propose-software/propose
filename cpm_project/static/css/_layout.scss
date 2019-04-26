@@ -38,12 +38,16 @@ a {
     color: $font-color;
 }
 
+h4 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
 section > h2 {
-    padding: 7px 13px;
+    padding: 10px 18px;
     background-color: rgb(93, 107, 126);
     border-radius: 5px;
-    display: inline-block;
-    width: 600px;
     font-weight: 700;
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
     margin: 0 0 20px;
@@ -60,6 +64,7 @@ section li:hover {
 
 aside {
     border:1px solid $white;
+    border-radius: 5px;
     margin-left: 20px;
     padding: 10px;
 }
@@ -98,22 +103,54 @@ aside li {
 
 .room {
     background-color: $primary-color;
-    margin-bottom: 10px;
+    margin: 20px 0;
     border-radius: 5px;
-    padding: 7px 13px;
+    padding: 13px;
     font-size: 16px;
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
-.room td, .room th {
+.room td, .room th, .project_detail td {
     text-align: center;
+    vertical-align: middle;
     width: 80px;
+    padding: 5px 0;
+}
+
+.project_detail td {
+    text-align: left;
+    width: 150px;
+}
+
+.room th {
+    border-bottom: 1px solid white;
+}
+
+.room p {
+    margin: 2px;
 }
 
 ul a {
     width: 300px;
     height: 100%;
     display: block;
+}
+
+.project_detail table {
+    margin-bottom: 10px;
+}
+
+#specifications {
+    margin: 30px 0;
+}
+
+.counts {
+    text-align: right;
+}
+
+.cabinet_count, .drawer_count {
+    display: inline-block;
+    font-weight: 700;
 }
 
 .account_name, .material_list, .labor_list, .hardware_list {

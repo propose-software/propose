@@ -127,8 +127,9 @@ class Project(models.Model):
 
     @property
     def price(self):
+        rooms = Room.objects.filter(project=self)
         project_total = 0
-        for room in self.rooms:
+        for room in rooms:
             project_total += room.price
         return project_total
 
