@@ -10,6 +10,6 @@
       <a href="{% url 'labor_detail' labor_id=l.id %}"><li class="labor_list">{{ l.item_name }}</li></a>
       {% endfor %}
     </ul>
-    <p ><a class='create' href="{% url 'labor_create' %}">Create Labor Item</a></p>
+    <a class='create' href="{% url 'labor_create' %}">Create Labor Item</a>
   </section>
 {% endblock content %}

@@ -10,7 +10,7 @@
 
     <form action="{% url 'cabinet_delete' proj_id=project.id cab_id=cabinet.id %}" method="POST">
       {% csrf_token %}
-      <input type="submit" value="Delete"/>
+      <input class="delete" type="submit" value="Delete"/>
     </form>
   </section>
 {% endblock %}

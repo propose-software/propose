@@ -138,7 +138,7 @@ aside li {
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
-.room td, .room th, .project_detail td {
+.room td, .room th, .project_detail td, .cabinet th, .cabinet td {
     text-align: center;
     vertical-align: middle;
     min-width: initial;
@@ -151,7 +151,7 @@ aside li {
     width: 150px;
 }
 
-.room th {
+.room th, .cabinet th {
     border-bottom: 1px solid white;
 }
 

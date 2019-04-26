@@ -10,6 +10,6 @@
       <a href="{% url 'hardware_detail' hardware_id=hardware.id %}"><li class="hardware_list">{{ hardware.name }}</li></a>
       {% endfor %}
     </ul>
-    <p><a class='create' href="{% url 'hardware_create' %}">Create New Hardware</a></p>
+    <a class='create' href="{% url 'hardware_create' %}">Create New Hardware</a>
   </section>
 {% endblock content %}
