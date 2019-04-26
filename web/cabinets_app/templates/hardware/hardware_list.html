@@ -5,11 +5,22 @@
 {% block content %}
   <section>
     <h2>Existing Hardware</h2>
-    <ul>
-      {% for hardware in hardware %}
-      <li class="hardware_list"><a href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></li>
-      {% endfor %}
-    </ul>
-    <p><a class='create' href="{% url 'hardware_create' %}">Create New Hardware</a></p>
+    <table class="item_list">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for hardware in hardware %}
+          <tr class="item">
+            <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
+            <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a class='create' href="{% url 'hardware_create' %}">Create New Hardware</a>
   </section>
 {% endblock content %}

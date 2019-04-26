@@ -21,16 +21,21 @@ main {
 
 .main_nav > ul > li > a {
     text-decoration: none;
-    padding: 10px;
+    padding: 3px 10px;
     display: initial;
     font-size: 18px;
+    border-radius: 5px;
 }
+
 .main_nav a:visited {
     text-decoration: none;
     color: inherit;
 }
+
 .main_nav a:hover {
     color: $hover-color;
+    background-color: #CFCFCF;
+    transition: 800ms;
 }
 
 a {
@@ -44,9 +49,9 @@ h4 {
     margin-bottom: 5px;
 }
 
-section > h2 {
+section h2 {
     padding: 10px 18px;
-    background-color: rgb(127, 140, 158);
+    background-color: #5D9379;
     border-radius: 5px;
     font-weight: 700;
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
@@ -55,11 +60,7 @@ section > h2 {
 
 a:visited {
     text-decoration: none;
-    color: $font-color;
-}
-
-section li:hover {
-    background-color: $secondary-color;
+    // color: $font-color;
 }
 
 aside {
@@ -86,19 +87,46 @@ aside li {
     border-radius: 5px;
 }
 
-.update, .delete, .invoice {
+.update, .delete, .create {
     text-align: center;
     display: inline-block;
-    width: 100px;
+    width: 80px;
     padding: 5px 8px;
     background-color: rgb(108, 122, 128);
     border-radius: 5px;
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
-    margin: 5px 3px 3px;
+    margin: 5px 6px 3px 0;
+    font-family: inherit;
+    font-size: 16px;
+    color: $white;
+    border: none;
+}
+
+.update:hover {
+    background-color: rgb(134, 147, 153);
+    transition: 200ms;
 }
 
 .delete {
     background-color: rgb(99, 51, 51);
+}
+
+.create {
+    background-color: $hover-color;
+    display: block;
+    min-width: 120px;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.create:hover {
+    background-color: rgb(124, 184, 155);
+    transition: 200ms;
+}
+
+.delete:hover {
+    background-color: rgb(124, 70, 70);
+    transition: 200ms;
 }
 
 .room {
@@ -110,11 +138,12 @@ aside li {
     box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
-.room td, .room th, .project_detail td {
+.room td, .room th, .project_detail td, .cabinet th, .cabinet td {
     text-align: center;
     vertical-align: middle;
-    width: 80px;
-    padding: 5px 0;
+    min-width: initial;
+    width: fit-content;
+    padding: 5px 10px;
 }
 
 .project_detail td {
@@ -122,8 +151,13 @@ aside li {
     width: 150px;
 }
 
-.room th {
+.room th, .cabinet th, .item_list th {
     border-bottom: 1px solid white;
+}
+
+.item_list th, .item_list td {
+    min-width: 130px;
+    padding: .5em 20px;
 }
 
 .room p {
@@ -131,7 +165,7 @@ aside li {
 }
 
 ul a {
-    width: 300px;
+    width: fit-content;
     height: 100%;
     display: block;
 }
@@ -154,15 +188,41 @@ ul a {
 }
 
 .account_name, .material_list, .labor_list, .hardware_list {
-    padding: 7px 13px;
-    background-color: $primary-color;
+    padding: 2px 7px;
+    // background-color: $primary-color;
     border-radius: 5px;
     display: block;
-    width: 300px;
+    // width: 300px;
     font-size: 18px;
-    box-shadow: rgb(44, 48, 49) 2px 2px 3px;
+    // box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
-.create:hover {
-    color: $hover-color;
+.item_list td:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.item_list td:last-child {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.item_list tbody tr:hover {
+    background-color: $white;
+    transition: 400ms;
+    color: rgb(16, 77, 47);
+}
+
+section li:hover {
+    background-color: $white;
+    transition: 400ms;
+    color: rgb(16, 77, 47);
+}
+
+section tr > td > a {
+    color: inherit;
+}
+
+.item_link {
+    display: block;
 }

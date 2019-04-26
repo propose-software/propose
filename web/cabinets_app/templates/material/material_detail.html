@@ -17,8 +17,7 @@
       <tr><td>Markup:</td> <td>{{ material.markup }}</td></tr>
       <tr><td>Date Updated:</td> <td>{{ material.date_updated }}</td></tr>
     </table>
-
-    <p class='update'><a href="{% url 'material_update' material_id=material.id %}">Update</a></p>
-    <p class='delete'><a href="{% url 'material_delete' material_id=material.id %}">Delete</a></p>
+    <a class='update' href="{% url 'material_update' material_id=material.id %}">Update</a>
+    <a class='delete' href="{% url 'material_delete' material_id=material.id %}">Delete</a>
   </section>
 {% endblock content %}

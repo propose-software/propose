@@ -7,10 +7,10 @@
     <h2>Create Hardware</h2>
     <form action="{% url 'hardware_create' %}" method="POST">
       <table>
-      {% csrf_token %}
-      {{ form }}
+        {% csrf_token %}
+        {{ form }}
       </table>
-      <input type="submit" value="Submit">
+      <input class="create" type="submit" value="Submit">
     </form>
   </section>
 {% endblock content %}

@@ -7,10 +7,10 @@
     <h2>Update Account</h2>
     <table>
       <form action="{% url 'account_update' account_id=account.id%}" method="POST">
-          {% csrf_token %}
-          {{ form }}
+        {% csrf_token %}
+        {{ form }}
       </form>
     </table>
-    <input type="submit" value="Submit">
+    <input class='update' type="submit" value="Submit">
   </section>
 {% endblock content %}

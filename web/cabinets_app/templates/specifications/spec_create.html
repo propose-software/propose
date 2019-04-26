@@ -3,12 +3,14 @@
 {% block title %}Create Specification{% endblock %}
 
 {% block content %}
-<h2>Create Specification</h2>
-<form action="{% url 'spec_create' proj_id=project.id %}" method="POST">
-    <table>
-    {% csrf_token %}
-    {{ form }}
-    </table>
-    <input type="submit" value="Submit">
-  </form>
+  <section>
+    <h2>Create Specification</h2>
+    <form action="{% url 'spec_create' proj_id=project.id %}" method="POST">
+      <table>
+        {% csrf_token %}
+        {{ form }}
+      </table>
+      <input class='create' type="submit" value="Submit">
+    </form>
+  </section>
 {% endblock content %}

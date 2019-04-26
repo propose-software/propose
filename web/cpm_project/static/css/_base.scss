@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=El+Messiri:700');
 
 body {
     font-family: 'Quicksand', sans-serif;
@@ -13,6 +14,7 @@ header, nav, aside, main, footer {
 nav ul li {
     display: inline;
 }
+
 nav ul li a {
     padding: 5px;
     cursor: pointer;
@@ -20,14 +22,19 @@ nav ul li a {
 
 h1 {
     font-size: 4em;
+    font-family: 'El Messiri';
+    margin: 20px;
 }
+
 h2 {
     font-size: 2em;
 }
+
 h3 {
     font-size: 1.4em;
     margin-top: 1em;
 }
+
 h4 {
     font-size: 1.2em;
 }
@@ -40,19 +47,40 @@ main ul, aside ul {
     margin-left: 1em;
     margin-top: .6em;
 }
+
 main ul li, aside ul li {
     list-style-type: disc;
     margin-bottom: .4em;
 }
 
 aside ul li {
-    margin-left: 1.3em;
+    margin-left: 2.3em;
 }
 
 th {
     font-weight: bold;
     text-align: left;
 }
+
 td, th {
+    min-width: 130px;
     padding: 4px 8px 4px 0px;
 }
+
+.account_aside {
+    font-size: 26px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+.project_aside {
+    font-size: 22px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+// .account_aside:hover, .project_aside:hover {
+//     color: $hover-color;
+//     background-color: #CFCFCF;
+//     transition: 800ms;
+// }

@@ -3,14 +3,16 @@
 {% block title %}Delete Room{% endblock %}
 
 {% block content %}
-  <h2>Delete Room</h2>
+  <section>
+    <h2>Delete Room</h2>
 
-  <p class="warning">Are you certain you want to delete this Room? This will also delete any Cabinets or Specification assiciated with this Room.</p>
+    <p class="warning">Are you certain you want to delete this Room? This will also delete any Cabinets or Specification assiciated with this Room.</p>
 
-  <p>Room name: {{ room.name }}</p>
+    <p>Room name: {{ room.name }}</p>
 
-  <form action="{% url 'room_delete' proj_id=room.project.id room_id=room.id %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Delete"/>
-  </form>
+    <form action="{% url 'room_delete' proj_id=room.project.id room_id=room.id %}" method="POST">
+      {% csrf_token %}
+      <input class='delete' type="submit" value="Delete"/>
+    </form>
+  </section>
 {% endblock %}
