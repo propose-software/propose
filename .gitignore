@@ -6,6 +6,7 @@ ENV/
 .idea
 .DS_Store
 /static/
+.env_prod
 
 
 # Byte-compiled / optimized / DLL files
