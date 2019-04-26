@@ -5,8 +5,9 @@
 
 {% block content %}
   <section class="project-detail">
-    <h2>{{ project.name }} Project Invoice  -  ${{ project.price|floatformat:2|intcomma }}</h2>
-    <p><a href="{% url 'project_detail' proj_id=project.id %}">Project Detail</a></p>
+      <a href="{% url 'project_detail' proj_id=project.id %}">
+        <h2>{{ project.name }} Project Invoice  -  ${{ project.price|floatformat:2|intcomma }}</h2>
+      </a>
     {% for room in rooms %}
       <section class="room">
         <h4>{{ room.name }}</h4>

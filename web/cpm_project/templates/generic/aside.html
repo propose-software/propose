@@ -1,5 +1,5 @@
 <p>Account:</p>
-<p><a href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account.name }}</a></p>
+<p class='account_aside'><a href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account.name }}</a></p>
 {% if not cabinet and not spec and not room %}
   <p>Related Projects:</p>
   <ul>
@@ -8,8 +8,8 @@
   {% endfor %}
   </ul>
 {% else %}
-  <p>Project:
-      <a href="{% url 'project_home' proj_id=project.id %}">{{ project.name }}</a></p>
+  <p>Project:</p>
+  <p class='project_aside'><a href="{% url 'project_home' proj_id=project.id %}">{{ project.name }}</a></p>
   <p>Related Specs:</p>
   <ul>
   {% for s in project.specifications.all %}

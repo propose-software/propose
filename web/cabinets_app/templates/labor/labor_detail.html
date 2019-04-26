@@ -15,8 +15,7 @@
         <td>{{ labor.minutes }}</td>
       </tr>
     </table>
-
-    <p class='update'><a href="{% url 'labor_update' labor_id=labor.id %}">Update</a></p>
-    <p class='delete'><a href="{% url 'labor_delete' labor_id=labor.id %}">Delete</a></p>
+    <a class='update' href="{% url 'labor_update' labor_id=labor.id %}">Update</a>
+    <a class='delete' href="{% url 'labor_delete' labor_id=labor.id %}">Delete</a>
   </section>
 {% endblock content %}
