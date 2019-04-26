@@ -14,8 +14,8 @@
       <tr><td>Discount:</td> <td>{{ account.discount }}</td></tr>
     </table>
 
-    <p class='update'><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
-    <p class='delete'><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
-    <p><a class='create' href="{% url 'project_create' account_id=account.id %}">Create New Project</a></p>
+    <a class='update' href="{% url 'account_update' account_id=account.id %}">Update</a>
+    <a class='delete' href="{% url 'account_delete' account_id=account.id %}">Delete</a>
+    <a class='create' href="{% url 'project_create' account_id=account.id %}">Create New Project</a>
   </section>
 {% endblock content %}
