@@ -4,7 +4,9 @@
 
 {% block content %}
   <section class="project_detail">
-    <h2>{{ project.name }} Project Detail</h2>
+      <a href="{% url 'project_home' proj_id=project.id %}">
+        <h2>{{ project.name }} Project Detail</h2>
+      </a>
     <table>
       <tr>
         <td>Jobsite Address:</td>
@@ -29,7 +31,6 @@
         <td></td>
       </tr>
     </table>
-    <p class='invoice'><a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a></p>
     <p class='update'><a href="{% url 'project_update' proj_id=project.id %}">Update</a></p>
     <p class='delete'><a href="{% url 'project_delete' proj_id=project.id %}">Delete</a></p>
   </section>

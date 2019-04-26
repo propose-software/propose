@@ -7,7 +7,9 @@
     <h2>Existing Materials</h2>
     <ul>
       {% for material in materials %}
-      <li class="material_list"><a href="{% url 'material_detail' material_id=material.id %}">{{material.name}}</a></li>
+      <a href="{% url 'material_detail' material_id=material.id %}">
+        <li class="material_list">{{material.name}}</li>
+      </a>
       {% endfor %}
     </ul>
     <p><a class='create' href="{% url 'material_create' %}">Create New Material</a></p>
