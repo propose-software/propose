@@ -18,6 +18,8 @@ libsass = "*"
 factory-boy = "*"
 boto3 = "*"
 django-storages = "*"
+gunicorn = "*"
+redis = "*"
 
 [requires]
 python_version = "3.7"
