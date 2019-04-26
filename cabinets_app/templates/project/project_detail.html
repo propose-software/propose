@@ -4,17 +4,17 @@
 
 {% block content %}
   <section class="project_detail">
+    <h2>{{ project.name }} Project Detail</h2>
     <table>
-      <h2>{{ project.name }} Project Detail</h2>
       <tr><td>Jobsite Address:</td> <td>{{ project.physical_address }}</td></tr>
       <tr><td>Site Contact:</td> <td>{{ project.site_contact }}</td></tr>
       <tr><td>Contact Phone:</td> <td>{{ project.contact_phone }}</td></tr>
       <tr><td>Contact Email:</td> <td>{{ project.contact_email }}</td></tr>
       <tr><td>Hourly Rate:</td> <td>${{ project.hourly_rate }}</td></tr>
     </table>
-    <a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a> |
-    <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
-    <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
+    <p class='invoice'><a href="{% url 'project_home' proj_id=project.id %}">View Invoice</a></p>
+    <p class='update'><a href="{% url 'project_update' proj_id=project.id %}">Update</a></p>
+    <p class='delete'><a href="{% url 'project_delete' proj_id=project.id %}">Delete</a></p>
   </section>
 
   <section>

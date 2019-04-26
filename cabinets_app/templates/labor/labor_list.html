@@ -3,11 +3,13 @@
 {% block title %}Labor List{% endblock title %}
 
 {% block content %}
-  <h2>Existing Labor Items</h2>
-  <p><a href="{% url 'labor_create' %}">Create Labor Item</a></p>
-  <ul>
-    {% for l in labor %}
+  <section>
+    <h2>Existing Labor Items</h2>
+    <ul>
+      {% for l in labor %}
       <li class="labor_list"><a href="{% url 'labor_detail' labor_id=l.id %}">{{ l.item_name }}</a></li>
-    {% endfor %}
-  </ul>
+      {% endfor %}
+    </ul>
+    <p ><a class='create' href="{% url 'labor_create' %}">Create Labor Item</a></p>
+  </section>
 {% endblock content %}

@@ -3,12 +3,14 @@
 {% block title %}Update Account{% endblock %}
 
 {% block content %}
-<h2>Update Account</h2>
-<table>
-  <form action="{% url 'account_update' account_id=account.id%}" method="POST">
-      {% csrf_token %}
-      {{ form }}
-</table>
+  <section>
+    <h2>Update Account</h2>
+    <table>
+      <form action="{% url 'account_update' account_id=account.id%}" method="POST">
+          {% csrf_token %}
+          {{ form }}
+      </form>
+    </table>
     <input type="submit" value="Submit">
-  </form>
+  </section>
 {% endblock content %}

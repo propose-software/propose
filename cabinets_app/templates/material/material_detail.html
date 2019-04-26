@@ -3,7 +3,7 @@
 {% block title %}Material Detail{% endblock title %}
 
 {% block content %}
-  <div class="material_detail">
+  <section class="material_detail">
     <table>
       <h2>Material Detail</h2>
       <tr><td>Material Name:</td> <td>{{ material.name }}</td></tr>
@@ -18,7 +18,7 @@
       <tr><td>Date Updated:</td> <td>{{ material.date_updated }}</td></tr>
     </table>
 
-    <p><a href="{% url 'material_update' material_id=material.id %}">Update</a></p>
-    <p><a href="{% url 'material_delete' material_id=material.id %}">Delete</a></p>
-  </div>
+    <p class='update'><a href="{% url 'material_update' material_id=material.id %}">Update</a></p>
+    <p class='delete'><a href="{% url 'material_delete' material_id=material.id %}">Delete</a></p>
+  </section>
 {% endblock content %}

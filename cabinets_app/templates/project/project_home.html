@@ -51,10 +51,10 @@
             {% endfor %}
           </tbody>
         </table>
-            <p>{{ room.cabinets.all|length }} Cabinets</p>
-            <p>{{ room.drawer_count }} Drawers</p>
-            <a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a>
-            <p>${{ room.price|floatformat:2 }}</p>
+        <p>{{ room.cabinets.all|length }} Cabinets</p>
+        <p>{{ room.drawer_count }} Drawers</p>
+        <a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a>
+        <p>${{ room.price|floatformat:2 }}</p>
       </section>
     {% endfor %}
 

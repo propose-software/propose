@@ -374,6 +374,9 @@ class Drawer(models.Model):
 
         return total_price
 
+    class Meta:
+        ordering = ('height',)
+
     def __repr__(self):
         return f'<Drawer for {self.cabinet.cabinet_number}>'
 
