@@ -26,7 +26,10 @@ def cabinet_create(req, proj_id=None):
         if form.is_valid():
             max_cab_no = Cabinet.objects.filter(
                 project__id=proj_id).aggregate(Max('cabinet_number'))
-            form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
+            if max_cab_no['cabinet_number__max']:
+                form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
+            else:
+                form.instance.cabinet_number = 1
             form.instance.project = project
             cabinet = form.save()
             for d in drawer_form:

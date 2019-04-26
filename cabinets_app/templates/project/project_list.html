@@ -3,19 +3,17 @@
 {% block title %}Project List{% endblock %}
 
 {% block content %}
-  <div>
+  <section>
     <h2>Existing Projects</h2>
-
-    <a href="{% url 'project_create' %}">Create Project</a>
-
     <ul>
       {% for project in projects %}
-        <li>
-          <a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a> |
-          <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
-          <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
+      <li>
+        <a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a> |
+        <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
+        <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
       </li>
       {% endfor %}
     </ul>
-  </div>
+    <p><a class='create' href="{% url 'project_create' %}">Create Project</a></p>
+  </section>
 {% endblock content %}

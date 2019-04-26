@@ -3,18 +3,19 @@
 {% block title %}Account Detail{% endblock %}
 
 {% block content %}
-<table>
-<h2>Account Detail</h2>
-  <tr><td>Account Name:</td> <td>{{ account.name }}</td></tr>
-  <tr><td>Address:</td> <td>{{ account.billing_address }}</td></tr>
-  <tr><td>Phone:</td> <td>{{ account.billing_phone }}</td></tr>
-  <tr><td>Email:</td> <td>{{ account.billing_email }}</td></tr>
-  <tr><td>Contact:</td> <td>{{ account.contact_name }}</td></tr>
-  <tr><td>Discount:</td> <td>{{ account.discount }}</td></tr>
-</table>
+  <section>
+    <h2>Account Detail</h2>
+    <table>
+      <tr><td>Account Name:</td> <td>{{ account.name }}</td></tr>
+      <tr><td>Address:</td> <td>{{ account.billing_address }}</td></tr>
+      <tr><td>Phone:</td> <td>{{ account.billing_phone }}</td></tr>
+      <tr><td>Email:</td> <td>{{ account.billing_email }}</td></tr>
+      <tr><td>Contact:</td> <td>{{ account.contact_name }}</td></tr>
+      <tr><td>Discount:</td> <td>{{ account.discount }}</td></tr>
+    </table>
 
-<p><a href="{% url 'account_update' account_id=account.id %}">Update</a> | 
-<a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
-<p><a href="{% url 'project_create' account_id=account.id %}">Create New Project</a></p>
-
+    <p class='update'><a href="{% url 'account_update' account_id=account.id %}">Update</a></p>
+    <p class='delete'><a href="{% url 'account_delete' account_id=account.id %}">Delete</a></p>
+    <p><a class='create' href="{% url 'project_create' account_id=account.id %}">Create New Project</a></p>
+  </section>
 {% endblock content %}

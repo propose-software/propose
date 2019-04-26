@@ -3,7 +3,7 @@
 {% block title %}Labor Detail{% endblock %}
 
 {% block content %}
-  <div class="hardware_detail">
+  <section class="hardware_detail">
     <table>
       <h2>Labor Item Detail</h2>
       <tr>
@@ -16,8 +16,7 @@
       </tr>
     </table>
 
-    <p><a href="{% url 'labor_update' labor_id=labor.id %}">Update</a></p>
-    <p><a href="{% url 'labor_delete' labor_id=labor.id %}">Delete</a></p>
-  </div>
-
+    <p class='update'><a href="{% url 'labor_update' labor_id=labor.id %}">Update</a></p>
+    <p class='delete'><a href="{% url 'labor_delete' labor_id=labor.id %}">Delete</a></p>
+  </section>
 {% endblock content %}

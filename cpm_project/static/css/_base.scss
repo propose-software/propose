@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
 body {
-    font-family: sans-serif;
+    font-family: 'Quicksand', sans-serif;
     color: $font-color;
     background-color: $background-color;
 }
@@ -41,6 +43,10 @@ main ul, aside ul {
 main ul li, aside ul li {
     list-style-type: disc;
     margin-bottom: .4em;
+}
+
+aside ul li {
+    margin-left: 1.3em;
 }
 
 th {

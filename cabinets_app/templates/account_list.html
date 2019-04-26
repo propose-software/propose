@@ -3,11 +3,13 @@
 {% block title %}Account List{% endblock %}
 
 {% block content %}
+  <section>
     <h2>Existing Accounts</h2>
-    <p id="create_account_link"><a href="{% url 'account_create' %}">Create Account</a></p>
     <ul>
-    {% for account in accounts %}
-      <li id="existing_account_name"><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></li>
-    {% endfor %}
+      {% for account in accounts %}
+      <li class="account_name"><a href="{% url 'account_detail' account_id=account.id %}">{{account.name}}</a></li>
+      {% endfor %}
     </ul>
+    <p><a class='create' href="{% url 'account_create' %}">Create Account</a></p>
+  </section>
 {% endblock content %}

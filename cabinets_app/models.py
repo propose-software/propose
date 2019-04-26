@@ -15,6 +15,9 @@ class Account(models.Model):
     contact_name = models.CharField(max_length=128)
     discount = models.DecimalField(max_digits=3, decimal_places=2)
 
+    class Meta:
+        ordering = ('name',)
+
     def __repr__(self):
         return f'<Account: {self.name}>'
 
@@ -45,6 +48,9 @@ class Material(models.Model):
         after_markup = before_markup + (before_markup * self.markup)
         return after_markup
 
+    class Meta:
+        ordering = ('name',)
+
     def __repr__(self):
         return f'<Material: {self.name}>'
 
@@ -68,6 +74,9 @@ class Hardware(models.Model):
     )
     markup = models.DecimalField(max_digits=3, decimal_places=2)
 
+    class Meta:
+        ordering = ('name',)
+
     def __repr__(self):
         return f'<Hardware: {self.name}>'
 
@@ -90,6 +99,9 @@ class Labor(models.Model):
         choices=UNIT_TYPE_CHOICES,
         max_length=16
     )
+
+    class Meta:
+        ordering = ('item_name',)
 
     def __repr__(self):
         return f'<Labor: {self.item_name}>'
@@ -115,10 +127,14 @@ class Project(models.Model):
 
     @property
     def price(self):
+        rooms = Room.objects.filter(project=self)
         project_total = 0
-        for room in self.rooms:
+        for room in rooms:
             project_total += room.price
         return project_total
+
+    class Meta:
+        ordering = ('name',)
 
     def __repr__(self):
         return f'<{self.name}>'
@@ -152,6 +168,9 @@ class Room(models.Model):
         for cab in cabinets:
             count += cab.drawers.count()
         return count
+
+    class Meta:
+        ordering = ('name',)
 
     def __repr__(self):
         return f'<{self.project.name}: {self.name}>'
@@ -220,6 +239,9 @@ class Specification(models.Model):
         default='Unfinished',
         max_length=125
     )
+
+    class Meta:
+        ordering = ('name',)
 
     def __repr__(self):
         return f'<Spec: {self.name}>'
@@ -310,6 +332,9 @@ class Cabinet(models.Model):
 
         return total_price
 
+    class Meta:
+        ordering = ('cabinet_number',)
+
     def __repr__(self):
         return f'<Cab No: {self.cabinet_number}>'
 
@@ -349,6 +374,9 @@ class Drawer(models.Model):
         total_price = drawer_material_price + drawer_labor_price
 
         return total_price
+
+    class Meta:
+        ordering = ('height',)
 
     def __repr__(self):
         return f'<Drawer for {self.cabinet.cabinet_number}>'
