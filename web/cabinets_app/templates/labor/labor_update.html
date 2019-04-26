@@ -3,12 +3,14 @@
 {% block title %}Update Labor{% endblock %}
 
 {% block content %}
-  <h2>Update Labor</h2>
-  <form action="{% url 'labor_update' labor_id=labor.id%}" method="POST">
-    <table>
-    {% csrf_token %}
-    {{ form }}
-    </table>
-    <input type="submit" value="Save">
-  </form>
+  <section>
+    <h2>Update Labor</h2>
+    <form action="{% url 'labor_update' labor_id=labor.id%}" method="POST">
+      <table>
+      {% csrf_token %}
+      {{ form }}
+      </table>
+      <input class="update" type="submit" value="Save">
+    </form>
+  </section>
 {% endblock content %}

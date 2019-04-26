@@ -19,9 +19,8 @@
         <td>{{ hardware.markup }}</td>
       </tr>
     </table>
-
-    <p class='update'><a href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a></p>
-    <p class='delete'><a href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a></p>
+    <a class='update' href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a>
+    <a class='delete' href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a>
   </section>
 
 {% endblock content %}

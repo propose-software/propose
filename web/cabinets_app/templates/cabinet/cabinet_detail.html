@@ -1,73 +1,53 @@
 {% extends "generic/base.html" %}
+{% load humanize %}
 
 {% block title %}Cabinet Detail{% endblock %}
 
 {% block content %}
   <section>
     <h2>{{ cabinet.project.name }} Cabinet No. {{ cabinet.cabinet_number }}</h2>
-    <p class='update'><a href="{% url 'cabinet_update' proj_id=cabinet.project.id cab_id=cabinet.id%}">Update</a></p>
-    <p class='delete'><a href="{% url 'cabinet_delete' proj_id=cabinet.project.id cab_id=cabinet.id%}">Delete</a></p>
-    <table>
-      <tr>
-        <td>Room</td>
-        <td>{{ cabinet.room.name }}</td>
-      </tr>
-      <tr>
-        <td>Specification</td>
-        <td>{{ cabinet.specification.name }}</td>
-      </tr>
-      <tr>
-        <td>Interior Material</td>
-        <td>{{ cabinet.specification.interior_material.name }}</td>
-      </tr>
-      <tr>
-        <td>Exterior Material</td>
-        <td>{{ cabinet.specification.exterior_material.name }}</td>
-      </tr>
-      <tr>
-        <td>Width</td>
-        <td>{{ cabinet.width }}"</td>
-      </tr>
-      <tr>
-        <td>Height</td>
-        <td>{{ cabinet.height }}"</td>
-      </tr>
-      <tr>
-        <td>Depth</td>
-        <td>{{ cabinet.depth }}"</td>
-      </tr>
-      <tr>
-        <td>Number of Doors</td>
-        <td>{{ cabinet.number_of_doors }}</td>
-      </tr>
-      <tr>
-        <td>Number of Shelves</td>
-        <td>{{ cabinet.number_of_shelves }}</td>
-      </tr>
-      <tr>
-        <td>Finished Interior</td>
-        <td>{{ cabinet.finished_interior }}</td>
-      </tr>
-      <tr>
-        <td>Finished Left End</td>
-        <td>{{ cabinet.finished_left_end }}</td>
-      </tr>
-      <tr>
-        <td>Finished Right End</td>
-        <td>{{ cabinet.finished_right_end }}</td>
-      </tr>
-      <tr>
-        <td>Finished Top</td>
-        <td>{{ cabinet.finished_top }}</td>
-      </tr>
-      <tr>
-        <td>Finished Bottom</td>
-        <td>{{ cabinet.finished_bottom }}</td>
-      </tr>
-      <tr>
-        <td>Price</td>
-        <td>${{ cabinet.price|floatformat:2 }}</td>
-      </tr>
+    <table class="cabinet">
+      <thead>
+        <tr>
+          <th>Cabinet</br>Number</th>
+          <th>Spec.</th>
+          <th>Width</th>
+          <th>Height</th>
+          <th>Depth</th>
+          <th>Number</br>Doors</th>
+          <th>Number</br>Shelves</th>
+          <th>Finished</br>Interior</th>
+          <th>Finished</br>Left End</th>
+          <th>Finished</br>Right End</th>
+          <th>Finished</br>Top</th>
+          <th>Finished</br>Bottom</th>
+          <th>Cabinet</br>Price</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ cabinet.cabinet_number }}</td>
+          <td><a href="{% url 'spec_detail' proj_id=cabinet.project.id spec_id=cabinet.specification.id %}">{{ cabinet.specification.name }}</a></td>
+          <td>{{ cabinet.width }}"</td>
+          <td>{{ cabinet.height }}"</td>
+          <td>{{ cabinet.depth }}"</td>
+          <td>{{ cabinet.number_of_doors }}</td>
+          <td>{{ cabinet.number_of_shelves }} </td>
+          <td>{% if cabinet.finished_interior == True %}✔{% endif %}</td>
+          <td>{% if cabinet.finished_left_end == True %}✔{% endif %}</td>
+          <td>{% if cabinet.finished_right_end == True %}✔{% endif %}</td>
+          <td>{% if cabinet.finished_top == True %}✔{% endif %}</td>
+          <td>{% if cabinet.finished_bottom == True %}✔{% endif %}</td>
+          <td>${{ cabinet.price|floatformat:2|intcomma }}</td>
+          <td><a href="{% url 'cabinet_update' proj_id=cabinet.project.id cab_id=cabinet.id %}">
+            Edit</a></td>
+          <td><a href="{% url 'cabinet_delete' proj_id=cabinet.project.id cab_id=cabinet.id %}">
+            Delete</a></td>
+          </td>
+        </tr>
+      </tbody>
     </table>
     <h3>Drawers ({{ cabinet.drawers.all|length }})</h3>
     {% for d in cabinet.drawers.all %}
