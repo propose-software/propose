@@ -54,7 +54,7 @@ main ul li, aside ul li {
 }
 
 aside ul li {
-    margin-left: 1.3em;
+    margin-left: 2.3em;
 }
 
 th {
@@ -63,7 +63,7 @@ th {
 }
 
 td, th {
-    width: 150px;
+    min-width: 130px;
     padding: 4px 8px 4px 0px;
 }
 
@@ -72,3 +72,15 @@ td, th {
     margin-left: 15px;
     margin-bottom: 15px;
 }
+
+.project_aside {
+    font-size: 22px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+
+// .account_aside:hover, .project_aside:hover {
+//     color: $hover-color;
+//     background-color: #CFCFCF;
+//     transition: 800ms;
+// }

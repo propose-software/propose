@@ -16,6 +16,6 @@
 
     <a class='update' href="{% url 'account_update' account_id=account.id %}">Update</a>
     <a class='delete' href="{% url 'account_delete' account_id=account.id %}">Delete</a>
-    <a class='create' href="{% url 'project_create' account_id=account.id %}">Create New Project</a>
+    <a class='create' href="{% url 'project_create' account_id=account.id %}">Create Project</a>
   </section>
 {% endblock content %}

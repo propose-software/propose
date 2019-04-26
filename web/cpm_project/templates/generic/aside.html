@@ -8,8 +8,8 @@
   {% endfor %}
   </ul>
 {% else %}
-  <p>Project:
-      <a href="{% url 'project_home' proj_id=project.id %}">{{ project.name }}</a></p>
+  <p>Project:</p>
+  <p class='project_aside'><a href="{% url 'project_home' proj_id=project.id %}">{{ project.name }}</a></p>
   <p>Related Specs:</p>
   <ul>
   {% for s in project.specifications.all %}

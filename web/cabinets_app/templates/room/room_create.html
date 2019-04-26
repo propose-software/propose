@@ -3,13 +3,15 @@
 {% block title %}Create Room{% endblock %}
 
 {% block content %}
-<h2>Create Room for {{ project.name }} Project</h2>
+  <section>
+    <h2>Create Room for {{ project.name }} Project</h2>
 
-<form action="{% url 'room_create' proj_id=project.id %}" method="POST">
-  <table>
-  {% csrf_token %}
-  {{ form }}
-  </table>
-  <input type="submit" value="Submit">
-</form>
+    <form action="{% url 'room_create' proj_id=project.id %}" method="POST">
+      <table>
+      {% csrf_token %}
+      {{ form }}
+      </table>
+      <input type="submit" value="Submit">
+    </form>
+  </section>
 {% endblock content %}
