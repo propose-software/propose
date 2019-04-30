@@ -132,11 +132,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/usr/src/app/static'
 
 # SASS Processor
 SASS_PROCESSOR_ROOT = STATIC_ROOT
-SASS_PROCESSOR_ENABLED = os.environ.get('DEBUG', False) == 'True'
+SASS_PROCESSOR_ENABLED = 'True' #os.environ.get('DEBUG', False) == 'True'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
