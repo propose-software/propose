@@ -148,7 +148,8 @@ class TestProjects(TestCase):
 
     def test_project_create_get(self):
         account = Account.objects.create(**get_account_info())
-        res = self.client.get('/account/' + str(account.id) + '/project', follow=True)
+        url = '/account/' + str(account.id) + '/project'
+        res = self.client.get(url, follow=True)
         check = '<h2>Create Project for {}</h2>'.format(account.name)
         self.assertIn(check.encode(), res.content)
 
