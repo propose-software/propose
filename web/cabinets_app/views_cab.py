@@ -56,8 +56,12 @@ def cabinet_create(req, proj_id=None):
 
 @login_required
 def drawer_form(req, proj_id=None):
+    if 'form-TOTAL_FORMS' in req.POST.keys():
+        formset = DrawerFormSet(req.POST)
+    else:
+        formset = DrawerFormSet(queryset=Drawer.objects.none())
     context = {
-        'form': DrawerFormSet(req.POST)
+        'formset': formset
     }
     return render(req, './cabinet/drawer_form.html', context)
 

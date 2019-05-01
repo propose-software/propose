@@ -89,7 +89,8 @@ class CabinetForm(forms.ModelForm):
 DrawerFormSet = forms.modelformset_factory(
     Drawer,
     fields=('height', 'material'),
-    extra=1
+    extra=1,
+    can_delete=True
 )
 
 

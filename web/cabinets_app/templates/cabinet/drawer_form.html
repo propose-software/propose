@@ -1,2 +1,10 @@
 {% csrf_token %}
-{{ form }}
+{{ formset.management_form }}
+{% for form in formset %}
+<tr class="{{ form.id.auto_id }}">
+    <td>{{ form.height.label }}{{ form.height }}</td>
+    <td>{{ form.material.label }}{{ form.material }}</td>
+    <td class="drawerDeleteButton" data-id="{{ form.DELETE.auto_id }}">-</td>
+    <td class="drawerDeleteField">{{ form.DELETE }}</td>
+</tr>
+{% endfor %}
