@@ -1,7 +1,7 @@
-$('#addDrawerButton').click(function() {
-    let drawerForm = $('#drawerForm');
+$('#add-drawer-button').click(function() {
+    let drawerForm = $('#drawer-form');
     url = drawerForm.attr('data-url');
-    formData = $('#drawerForm :input').serializeArray();
+    formData = $('#drawer-form :input').serializeArray();
     console.log(formData);
     if (formData.length > 1) {
         formData[1].value = parseInt(formData[1].value) + 1;
@@ -19,13 +19,13 @@ $('#addDrawerButton').click(function() {
     });
 });
 
-$(document).on('click', '.drawerDeleteButton', function() {
+$(document).on('click', '.drawer-delete-button', function() {
     const dataId = $(this).data('id');
     checkBox = $('#' + dataId);
     checkBox.prop('checked', !checkBox.prop("checked"));
-    let drawerForm = $('#drawerForm');
+    let drawerForm = $('#drawer-form');
     url = drawerForm.attr('data-url');
-    formData = $('#drawerForm :input').serializeArray();
+    formData = $('#drawer-form :input').serializeArray();
     console.log(formData);
     $.ajax({
         url: url,

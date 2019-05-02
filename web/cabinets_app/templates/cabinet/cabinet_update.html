@@ -12,9 +12,9 @@
       </table>
 
       <h3>Drawers:</h3>
-      <div id="addDrawerButton">+</div>
+      <div id="add-drawer-button" class="create drawer-button">+</div>
 
-      <table id="drawerForm"
+      <table id="drawer-form"
           data-url="{% url 'drawer_form' proj_id=project.id %}">
           {% include './drawer_form.html' %}
       </table>

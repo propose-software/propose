@@ -1,7 +1,22 @@
-.drawerDeleteField, .toBeDeleted {
+.drawer-delete-field, .to-be-deleted {
     display: none;
 }
 
-#drawerForm th {
+#drawer-form th {
     min-width: 0;
+}
+
+form h3 {
+    display: inline-block;
+}
+
+.drawer-button, .drawer-delete-button {
+    font-size: 1.2em;
+    min-width: 0px;
+    width: 0.8em;
+    height: 0.6em;
+    line-height: .6em;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 20px;
 }

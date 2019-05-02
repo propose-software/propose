@@ -5,7 +5,7 @@ from django import forms
 from .models import (
     Account, Cabinet, Drawer, Project
 )
-from .forms import CabinetForm, DrawerFormSet, UpdateInitialDrawerFormSet
+from .forms import CabinetForm, DrawerFormSet
 
 
 @login_required
@@ -50,7 +50,8 @@ def cabinet_create(req, proj_id=None):
     else:
         context = {
             'form': CabinetForm(project),
-            'project': project
+            'project': project,
+            'drawer_form': DrawerFormSet(queryset=Drawer.objects.none())
         }
         return render(req, './cabinet/cabinet_create.html', context)
 
@@ -108,7 +109,7 @@ def cabinet_update(req, proj_id=None, cab_id=None):
             return render(req, './cabinet/cabinet_update.html', context)
     else:
         form = CabinetForm(project, instance=cabinet)
-        drawer_form = UpdateInitialDrawerFormSet(
+        drawer_form = DrawerFormSet(
             queryset=Drawer.objects.filter(cabinet=cabinet))
         context = {
             'form': form,
