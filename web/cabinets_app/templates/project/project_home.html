@@ -57,7 +57,8 @@
             {% endfor %}
           </tbody>
         </table>
-        <p class='create'><a href="{% url 'cabinet_create' proj_id=project.id %}">Add Cabinet</a></p>
+        <p class='create'>
+          <a href="{% url 'cabinet_create' proj_id=project.id room_id=room.id %}">Add Cabinet</a></p>
         <section class='counts'>
           <p class='cabinet_count'>{{ room.cabinets.all|length }} Cabinets</p>
           <p class='drawer_count'>{{ room.drawer_count }} Drawers</p>

@@ -86,7 +86,7 @@ urlpatterns = [
     path('project/<int:proj_id>/spec/<int:spec_id>/delete',
          spec_delete, name='spec_delete'),
 
-    path('project/<int:proj_id>/cabinet',
+    path('project/<int:proj_id>/room/<int:room_id>/cabinet',
          cabinet_create, name='cabinet_create'),
     path('project/<int:proj_id>/cabinet/drawer_form',
          drawer_form, name='drawer_form'),
