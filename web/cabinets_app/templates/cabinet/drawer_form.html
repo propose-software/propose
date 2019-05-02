@@ -1,6 +1,6 @@
 {% csrf_token %}
-{{ formset.management_form }}
-{% for form in formset %}
+{{ drawer_form.management_form }}
+{% for form in drawer_form %}
 <tr class="{% if form.DELETE.value %}toBeDeleted{% endif %}">
     <th>{{ form.height.label }}</th><td>{{ form.height }}</td>
     <th>{{ form.material.label }}</th><td>{{ form.material }}</td>

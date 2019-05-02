@@ -11,12 +11,12 @@
           {{ form }}
       </table>
 
-      <h3>Drawers: (<span id="add">add</span>) | (<span id="sub">subtract</span>)</h3>
+      <h3>Drawers:</h3>
+      <div id="addDrawerButton">+</div>
 
       <table id="drawerForm"
           data-url="{% url 'drawer_form' proj_id=project.id %}">
-          {% csrf_token %}
-          {{ drawer_form }}
+          {% include './drawer_form.html' %}
       </table>
       <input class="update" type="submit" value="Submit">
     </form>

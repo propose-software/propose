@@ -94,6 +94,14 @@ DrawerFormSet = forms.modelformset_factory(
 )
 
 
+UpdateInitialDrawerFormSet = forms.modelformset_factory(
+    Drawer,
+    fields=('height', 'material'),
+    extra=0,
+    can_delete=True
+)
+
+
 class HardwareForm(forms.ModelForm):
     class Meta:
         model = Hardware

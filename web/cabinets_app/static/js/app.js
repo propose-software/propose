@@ -2,6 +2,7 @@ $('#addDrawerButton').click(function() {
     let drawerForm = $('#drawerForm');
     url = drawerForm.attr('data-url');
     formData = $('#drawerForm :input').serializeArray();
+    console.log(formData);
     if (formData.length > 1) {
         formData[1].value = parseInt(formData[1].value) + 1;
     }
@@ -26,9 +27,6 @@ $(document).on('click', '.drawerDeleteButton', function() {
     url = drawerForm.attr('data-url');
     formData = $('#drawerForm :input').serializeArray();
     console.log(formData);
-    // if (formData.length > 1) {
-    //     formData[1].value = parseInt(formData[1].value) - 1;
-    // }
     $.ajax({
         url: url,
         method: 'POST',

@@ -5,7 +5,7 @@ from django import forms
 from .models import (
     Account, Cabinet, Drawer, Project
 )
-from .forms import CabinetForm, DrawerFormSet
+from .forms import CabinetForm, DrawerFormSet, UpdateInitialDrawerFormSet
 
 
 @login_required
@@ -33,6 +33,7 @@ def cabinet_create(req, proj_id=None):
             form.instance.project = project
             cab = form.save()
             for d in drawer_form:
+                # don't save drawers if user marked for deletion
                 if d.is_valid() and not d['DELETE'].value():
                     if d['height'].value() and d['material'].value():
                         instance = d.save(commit=False)
@@ -49,8 +50,7 @@ def cabinet_create(req, proj_id=None):
     else:
         context = {
             'form': CabinetForm(project),
-            'project': project,
-            'drawer_form': DrawerFormSet(queryset=Drawer.objects.none())
+            'project': project
         }
         return render(req, './cabinet/cabinet_create.html', context)
 
@@ -58,11 +58,11 @@ def cabinet_create(req, proj_id=None):
 @login_required
 def drawer_form(req, proj_id=None):
     if 'form-TOTAL_FORMS' in req.POST.keys():
-        formset = DrawerFormSet(req.POST)
+        drawer_form = DrawerFormSet(req.POST)
     else:
-        formset = DrawerFormSet(queryset=Drawer.objects.none())
+        drawer_form = DrawerFormSet(queryset=Drawer.objects.none())
     context = {
-        'formset': formset
+        'drawer_form': drawer_form
     }
     return render(req, './cabinet/drawer_form.html', context)
 
@@ -90,10 +90,14 @@ def cabinet_update(req, proj_id=None, cab_id=None):
         if form.is_valid():
             cabinet = form.save()
             for d in drawer_form:
-                if d.is_valid() and d['height'].value() and d['material'].value():
-                    instance = d.save(commit=False)
-                    instance.cabinet = cabinet
-                    instance.save()
+                if d.is_valid() and not d['DELETE'].value():
+                    if d['height'].value() and d['material'].value():
+                        instance = d.save(commit=False)
+                        instance.cabinet = cabinet
+                        instance.save()
+            instances = drawer_form.save(commit=False)
+            for obj in drawer_form.deleted_objects:
+                obj.delete()
             return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab_id)
         else:
             context = {
@@ -104,7 +108,8 @@ def cabinet_update(req, proj_id=None, cab_id=None):
             return render(req, './cabinet/cabinet_update.html', context)
     else:
         form = CabinetForm(project, instance=cabinet)
-        drawer_form = DrawerFormSet(queryset=Drawer.objects.filter(cabinet=cabinet))
+        drawer_form = UpdateInitialDrawerFormSet(
+            queryset=Drawer.objects.filter(cabinet=cabinet))
         context = {
             'form': form,
             'project': project,
