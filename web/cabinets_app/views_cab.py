@@ -31,13 +31,14 @@ def cabinet_create(req, proj_id=None):
             else:
                 form.instance.cabinet_number = 1
             form.instance.project = project
-            cabinet = form.save()
+            cab = form.save()
             for d in drawer_form:
-                if d.is_valid() and d['height'].value() and d['material'].value():
-                    instance = d.save(commit=False)
-                    instance.cabinet = cabinet
-                    instance.save()
-            return redirect('cabinet_detail', proj_id=proj_id, cab_id=cabinet.id)
+                if d.is_valid() and not d['DELETE'].value():
+                    if d['height'].value() and d['material'].value():
+                        instance = d.save(commit=False)
+                        instance.cabinet = cab
+                        instance.save()
+            return redirect('cabinet_detail', proj_id=proj_id, cab_id=cab.id)
         else:
             context = {
                 'form': form,

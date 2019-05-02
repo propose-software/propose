@@ -1,3 +1,7 @@
-.drawerDeleteField {
+.drawerDeleteField, .toBeDeleted {
     display: none;
+}
+
+#drawerForm th {
+    min-width: 0;
 }
