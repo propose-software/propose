@@ -6,7 +6,7 @@
 {% block content %}
   <section>
     <h2>Create Cabinet</h2>
-    <form action="{% url 'cabinet_create' proj_id=project.id %}" method="POST">
+    <form action="{% url 'cabinet_create' proj_id=project.id room_id=room.id %}" method="POST">
       <table>
       {{ form }}
       </table>

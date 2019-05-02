@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Max
 from django import forms
 from .models import (
-    Account, Cabinet, Drawer, Project
+    Account, Cabinet, Drawer, Project, Room
 )
 from .forms import CabinetForm, DrawerFormSet
 
@@ -18,19 +18,23 @@ def cabinet_list(req, proj_id=None):
 
 
 @login_required
-def cabinet_create(req, proj_id=None):
+def cabinet_create(req, proj_id=None, room_id=None):
     project = Project.objects.get(pk=proj_id)
+    room = Room.objects.get(pk=room_id)
     if req.method == 'POST':
         form = CabinetForm(project, req.POST)
         drawer_form = DrawerFormSet(req.POST)
         if form.is_valid():
+            # set cabinet_number to increment within project
             max_cab_no = Cabinet.objects.filter(
                 project__id=proj_id).aggregate(Max('cabinet_number'))
             if max_cab_no['cabinet_number__max']:
-                form.instance.cabinet_number = max_cab_no['cabinet_number__max'] + 1
+                cabinet_number = max_cab_no['cabinet_number__max'] + 1
+                form.instance.cabinet_number = cabinet_number
             else:
                 form.instance.cabinet_number = 1
             form.instance.project = project
+            form.instance.room = room
             cab = form.save()
             for d in drawer_form:
                 # don't save drawers if user marked for deletion
@@ -44,6 +48,7 @@ def cabinet_create(req, proj_id=None):
             context = {
                 'form': form,
                 'project': project,
+                'room': room,
                 'drawer_form': drawer_form
             }
             return render(req, './cabinet/cabinet_create.html', context)
@@ -51,6 +56,7 @@ def cabinet_create(req, proj_id=None):
         context = {
             'form': CabinetForm(project),
             'project': project,
+            'room': room,
             'drawer_form': DrawerFormSet(queryset=Drawer.objects.none())
         }
         return render(req, './cabinet/cabinet_create.html', context)
@@ -62,9 +68,7 @@ def drawer_form(req, proj_id=None):
         drawer_form = DrawerFormSet(req.POST)
     else:
         drawer_form = DrawerFormSet(queryset=Drawer.objects.none())
-    context = {
-        'drawer_form': drawer_form
-    }
+    context = {'drawer_form': drawer_form}
     return render(req, './cabinet/drawer_form.html', context)
 
 
