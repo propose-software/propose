@@ -1,2 +1,10 @@
 {% csrf_token %}
-{{ form }}
+{{ drawer_form.management_form }}
+{% for form in drawer_form %}
+<tr class="{% if form.DELETE.value %}to-be-deleted{% endif %}">
+    <th>{{ form.height.label }}</th><td>{{ form.height }}</td>
+    <th>{{ form.material.label }}</th><td>{{ form.material }}</td>
+    <td class="drawer-delete-button delete" data-id="{{ form.DELETE.auto_id }}">-</td>
+    <td class="drawer-delete-field">{{ form.DELETE }}{{ form.id }}</td>
+</tr>
+{% endfor %}
