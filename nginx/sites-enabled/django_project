@@ -3,6 +3,7 @@ server {
     listen 80;
     server_name 134.209.172.141;
     charset utf-8;
+    error_log /var/log/nginx/new_error.log debug;
 
     location /static {
         alias /www/static;

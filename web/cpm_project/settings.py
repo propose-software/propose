@@ -136,7 +136,7 @@ STATIC_ROOT = '/usr/src/app/static'
 
 # SASS Processor
 SASS_PROCESSOR_ROOT = STATIC_ROOT
-SASS_PROCESSOR_ENABLED = 'True' #os.environ.get('DEBUG', False) == 'True'
+SASS_PROCESSOR_ENABLED = 'True'  # os.environ.get('DEBUG', False) == 'True'
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -148,22 +148,9 @@ ACCOUNT_ACTIVATION_DAYS = 1
 LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-# Amazon Stuff
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = 'cpm-s3'
-# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_LOCATION = 'static'
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'cpm_project/static'),
-# ]
-# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.hover.com'
+EMAIL_HOST_USER = 'info@proposesoftware.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587

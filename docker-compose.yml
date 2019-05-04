@@ -13,8 +13,6 @@ services:
       - web-django:/usr/src/app
       - web-static:/usr/src/app/static
     env_file: .env_prod
-    environment:
-      DEBUG: 'true'
     command: /usr/local/bin/gunicorn cpm_project.wsgi:application -w 2 -b :8000
 
   nginx:
@@ -30,8 +28,6 @@ services:
   postgres:
     restart: always
     image: postgres:latest
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data/
 
