@@ -1,4 +1,4 @@
-# propopse
+# propose
 
 ## Collaborators
 * [Chris Ball](https://github.com/chrisba11)
