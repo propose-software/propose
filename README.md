@@ -1,5 +1,4 @@
-# CPM
-*(Cabinet Project Manager, or something similar...or just Chris, Paul, Milo)*
+# propopse
 
 ## Collaborators
 * [Chris Ball](https://github.com/chrisba11)
@@ -19,7 +18,7 @@ This project is the brain child of Chris, who is coming from a background in cab
 
 ## Getting Started Locally
 After cloning the repo, you'll need to create a .env file with values for the following:
-``` 
+```
 DB_NAME=[value]
 DB_USER=[value]
 DB_HOST=[value]
@@ -28,11 +27,11 @@ DEBUG=True
 ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0
 CACHE_URL=redis://redis:6379
 ```
-Next, run `docker-compose up --build` in your terminal to download all the dependencies and start the containers. 
+Next, run `docker-compose up --build` in your terminal to download all the dependencies and start the containers.
 
 When this is done, you might want to create a superuser for Django admin purposes. Run `docker-compose exec web bash` to shell into the container, then `./manage.py createsuperuser` and follow the prompts.
 
-Hopefully that all worked, and you can now view the project at http://localhost:8000. It won't look like much until it has some data; luckily we've made a script to handle that for you. 
+Hopefully that all worked, and you can now view the project at http://localhost:8000. It won't look like much until it has some data; luckily we've made a script to handle that for you.
 
 Run `docker-compose exec web bash` to shell into the container if you aren't already there, then run `./manage.py dummy_data`. This will delete any data in the DB, then re-populate it with a variety of Accounts, Projects, Cabinets, Specifications, etc.
 
