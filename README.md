@@ -17,17 +17,9 @@ This project is the brain child of Chris, who is coming from a background in cab
 * User can view a detailed invoice of project costs
 
 ## Getting Started Locally
-After cloning the repo, you'll need to create a .env file with values for the following:
-```
-DB_NAME=[value]
-DB_USER=[value]
-DB_HOST=[value]
-SECRET_KEY=[get django secret key]
-DEBUG=True
-ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0
-CACHE_URL=redis://redis:6379
-```
-Next, run `docker-compose up --build` in your terminal to download all the dependencies and start the containers.
+After cloning the repo, you'll need to create an .env file. The file ".env_example" is included in this repo to show the values this app needs to run. You can easily get a Django secret key from one of many online generators. The email settings are only necessary if you want to demonstrate the new user email registration functionality. 
+
+To run the project locally, navigate into the web/ folder (the docker-compose.yml in the root directory is intended for live deployment). Next, run `docker-compose up --build` in your terminal to download all the dependencies and start the containers.
 
 When this is done, you might want to create a superuser for Django admin purposes. Run `docker-compose exec web bash` to shell into the container, then `./manage.py createsuperuser` and follow the prompts.
 

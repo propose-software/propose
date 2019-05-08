@@ -148,9 +148,10 @@ ACCOUNT_ACTIVATION_DAYS = 1
 LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'mail.hover.com'
-EMAIL_HOST_USER = 'info@proposesoftware.com'
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS') == 'True'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT'))
