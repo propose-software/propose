@@ -154,3 +154,4 @@ EMAIL_HOST = 'mail.hover.com'
 EMAIL_HOST_USER = 'info@proposesoftware.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'info@proposesoftware.com'
