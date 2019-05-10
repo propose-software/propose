@@ -1,8 +1,39 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
+
+
+class Company(models.Model):
+    """Defines a company that users belong to"""
+    name = models.CharField(max_length=128)
+    billing_address = models.CharField(max_length=1024)
+    billing_phone = models.CharField(max_length=32)
+    billing_email = models.EmailField(max_length=256)
+    contact_name = models.CharField(max_length=128)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __repr__(self):
+        return f'<Company: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class User(AbstractUser):
+    """Defines a company that users belong to"""
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='users'
+    )
+
+    class Meta:
+        ordering = ('name',)
 
 
 class Account(models.Model):
