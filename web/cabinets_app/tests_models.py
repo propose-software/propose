@@ -21,6 +21,29 @@ def get_material_info():
     }
 
 
+def get_hardware_info():
+    ''' Return dictionary for easy creation of Hardware
+    E.g. hardware = Hardware.objects.create(**get_hardware_info())
+    '''
+    return {
+        'name': 'Blum 110+ Hinge',
+        'cost_per': 2.75,
+        'unit_type': 'each',
+        'markup': .2,
+    }
+
+
+def get_labor_info():
+    """ Return dictionary for ez creation on Labor,
+    e.g. labor = Labor.objects.create(**get_labor_info())
+    """
+    return {
+        'item_name': 'Cabinet',
+        'minutes': 120,
+        'unit_type': 'each'
+    }
+
+
 def get_account_info():
     """
     Return dictionary for easy creation of Account
@@ -129,18 +152,6 @@ def get_drawer_info(cabinet=None, material=None):
         'material': material
     }
 
-def get_hardware_info():
-    ''' Return dictionary for easy creation of Hardware
-    E.g. hardware = Hardware.objects.create(**get_hardware_info())
-    '''
-    return {
-       'name': 'Blum 110+ Hinge',
-       'cost_per': 2.75,
-       'unit_type': 'each',
-       'markup': .2,
-    }
-
-
 
 class AccountTest(TestCase):
 
@@ -223,6 +234,32 @@ class SpecificationTest(TestCase):
         spec_two_info = get_spec_info(spec_one.project)
         spec_two = Specification.objects.create(**spec_two_info)
         self.assertEqual(len(spec_one.project.specifications.all()), 2)
+
+
+class RoomTest(TestCase):
+
+    def test_room_class(self):
+        self.assertTrue(Room)
+
+    def test_room_instance(self):
+        room = Room(**get_room_info())
+        self.assertIsInstance(room, Room)
+
+    def test_room_has_project(self):
+        room = Room(**get_room_info())
+        self.assertEqual(room.project.name, 'remodel')
+
+    def test_room_fields(self):
+        room_info = get_room_info()
+        room = Room(**room_info)
+        self.assertEqual(room_info['project'], room.project)
+        self.assertEqual(room_info['name'], room.name)
+
+    def test_room_project_has_many_rooms(self):
+        room_one = Room.objects.create(**get_room_info())
+        room_two_info = get_room_info(project=room_one.project)
+        room_two = Room.objects.create(**room_two_info)
+        self.assertEqual(len(room_one.project.rooms.all()), 2)
 
 
 class CabinetTest(TestCase):
