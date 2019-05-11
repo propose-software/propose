@@ -153,6 +153,63 @@ def get_drawer_info(cabinet=None, material=None):
     }
 
 
+class MaterialTest(TestCase):
+
+    def test_material_class(self):
+        self.assertTrue(Material)
+
+    def test_material_instance(self):
+        material = Material.objects.create(**get_material_info())
+        self.assertIsInstance(material, Material)
+
+    def test_material_fields(self):
+        material_info = get_material_info()
+        material = Material.objects.create(**material_info)
+        self.assertEqual(material_info['name'], material.name)
+        self.assertEqual(material_info['description'], material.description)
+        self.assertEqual(material_info['thickness'], material.thickness)
+        self.assertEqual(material_info['width'], material.width)
+        self.assertEqual(material_info['length'], material.length)
+        self.assertEqual(material_info['sheet_cost'], material.sheet_cost)
+        self.assertEqual(material_info['waste_factor'], material.waste_factor)
+        self.assertEqual(material_info['markup'], material.markup)
+
+
+class HardwareTest(TestCase):
+
+    def test_hardware_class(self):
+        self.assertTrue(Hardware)
+
+    def test_hardware_instance(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        self.assertIsInstance(hardware, Hardware)
+
+    def test_hardware_fields(self):
+        hardware_info = get_hardware_info()
+        hardware = Hardware.objects.create(**hardware_info)
+        self.assertEqual(hardware_info['name'], hardware.name)
+        self.assertEqual(hardware_info['cost_per'], hardware.cost_per)
+        self.assertEqual(hardware_info['unit_type'], hardware.unit_type)
+        self.assertEqual(hardware_info['markup'], hardware.markup)
+
+
+class LaborTest(TestCase):
+
+    def test_labor_class(self):
+        self.assertTrue(Labor)
+
+    def test_labor_instance(self):
+        labor = Labor.objects.create(**get_labor_info())
+        self.assertIsInstance(labor, Labor)
+
+    def test_labor_fields(self):
+        labor_info = get_labor_info()
+        labor = Labor.objects.create(**labor_info)
+        self.assertEqual(labor_info['item_name'], labor.item_name)
+        self.assertEqual(labor_info['minutes'], labor.minutes)
+        self.assertEqual(labor_info['unit_type'], labor.unit_type)
+
+
 class AccountTest(TestCase):
 
     def test_account_class(self):
