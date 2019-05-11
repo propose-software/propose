@@ -6,10 +6,9 @@ from .models import (
     Project, Cabinet, Drawer, Specification, Room
 )
 from .tests_models import (
-    get_material_info, get_account_info, get_cabinet_info,
-    get_drawer_info, get_material_info, get_project_info,
-    get_spec_info,
-    get_hardware_info
+    get_material_info, get_hardware_info, get_labor_info,
+    get_account_info, get_project_info, get_spec_info, get_room_info,
+    get_cabinet_info, get_drawer_info,
 )
 
 
@@ -60,6 +59,35 @@ class TestAccounts(TestCase):
         account_info = get_account_info()
         res = self.client.post('/account/', account_info, follow=True)
         self.assertIn(account_info['name'].encode(), res.content)
+
+    def test_account_update_get(self):
+        account = Account.objects.create(**get_account_info())
+        url = '/account/' + str(account.id) + '/update'
+        res = self.client.get(url, follow=True)
+        self.assertIn(account.name.encode(), res.content)
+
+    def test_account_update_post(self):
+        account_info = get_account_info()
+        account = Account.objects.create(**account_info)
+        account_info['name'] = 'New Test Name'
+        url = '/account/' + str(account.id) + '/update'
+        res = self.client.post(url, account_info, follow=True)
+        self.assertIn(account_info['name'].encode(), res.content)
+
+    def test_account_delete_get(self):
+        account = Account.objects.create(**get_account_info())
+        url = '/account/' + str(account.id) + '/delete'
+        res = self.client.get(url, follow=True)
+        self.assertIn(account.name.encode(), res.content)
+
+    def test_account_delete_post(self):
+        account = Account.objects.create(**get_account_info())
+        res = self.client.get('/', follow=True)
+        self.assertIn(account.name.encode(), res.content)
+        url = '/account/' + str(account.id) + '/delete'
+        self.client.post(url)
+        res = self.client.get('/', follow=True)
+        self.assertNotIn(account.name.encode(), res.content)
 
 
 class TestMaterials(TestCase):
