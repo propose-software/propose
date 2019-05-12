@@ -102,15 +102,6 @@ class TestHardware(TestCase):
             password='12345'
         )
 
-    def test_hardware_create_get(self):
-        res = self.client.get('/hardware', follow=True)
-        self.assertIn(b'<title>Create Hardware</title>', res.content)
-
-    def test_hardware_create_post(self):
-        hardware_create = get_hardware_info()
-        res = self.client.post('/hardware', hardware_create, follow=True)
-        self.assertIn('<h2>Create Hardware</h2>', res.content.decode())
-
     def test_hardware_list(self):
         hardware = Hardware.objects.create(**get_hardware_info())
         res = self.client.get('/hardware/' + str(hardware.id), follow=True)
@@ -124,6 +115,42 @@ class TestHardware(TestCase):
         self.assertIn(str(hardware.unit_type).encode(), res.content)
         self.assertIn(str(hardware.markup).encode(), res.content)
 
+    def test_hardware_create_get(self):
+        res = self.client.get('/hardware', follow=True)
+        self.assertIn(b'<title>Create Hardware</title>', res.content)
+
+    def test_hardware_create_post(self):
+        hardware_create = get_hardware_info()
+        res = self.client.post('/hardware', hardware_create, follow=True)
+        self.assertIn('<h2>Create Hardware</h2>', res.content.decode())
+
+    def test_hardware_update_get(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        url = '/hardware/' + str(hardware.id) + '/update'
+        res = self.client.get(url, follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+
+    def test_hardware_update_post(self):
+        hardware_info = get_hardware_info()
+        hardware = Hardware.objects.create(**hardware_info)
+        hardware_info['name'] = 'New Test Name'
+        url = '/hardware/' + str(hardware.id) + '/update'
+        res = self.client.post(url, hardware_info, follow=True)
+        self.assertIn(hardware_info['name'].encode(), res.content)
+
+    def test_hardware_delete_get(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        url = '/hardware/' + str(hardware.id) + '/delete'
+        res = self.client.get(url, follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+
+    def test_hardware_delete_post(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/all', follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+        self.client.post('/hardware/' + str(hardware.id) + '/delete')
+        res = self.client.get('/', follow=True)
+        self.assertNotIn(hardware.name.encode(), res.content)
 
 
 class TestAccounts(TestCase):

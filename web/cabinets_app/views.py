@@ -186,7 +186,11 @@ def hardware_update(req, hardware_id=None):
             hardware = form.save()
             return redirect('hardware_detail', hardware_id=hardware_id)
         else:
-            return render(req, './hardware/hardware_update.html', {'form': form})
+            context = {
+                'form': form,
+                'hardware': hardware
+            }
+            return render(req, './hardware/hardware_update.html', context)
     else:
         form = HardwareForm(instance=hardware)
         context = {
