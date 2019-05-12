@@ -24,6 +24,108 @@ class UserFactory(factory.django.DjangoModelFactory):
     last_name = factory.Faker('last_name')
 
 
+class TestMaterials(TestCase):
+
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+
+    def test_material_list(self):
+        material = Material.objects.create(**get_material_info())
+        res = self.client.get('/material/' + str(material.id), follow=True)
+        self.assertIn(material.name.encode(), res.content)
+
+    def test_material_detail(self):
+        material = Material.objects.create(**get_material_info())
+        res = self.client.get('/material/' + str(material.id), follow=True)
+        self.assertIn(material.name.encode(), res.content)
+        self.assertIn(material.description.encode(), res.content)
+        self.assertIn(str(material.thickness).encode(), res.content)
+        self.assertIn(str(material.width).encode(), res.content)
+        self.assertIn(str(material.length).encode(), res.content)
+        self.assertIn(str(material.sheet_cost).encode(), res.content)
+        self.assertIn(str(material.waste_factor).encode(), res.content)
+        self.assertIn(str(material.markup).encode(), res.content)
+
+    def test_material_create_get(self):
+        res = self.client.get('/material', follow=True)
+        self.assertIn(b'<h2>Create Material</h2>', res.content)
+
+    def test_material_create_post(self):
+        material_create = get_material_info()
+        res = self.client.post('/material', material_create, follow=True)
+        self.assertIn('<h2>Create Material</h2>', res.content.decode())
+
+    def test_material_update_get(self):
+        material = Material.objects.create(**get_material_info())
+        url = '/material/' + str(material.id) + '/update'
+        res = self.client.get(url, follow=True)
+        self.assertIn(material.name.encode(), res.content)
+
+    def test_material_update_post(self):
+        material_info = get_material_info()
+        material = Material.objects.create(**material_info)
+        material_info['name'] = 'New Material Name'
+        url = '/material/' + str(material.id) + '/update'
+        res = self.client.post(url, material_info, follow=True)
+        self.assertIn(material_info['name'].encode(), res.content)
+
+    def test_material_delete_get(self):
+        material = Material.objects.create(**get_material_info())
+        url = '/material/' + str(material.id) + '/delete'
+        res = self.client.get(url, follow=True)
+        self.assertIn(material.name.encode(), res.content)
+
+    def test_material_delete_post(self):
+        material = Material.objects.create(**get_material_info())
+        res = self.client.get('/material/all', follow=True)
+        self.assertIn(material.name.encode(), res.content)
+        self.client.post('/material/' + str(material.id) + '/delete')
+        res = self.client.get('/material/all', follow=True)
+        self.assertNotIn(material.name.encode(), res.content)
+
+
+class TestHardware(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.user.set_password('12345')
+        self.user.save()
+        self.client = Client()
+        self.client.login(
+            username=self.user.username,
+            password='12345'
+        )
+
+    def test_hardware_create_get(self):
+        res = self.client.get('/hardware', follow=True)
+        self.assertIn(b'<title>Create Hardware</title>', res.content)
+
+    def test_hardware_create_post(self):
+        hardware_create = get_hardware_info()
+        res = self.client.post('/hardware', hardware_create, follow=True)
+        self.assertIn('<h2>Create Hardware</h2>', res.content.decode())
+
+    def test_hardware_list(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+
+    def test_hardware_detail(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
+        self.assertIn(hardware.name.encode(), res.content)
+        self.assertIn(str(hardware.cost_per).encode(), res.content)
+        self.assertIn(str(hardware.unit_type).encode(), res.content)
+        self.assertIn(str(hardware.markup).encode(), res.content)
+
+
+
 class TestAccounts(TestCase):
 
     def setUp(self):
@@ -84,83 +186,9 @@ class TestAccounts(TestCase):
         account = Account.objects.create(**get_account_info())
         res = self.client.get('/', follow=True)
         self.assertIn(account.name.encode(), res.content)
-        url = '/account/' + str(account.id) + '/delete'
-        self.client.post(url)
+        self.client.post('/account/' + str(account.id) + '/delete')
         res = self.client.get('/', follow=True)
         self.assertNotIn(account.name.encode(), res.content)
-
-
-class TestMaterials(TestCase):
-
-    def setUp(self):
-        self.user = UserFactory()
-        self.user.set_password('12345')
-        self.user.save()
-        self.client = Client()
-        self.client.login(
-            username=self.user.username,
-            password='12345'
-        )
-
-    def test_material_create_get(self):
-        res = self.client.get('/material', follow=True)
-        self.assertIn(b'<h2>Create Material</h2>', res.content)
-
-    def test_material_create_post(self):
-        material_create = get_material_info()
-        res = self.client.post('/material', material_create, follow=True)
-        self.assertIn('<h2>Create Material</h2>', res.content.decode())
-
-    def test_material_list(self):
-        material = Material.objects.create(**get_material_info())
-        res = self.client.get('/material/' + str(material.id), follow=True)
-        self.assertIn(material.name.encode(), res.content)
-
-    def test_material_detail(self):
-        material = Material.objects.create(**get_material_info())
-        res = self.client.get('/material/' + str(material.id), follow=True)
-        self.assertIn(material.name.encode(), res.content)
-        self.assertIn(material.description.encode(), res.content)
-        self.assertIn(str(material.thickness).encode(), res.content)
-        self.assertIn(str(material.width).encode(), res.content)
-        self.assertIn(str(material.length).encode(), res.content)
-        self.assertIn(str(material.sheet_cost).encode(), res.content)
-        self.assertIn(str(material.waste_factor).encode(), res.content)
-        self.assertIn(str(material.markup).encode(), res.content)
-
-
-class TestHardware(TestCase):
-    def setUp(self):
-        self.user = UserFactory()
-        self.user.set_password('12345')
-        self.user.save()
-        self.client = Client()
-        self.client.login(
-            username=self.user.username,
-            password='12345'
-        )
-
-    def test_hardware_create_get(self):
-        res = self.client.get('/hardware', follow=True)
-        self.assertIn(b'<title>Create Hardware</title>', res.content)
-
-    def test_hardware_create_post(self):
-        hardware_create = get_hardware_info()
-        res = self.client.post('/hardware', hardware_create, follow=True)
-        self.assertIn('<h2>Create Hardware</h2>', res.content.decode())
-
-    def test_hardware_list(self):
-        hardware = Hardware.objects.create(**get_hardware_info())
-        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
-        self.assertIn(hardware.name.encode(), res.content)
-
-    def test_hardware_detail(self):
-        hardware = Hardware.objects.create(**get_hardware_info())
-        res = self.client.get('/hardware/' + str(hardware.id), follow=True)
-        self.assertIn(hardware.name.encode(), res.content)
-        self.assertIn(str(hardware.cost_per).encode(), res.content)
-        self.assertIn(str(hardware.unit_type).encode(), res.content)
-        self.assertIn(str(hardware.markup).encode(), res.content)
 
 
 class TestProjects(TestCase):
