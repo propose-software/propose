@@ -33,7 +33,7 @@ class User(AbstractUser):
     )
 
     class Meta:
-        ordering = ('company', 'name',)
+        ordering = ('company', 'username',)
 
 
 class Account(models.Model):

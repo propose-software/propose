@@ -114,6 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Custom User Model Registration
+AUTH_USER_MODEL = "cabinets_app.User"
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 

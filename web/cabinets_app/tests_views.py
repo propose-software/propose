@@ -1,8 +1,8 @@
 import factory
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.test import TestCase, Client
 from .models import (
-    Material, Hardware, Labor, Account,
+    Material, Hardware, Labor, Account, User,
     Project, Cabinet, Drawer, Specification, Room
 )
 from .tests_models import (

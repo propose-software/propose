@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from cabinets_app.forms import CustomAuthForm
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(r'^login/', (
+        auth_views.LoginView.as_view(authentication_form=CustomAuthForm)
+        )
+    ),
     path('', include('cabinets_app.urls')),
     path('users/', include('django_registration.backends.activation.urls')),
     path('users/', include('django.contrib.auth.urls')),
