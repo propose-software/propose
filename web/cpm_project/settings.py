@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'storages'
 ]
 
-# AUTH_USER_MODEL = 'cabinets_app.User'
+AUTH_USER_MODEL = 'cabinets_app.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

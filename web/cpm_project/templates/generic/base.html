@@ -6,29 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link type="text/css" rel="stylesheet" href="{% sass_src 'css/main.scss' %}">
-  <title>{% block title %}CPM{% endblock title %}</title>
+  <title>{% block title %}Propose{% endblock title %}</title>
 </head>
 <body>
   <header>
-    <h1>Propose</h1>
+    <h1><span class="p">P</span>R0P0$E</h1>
+    {% if user.is_authenticated %}
+      <p>{{ user.name }}</p>
+      <p><a href="{% url 'logout' %}">Logout</a></p>
+    {% else %}
+      <ul>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'django_registration_register' %}">Signup</a></li>
+      </ul>
+    {% endif %}
   </header>
   <nav class="main_nav">
-      <ul>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'account' %}">Accounts</a></li>
-        <li><a href="{% url 'material_list' %}">Materials</a></li>
-        <li><a href="{% url 'hardware_list' %}">Hardware</a></li>
-        <li><a href="{% url 'labor_list' %}">Labor</a></li>
-        <li><a href="{% url 'logout' %}">Logout</a></li>
-        {% else %}
-        <li><a href="{% url 'django_registration_register' %}">Signup</a></li>
-        <li><a href="{% url 'login' %}">Signin</a></li>
-        {% endif %}
+    <ul>
+      {% if user.is_authenticated %}
+      <li><a href="{% url 'account' %}">Accounts</a></li>
+      <li><a href="{% url 'material_list' %}">Materials</a></li>
+      <li><a href="{% url 'hardware_list' %}">Hardware</a></li>
+      <li><a href="{% url 'labor_list' %}">Labor</a></li>
         {% if user.is_superuser %}
         <li><a href="{% url 'admin:index' %}">Admin</a></li>
         {% endif %}
-      </ul>
+      {% endif %}
+    </ul>
   </nav>
+
+
   <aside>
   {% if project %}
     {% include './aside.html' %}
