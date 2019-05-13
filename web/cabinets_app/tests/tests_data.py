@@ -108,7 +108,10 @@ def get_spec_info(project=None, int_material=None, ext_material=None):
         'project': project,
         'interior_material': int_material,
         'exterior_material': ext_material,
-        'name': 'Dark Cherry'
+        'name': 'Dark Cherry',
+        'construction': 'Frameless',
+        'catalog': 'Laminate',
+        'finish_level': 'Unfinished'
     }
 
 

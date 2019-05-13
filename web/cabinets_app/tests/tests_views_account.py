@@ -1,11 +1,6 @@
 from django.test import TestCase, Client
-from ..models import (
-    Material, Hardware, Labor, Account, Project
-)
-from .tests_data import (
-    get_material_info, get_hardware_info, get_labor_info,
-    get_account_info, get_project_info, UserFactory
-)
+from ..models import Account
+from .tests_data import get_account_info, UserFactory
 
 
 class TestAccounts(TestCase):

@@ -142,6 +142,9 @@ class SpecificationTest(TestCase):
         self.assertEqual(
             spec_info['exterior_material'], spec.exterior_material)
         self.assertEqual(spec_info['name'], spec.name)
+        self.assertEqual(spec_info['construction'], spec.construction)
+        self.assertEqual(spec_info['catalog'], spec.catalog)
+        self.assertEqual(spec_info['finish_level'], spec.finish_level)
 
     def test_spec_project_has_many_specs(self):
         spec_one = Specification.objects.create(**get_spec_info())
