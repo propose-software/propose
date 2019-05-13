@@ -4,9 +4,9 @@
   <div class="login-form container">
     <form method="post">
       {% csrf_token %}
-
-      {{ form.as_p }}
-
+      <table>
+        {{ form.as_table }}
+      </table>
       <input class="create" type="submit" value="Submit" />
     </form>
   </div>
