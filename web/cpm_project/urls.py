@@ -21,10 +21,7 @@ from cabinets_app.forms import CustomAuthForm
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'^login/', (
-        auth_views.LoginView.as_view(authentication_form=CustomAuthForm)
-        )
-    ),
+    path(r'^login/', auth_views.LoginView.as_view(authentication_form=CustomAuthForm), name='login'),
     path('', include('cabinets_app.urls')),
     path('users/', include('django_registration.backends.activation.urls')),
     path('users/', include('django.contrib.auth.urls')),

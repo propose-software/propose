@@ -4,8 +4,13 @@ from .models import (
     Drawer, Specification, Material,
     Labor, Hardware
 )
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 admin.site.register((
+    User,
     Account,
     Project,
     Cabinet,

@@ -4,8 +4,11 @@ from .models import (
     Labor, Project, Specification,
     Cabinet, Drawer, Room
 )
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms.widgets import PasswordInput, TextInput
+
+User = get_user_model()
 
 
 class CustomAuthForm(AuthenticationForm):
@@ -15,6 +18,13 @@ class CustomAuthForm(AuthenticationForm):
     password = forms.CharField(
         widget=PasswordInput(attrs={'placeholder': 'password'})
     )
+
+
+class SignUpForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ('username', 'password')
 
 
 class AccountForm(forms.ModelForm):
