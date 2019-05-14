@@ -1,7 +1,7 @@
 {% extends 'generic/base.html' %}
 
 {% block content %}
-  <div class="login-form container">
+  <section class="login-form container">
     <form method="post">
       {% csrf_token %}
       <table>
@@ -9,5 +9,5 @@
       </table>
       <input class="create" type="submit" value="Log In" />
     </form>
-  </div>
+  </section>
 {% endblock %}
