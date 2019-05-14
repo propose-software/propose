@@ -5,7 +5,9 @@
   <h2>Register today!</h2>
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <table>
+      {{ form.as_table }}
+    </table>
     <input type="submit" value="Register"/>
   </form>
 </div>
