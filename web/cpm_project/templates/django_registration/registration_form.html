@@ -1,12 +1,14 @@
 {% extends 'generic/base.html' %}
 
 {% block content %}
-<div class="registration-form container">
-  <h2>Register today!</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Register"/>
-  </form>
-</div>
+  <section class="registration-form container">
+    <h2>Register today!</h2>
+    <form method="post">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <input class="create" type="submit" value="Sign Up"/>
+    </form>
+  </section>
 {% endblock %}

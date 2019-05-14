@@ -1,10 +1,35 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 @import url('https://fonts.googleapis.com/css?family=El+Messiri:700');
+@import url('https://fonts.googleapis.com/css?family=Katibeh');
 
 body {
     font-family: 'Quicksand', sans-serif;
     color: $font-color;
     background-color: $background-color;
+}
+
+header > ul {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    text-align: center;
+}
+
+header > ul > li > a {
+    width: 100%;
+}
+
+header > ul > li {
+    margin: 10px 10px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: right;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 header, nav, aside, main, footer {
@@ -21,9 +46,15 @@ nav ul li a {
 }
 
 h1 {
-    font-size: 4em;
-    font-family: 'El Messiri';
-    margin: 20px;
+    display: inline-block;
+    font-size: 4.7em;
+    font-family: 'Katibeh';
+    margin: 15px 20px 20px 10px;
+    text-shadow: gray 3px 3px 3px;
+}
+
+span.p {
+    font-size: 1.3em;
 }
 
 h2 {
@@ -77,6 +108,17 @@ td, th {
     font-size: 22px;
     margin-left: 15px;
     margin-bottom: 15px;
+}
+
+input, textarea {
+    font-family: 'Quicksand', sans-serif;
+    color: rgb(54, 54, 54);
+    font-size: 16px;
+    width: 300px;
+}
+
+th > label {
+    font-size: 20px;
 }
 
 // .account_aside:hover, .project_aside:hover {
