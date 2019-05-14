@@ -14,12 +14,12 @@
     {% if user.is_authenticated %}
       <ul>
         <li>{{ user.email }}</li>
-        <li><a class="logout" href="{% url 'logout' %}">Logout</a></li>
+        <li><a class="logout" href="{% url 'logout' %}">Log Out</a></li>
       </ul>
     {% else %}
       <ul>
-        <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'django_registration_register' %}">Signup</a></li>
+        <li><a href="{% url 'login' %}">Log In</a></li>
+        <li><a href="{% url 'django_registration_register' %}">Sign Up</a></li>
       </ul>
     {% endif %}
   </header>
