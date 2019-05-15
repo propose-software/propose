@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Hardware
-from .tests_data import get_hardware_info, UserFactory
+from .test_data import get_hardware_info, UserFactory
 
 
 class TestHardware(TestCase):

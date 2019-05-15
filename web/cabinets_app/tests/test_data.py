@@ -167,3 +167,22 @@ def get_drawer_info(cabinet=None, material=None):
         'height': 8,
         'material': material
     }
+
+
+def get_drawer_form_info(cabinet=None, material=None):
+    """ Return dictionary for easy creation of drawer form POST data
+    """
+    if not cabinet:
+        cabinet = Cabinet.objects.create(**get_cabinet_info())
+    if not material:
+        material = Material.objects.create(**get_material_info())
+    return {
+        'form-TOTAL_FORMS': 1,
+        'form-INITIAL_FORMS': 0,
+        'form-MIN_NUM_FORMS': 0,
+        'form-MAX_NUM_FORMS': 1000,
+        'cabinet': cabinet,
+        'form-0-height': 8,
+        'form-0-material': material.id,
+        'form-0-id': ''
+    }

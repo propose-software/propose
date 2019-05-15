@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Labor
-from .tests_data import get_labor_info, UserFactory
+from .test_data import get_labor_info, UserFactory
 
 
 class TestLabor(TestCase):

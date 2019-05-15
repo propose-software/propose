@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Material
-from .tests_data import get_material_info, UserFactory
+from .test_data import get_material_info, UserFactory
 
 
 class TestMaterials(TestCase):

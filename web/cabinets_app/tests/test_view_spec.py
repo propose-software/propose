@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Project, Specification
-from .tests_data import get_project_info, get_spec_info, UserFactory
+from .test_data import get_project_info, get_spec_info, UserFactory
 
 
 class TestSpecifications(TestCase):

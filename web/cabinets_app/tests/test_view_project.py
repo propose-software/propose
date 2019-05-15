@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Account, Project
-from .tests_data import get_account_info, get_project_info, UserFactory
+from .test_data import get_account_info, get_project_info, UserFactory
 
 
 class TestProjects(TestCase):

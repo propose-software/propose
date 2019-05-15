@@ -3,7 +3,7 @@ from ..models import (
     Material, Hardware, Labor, Account,
     Project, Cabinet, Drawer, Specification, Room
 )
-from .tests_data import (
+from .test_data import (
     get_material_info, get_hardware_info, get_labor_info,
     get_account_info, get_project_info, get_spec_info, get_room_info,
     get_cabinet_info, get_drawer_info,

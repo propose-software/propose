@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from ..models import Account
-from .tests_data import get_account_info, UserFactory
+from .test_data import get_account_info, UserFactory
 
 
 class TestAccounts(TestCase):
