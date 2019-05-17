@@ -7,6 +7,7 @@ from .models import (
     Labor, Hardware, CustomUser
 )
 
+
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
