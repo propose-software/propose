@@ -1,9 +1,24 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import (
     Account, Material, Hardware,
     Labor, Project, Specification,
-    Cabinet, Drawer, Room
+    Cabinet, Drawer, Room, CustomUser
 )
+
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta(UserCreationForm):
+        model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('company',)
+
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = CustomUser
+        fields = UserChangeForm.Meta.fields
 
 
 class AccountForm(forms.ModelForm):

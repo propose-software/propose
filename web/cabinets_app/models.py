@@ -1,8 +1,12 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
+
+
+class CustomUser(AbstractUser):
+     company = models.CharField(max_length=256)
 
 
 class Account(models.Model):
