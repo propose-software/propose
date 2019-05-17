@@ -25,4 +25,3 @@ admin.site.register((
     Labor,
     Hardware
 ))
-
