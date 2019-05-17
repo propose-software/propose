@@ -1,10 +1,13 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import (
     Account, Material, Hardware,
     Labor, Project, Specification,
     Cabinet, Drawer, Room, CustomUser
 )
+
+User = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
