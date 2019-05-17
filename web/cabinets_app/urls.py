@@ -11,10 +11,10 @@ from .views_cab import (
     cabinet_update, cabinet_delete, cabinet_list
 )
 from .views_proj import (
-     project_list, project_create, project_detail, project_update,
-     project_delete, project_home,
-     spec_create, spec_detail, spec_delete, spec_update,
-     room_create, room_update, room_delete,
+    project_list, project_create, project_detail, project_update,
+    project_delete, project_home,
+    spec_create, spec_detail, spec_delete, spec_update,
+    room_create, room_update, room_delete,
 )
 from django.urls import path
 

@@ -55,11 +55,14 @@ def account_update(req, account_id=None):
             account = form.save()
             return redirect('account_detail', account_id=account_id)
         else:
-            return render(req, './account/account_update.html', {'form': form})
+            context = {
+                'form': form,
+                'account': account
+            }
+            return render(req, './account/account_update.html', context)
     else:
-        form = AccountForm(instance=account)
         context = {
-            'form': form,
+            'form': AccountForm(instance=account),
             'account': account
         }
         return render(req, './account/account_update.html', context)
@@ -96,6 +99,7 @@ def material_create(req):
             new_material = form.save()
             return redirect('material_detail', material_id=new_material.id)
         else:
+            print(form)
             return render(req, './material/material_create.html', {'form': form})
     else:
         form = MaterialForm()
@@ -104,9 +108,8 @@ def material_create(req):
 
 @login_required
 def material_detail(req, material_id=None):
-    material = Material.objects.get(pk=material_id)
     context = {
-        'material': material,
+        'material': Material.objects.get(pk=material_id),
     }
     return render(req, './material/material_detail.html', context)
 
@@ -121,11 +124,14 @@ def material_update(req, material_id=None):
             material = form.save()
             return redirect('material_detail', material_id=material.id)
         else:
-            return render(req, './material/material_update.html', {'form': form})
+            context = {
+                'form': form,
+                'material': material
+            }
+            return render(req, './material/material_update.html', context)
     else:
-        form = MaterialForm(instance=material)
         context = {
-            'form': form,
+            'form': MaterialForm(instance=material),
             'material': material
         }
         return render(req, './material/material_update.html', context)
@@ -186,7 +192,11 @@ def hardware_update(req, hardware_id=None):
             hardware = form.save()
             return redirect('hardware_detail', hardware_id=hardware_id)
         else:
-            return render(req, './hardware/hardware_update.html', {'form': form})
+            context = {
+                'form': form,
+                'hardware': hardware
+            }
+            return render(req, './hardware/hardware_update.html', context)
     else:
         form = HardwareForm(instance=hardware)
         context = {
@@ -251,7 +261,11 @@ def labor_update(req, labor_id=None):
             labor = form.save()
             return redirect('labor_detail', labor_id=labor_id)
         else:
-            return render(req, './labor/labor_update.html', {'form': form})
+            context = {
+                'form': form,
+                'labor': labor
+            }
+            return render(req, './labor/labor_update.html', context)
     else:
         form = LaborForm(instance=labor)
         context = {

@@ -1,145 +1,70 @@
 from django.test import TestCase
-from .models import (
+from ..models import (
     Material, Hardware, Labor, Account,
     Project, Cabinet, Drawer, Specification, Room
 )
+from .test_data import (
+    get_material_info, get_hardware_info, get_labor_info,
+    get_account_info, get_project_info, get_spec_info, get_room_info,
+    get_cabinet_info, get_drawer_info,
+)
 
 
-def get_material_info():
-    """ Return dict for easy creation of Material instance
-    e.g. material = Material.objects.create(**get_material_info)
-    """
-    return {
-        'name': 'Select Cherry',
-        'description': '3/4 A1 Select Cherry Plywood',
-        'thickness': 0.75,
-        'width': 48,
-        'length': 96,
-        'sheet_cost': 120,
-        'waste_factor': 0.15,
-        'markup': 0.2
-    }
+class MaterialTest(TestCase):
 
+    def test_material_class(self):
+        self.assertTrue(Material)
 
-def get_account_info():
-    """
-    Return dictionary for easy creation of Account
-    E.g. account = Account(**get_account_info())
-    You can get fancy with this where you pass in
-    custom values, etc.
-    """
-    return {
-        'name': 'Foo, Inc.',
-        'billing_address': '123 Bar Lane',
-        'billing_phone': '206-123-4567',
-        'billing_email': 'foo@bar.baz',
-        'contact_name': 'Foo Bar',
-        'discount': .00
-    }
-
-
-def get_project_info(account=None):
-    """
-    Return dictionary for easy creation of Project
-    E.g. project = Project(**get_project_info())
-    You can get fancy with this where you pass in
-    custom values, etc.
-    """
-    if not account:
-        account = Account.objects.create(**get_account_info())
-    return {
-        'name': 'remodel',
-        'account': account,
-        'physical_address': '123 Foo Bar Lane',
-        'site_contact': 'Cookie Monster',
-        'contact_phone': '123-456-7890',
-        'contact_email': 'cookie@monster.com',
-        'hourly_rate': 22.50
-    }
-
-
-def get_spec_info(project=None, int_material=None, ext_material=None):
-    """ Return dictionary for easy creation of Specification
-    e.g. spec = Specification.objects.create(**get_spec_info())
-    """
-    if not project:
-        project = Project.objects.create(**get_project_info())
-    if not int_material:
-        int_material = Material.objects.create(**get_material_info())
-    if not ext_material:
-        ext_material = Material.objects.create(**get_material_info())
-    return {
-        'project': project,
-        'interior_material': int_material,
-        'exterior_material': ext_material,
-        'name': 'Dark Cherry'
-    }
-
-
-def get_room_info(project=None):
-    """ Return a dictionary for easy creation of Room objects
-    """
-    if not project:
-        project = Project.objects.create(**get_project_info())
-    return {
-        'name': 'Kitchen',
-        'project': project
-    }
-
-
-def get_cabinet_info(project=None, spec=None, room=None):
-    """ Return dictionary for easy creation of Cabinet
-    E.g. cabinet = Cabinet.objects.create(**get_cabinet_info())
-    """
-    if not project:
-        project = Project.objects.create(**get_project_info())
-    if not spec:
-        spec = Specification.objects.create(**get_spec_info())
-    if not room:
-        room = Room.objects.create(**get_room_info())
-    return {
-        'project': project,
-        'specification': spec,
-        'room': room,
-        'cabinet_number': 1,
-        'width': 9,
-        'height': 31,
-        'depth': 24,
-        'number_of_doors': 1,
-        'number_of_shelves': 3,
-        'finished_interior': False,
-        'finished_left_end': False,
-        'finished_right_end': False,
-        'finished_top': False,
-        'finished_bottom': False
-    }
-
-
-def get_drawer_info(cabinet=None, material=None):
-    """ Return dictionary for easy creation of Drawer
-    E.g. drawer = Drawer.objects.create(**get_cabinet_info())
-    """
-    if not cabinet:
-        cabinet = Cabinet.objects.create(**get_cabinet_info())
-    if not material:
+    def test_material_instance(self):
         material = Material.objects.create(**get_material_info())
-    return {
-        'cabinet': cabinet,
-        'height': 8,
-        'material': material
-    }
+        self.assertIsInstance(material, Material)
 
-def get_hardware_info():
-    ''' Return dictionary for easy creation of Hardware
-    E.g. hardware = Hardware.objects.create(**get_hardware_info())
-    '''
-    return {
-       'name': 'Blum 110+ Hinge',
-       'cost_per': 2.75,
-       'unit_type': 'each',
-       'markup': .2,
-    }
+    def test_material_fields(self):
+        material_info = get_material_info()
+        material = Material.objects.create(**material_info)
+        self.assertEqual(material_info['name'], material.name)
+        self.assertEqual(material_info['description'], material.description)
+        self.assertEqual(material_info['thickness'], material.thickness)
+        self.assertEqual(material_info['width'], material.width)
+        self.assertEqual(material_info['length'], material.length)
+        self.assertEqual(material_info['sheet_cost'], material.sheet_cost)
+        self.assertEqual(material_info['waste_factor'], material.waste_factor)
+        self.assertEqual(material_info['markup'], material.markup)
 
+
+class HardwareTest(TestCase):
+
+    def test_hardware_class(self):
+        self.assertTrue(Hardware)
+
+    def test_hardware_instance(self):
+        hardware = Hardware.objects.create(**get_hardware_info())
+        self.assertIsInstance(hardware, Hardware)
+
+    def test_hardware_fields(self):
+        hardware_info = get_hardware_info()
+        hardware = Hardware.objects.create(**hardware_info)
+        self.assertEqual(hardware_info['name'], hardware.name)
+        self.assertEqual(hardware_info['cost_per'], hardware.cost_per)
+        self.assertEqual(hardware_info['unit_type'], hardware.unit_type)
+        self.assertEqual(hardware_info['markup'], hardware.markup)
+
+
+class LaborTest(TestCase):
+
+    def test_labor_class(self):
+        self.assertTrue(Labor)
+
+    def test_labor_instance(self):
+        labor = Labor.objects.create(**get_labor_info())
+        self.assertIsInstance(labor, Labor)
+
+    def test_labor_fields(self):
+        labor_info = get_labor_info()
+        labor = Labor.objects.create(**labor_info)
+        self.assertEqual(labor_info['item_name'], labor.item_name)
+        self.assertEqual(labor_info['minutes'], labor.minutes)
+        self.assertEqual(labor_info['unit_type'], labor.unit_type)
 
 
 class AccountTest(TestCase):
@@ -217,12 +142,41 @@ class SpecificationTest(TestCase):
         self.assertEqual(
             spec_info['exterior_material'], spec.exterior_material)
         self.assertEqual(spec_info['name'], spec.name)
+        self.assertEqual(spec_info['construction'], spec.construction)
+        self.assertEqual(spec_info['catalog'], spec.catalog)
+        self.assertEqual(spec_info['finish_level'], spec.finish_level)
 
     def test_spec_project_has_many_specs(self):
         spec_one = Specification.objects.create(**get_spec_info())
         spec_two_info = get_spec_info(spec_one.project)
         spec_two = Specification.objects.create(**spec_two_info)
         self.assertEqual(len(spec_one.project.specifications.all()), 2)
+
+
+class RoomTest(TestCase):
+
+    def test_room_class(self):
+        self.assertTrue(Room)
+
+    def test_room_instance(self):
+        room = Room(**get_room_info())
+        self.assertIsInstance(room, Room)
+
+    def test_room_has_project(self):
+        room = Room(**get_room_info())
+        self.assertEqual(room.project.name, 'remodel')
+
+    def test_room_fields(self):
+        room_info = get_room_info()
+        room = Room(**room_info)
+        self.assertEqual(room_info['project'], room.project)
+        self.assertEqual(room_info['name'], room.name)
+
+    def test_room_project_has_many_rooms(self):
+        room_one = Room.objects.create(**get_room_info())
+        room_two_info = get_room_info(project=room_one.project)
+        room_two = Room.objects.create(**room_two_info)
+        self.assertEqual(len(room_one.project.rooms.all()), 2)
 
 
 class CabinetTest(TestCase):

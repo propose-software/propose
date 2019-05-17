@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 pep8 = "*"
 autopep8 = "*"
+coverage = "*"
+factory-boy = "*"
 
 [packages]
 django = "*"
@@ -15,7 +17,6 @@ django-phonenumber-field = "*"
 phonenumbers = "*"
 django-sass-processor = "*"
 libsass = "*"
-factory-boy = "*"
 boto3 = "*"
 django-storages = "*"
 gunicorn = "*"

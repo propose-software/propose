@@ -108,6 +108,7 @@ def cabinet_update(req, proj_id=None, cab_id=None):
             context = {
                 'form': form,
                 'project': project,
+                'cabinet': cabinet,
                 'drawer_form': drawer_form
             }
             return render(req, './cabinet/cabinet_update.html', context)
