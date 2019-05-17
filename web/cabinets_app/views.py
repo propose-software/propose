@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.generic import CreateView
 from .models import (
     Account, Material, Labor,
     Specification, Hardware, Project, Room, Cabinet
 )
 from .forms import (
     ProjectForm, AccountForm, CabinetForm, SpecForm,
-    MaterialForm, HardwareForm, RoomForm, LaborForm
+    MaterialForm, HardwareForm, RoomForm, LaborForm,
+    CustomUserCreationForm
 )
 
 

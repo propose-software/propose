@@ -18,7 +18,12 @@ from .views_proj import (
 )
 from django.urls import path
 
+from django_registration.backends.activation.views import RegistrationView
+from .forms import CustomUserCreationForm
+
 urlpatterns = [
+    path('users/register/', RegistrationView.as_view(form_class=CustomUserCreationForm), name='django_registration_register'),
+
     path('', account, name='account'),
     path('account/',
          account_create, name='account_create'),
