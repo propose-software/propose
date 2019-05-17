@@ -6,7 +6,7 @@ from decimal import Decimal
 
 
 class CustomUser(AbstractUser):
-     company = models.CharField(max_length=256)
+    company = models.CharField(max_length=256)
 
 
 class Account(models.Model):
