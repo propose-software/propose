@@ -16,13 +16,14 @@ from .views_proj import (
     spec_create, spec_detail, spec_delete, spec_update,
     room_create, room_update, room_delete,
 )
-from django.urls import path
+from django.urls import path, include
 
 from django_registration.backends.activation.views import RegistrationView
 from .forms import CustomUserCreationForm
 
 urlpatterns = [
     path('users/register/', RegistrationView.as_view(form_class=CustomUserCreationForm), name='django_registration_register'),
+    path('accounts/', include('django_registration.backends.activation.urls')),
 
     path('', account, name='account'),
     path('account/',
