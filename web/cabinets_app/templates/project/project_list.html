@@ -23,8 +23,8 @@
               <td><a class="item_link" href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account }}</a></td>
               <td>{{ project.physical_address }}</td>
               <td>{{ project.site_contact }}</td>
-              <td>{{ project.contact_phone }}</td>
-              <td><a href="mailto:{{ project.contact_email }}">{{ project.contact_email }}</a></td>
+              <td class="no-wrap">{{ project.contact_phone }}</td>
+              <td class="no-wrap"><a href="mailto:{{ project.contact_email }}">{{ project.contact_email }}</a></td>
             </tr>
           {% endfor %}
         </tbody>

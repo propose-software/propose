@@ -168,7 +168,7 @@ aside li {
 }
 
 .item_list th, .item_list td {
-    min-width: 130px;
+    min-width: 30px;
     padding: .5em 20px;
 }
 
@@ -209,6 +209,10 @@ ul a {
     // box-shadow: rgb(44, 48, 49) 2px 2px 3px;
 }
 
+.item_list td {
+    width: fit-content;
+}
+
 .item_list td:first-child {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
@@ -223,6 +227,18 @@ ul a {
     background-color: $white;
     transition: 400ms;
     color: rgb(16, 77, 47);
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+td.right, th.right {
+    text-align: right;
+}
+
+td.center, th.center {
+    text-align: center;
 }
 
 section li:hover {
