@@ -13,6 +13,7 @@
     <form action="{% url 'project_delete' proj_id=project.id %}" method="POST">
       {% csrf_token %}
       <input class="delete" type="submit" value="Delete"/>
+      <a class="cancel" href="{% url 'project_detail' proj_id=project.id %}">Cancel</a>
     </form>
   </section>
 {% endblock %}

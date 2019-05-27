@@ -15,6 +15,7 @@
       {% csrf_token %}
       </table>
       <input class="delete" type="submit" value="Delete"/>
+      <a class="cancel" href="{% url 'labor_detail' labor_id=labor.id %}">Cancel</a>
     </form>
   </section>
 {% endblock %}
