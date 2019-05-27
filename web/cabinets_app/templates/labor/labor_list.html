@@ -12,7 +12,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Minutes / Unit Type</th>
+              <th class="center">Labor Time</th>
             </tr>
           </thead>
           <tbody>
@@ -20,7 +20,7 @@
               {% if labor.category == category %}
                 <tr class="item">
                   <td><a class="item_link" href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.item_name }}</a></td>
-                  <td>{{ labor.minutes }} min / {{ labor.unit_type }}</td>
+                  <td class="right">{{ labor.minutes }} min / {{ labor.unit_type }}</td>
                 </tr>
               {% endif %}
             {% endfor %}

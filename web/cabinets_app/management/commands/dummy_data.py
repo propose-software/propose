@@ -55,6 +55,8 @@ class Command(BaseCommand):
                     sheet_cost=row['Sheet_Cost'],
                     waste_factor=row['Waste_Factor'],
                     markup=row['Markup'],
+                    category=row['Category'],
+                    mat_type=row['Type'],
                 )
                 p.save()
 
@@ -66,6 +68,8 @@ class Command(BaseCommand):
                     cost_per=row['Cost_Per'],
                     unit_type=row['Unit'],
                     markup=row['Markup'],
+                    category=row['Category'],
+                    labor_minutes=row['Labor_Minutes'],
                 )
                 p.save()
 
@@ -76,6 +80,7 @@ class Command(BaseCommand):
                     item_name=row['\ufeffItem_Name'],
                     minutes=row['Minutes'],
                     unit_type=row['Units'],
+                    category=row['Category'],
                 )
                 p.save()
 

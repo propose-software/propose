@@ -1,8 +1,8 @@
-﻿Item_Name,Minutes,Units
-Cabinet,120,each,Production
-Door,60,each,Production
-Drawer,60,each,Production
-Shelf,5,each,Production
+﻿Item_Name,Minutes,Units,Category
+Cabinet,120,Each,Production
+Door,60,Each,Production
+Drawer,60,Each,Production
+Shelf,5,Each,Production
 Unfinished,0,Sq Ft,Finishing
 Sand & Prep Only,3,Sq Ft,Finishing
 Clear,6,Sq Ft,Finishing

@@ -87,8 +87,14 @@ def account_delete(req, account_id=None):
 
 @login_required
 def material_list(req):
+    materials = Material.objects.all()
+    categories = []
+    for material in materials:
+        if material.category not in categories:
+            categories.append(material.category)
     context = {
-        'materials': Material.objects.all()
+        'materials': materials,
+        'categories': categories,
     }
     return render(req, './material/material_list.html', context)
 

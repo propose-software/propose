@@ -32,7 +32,27 @@ class Account(models.Model):
 class Material(models.Model):
     """ Applied to Project/Cabinet via Specification
     """
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True, null=False)
+    CATEGORY_CHOICES = [
+        ('Interior Material', 'Interior Material'),
+        ('Exterior Material', 'Exterior Material'),
+        ('Drawer Material', 'Drawer Material'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Exterior Material'
+    )
+    TYPE_CHOICES = [
+        ('Sheet', 'Sheet'),
+        ('Board', 'Board'),
+        ('Moulding', 'Moulding'),
+    ]
+    mat_type = models.CharField(
+        choices=TYPE_CHOICES,
+        max_length=128,
+        default='Sheet'
+    )
     description = models.CharField(max_length=512)
     thickness = models.DecimalField(max_digits=4, decimal_places=2)
     width = models.DecimalField(max_digits=6, decimal_places=2)
@@ -47,13 +67,16 @@ class Material(models.Model):
 
     @property
     def sq_ft_cost(self):
-        sq_ft = ((self.width / 12) * (self.length / 12))
-        before_markup = self.sheet_cost / sq_ft
-        after_markup = before_markup + (before_markup * self.markup)
-        return after_markup
+        if self.mat_type == 'Sheet':
+            sq_ft = ((self.width / 12) * (self.length / 12))
+            before_markup = self.sheet_cost / sq_ft
+            after_markup = before_markup + (before_markup * self.markup)
+            return after_markup
+        else:
+            return 'N/A'
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('category', 'name',)
 
     def __repr__(self):
         return f'<Material: {self.name}>'
