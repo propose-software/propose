@@ -225,8 +225,14 @@ def hardware_delete(req, hardware_id=None):
 
 @login_required
 def labor_list(req):
+    labors = Labor.objects.all()
+    categories = []
+    for labor in labors:
+        if labor.category not in categories:
+            categories.append(labor.category)
     context = {
-        'labor': Labor.objects.all(),
+        'labor': labors,
+        'categories': categories,
     }
     return render(req, './labor/labor_list.html', context)
 
