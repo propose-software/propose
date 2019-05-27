@@ -92,6 +92,18 @@ class Labor(models.Model):
     """ Correlates items to labor required, for invoice calculations
     """
     item_name = models.CharField(max_length=128)
+    CATEGORY_CHOICES = [
+        ('Design', 'Design'),
+        ('Engineering', 'Engineering'),
+        ('Production', 'Production'),
+        ('Finishing', 'Finishing'),
+        ('Installation', 'Installation'),
+        ('Misc.', 'Misc.'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES
+        max_length=128
+    )
     minutes = models.IntegerField()
     UNIT_TYPE_CHOICES = [
         ('Each', 'Each'),
