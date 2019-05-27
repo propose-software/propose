@@ -118,7 +118,7 @@ class Labor(models.Model):
     )
 
     class Meta:
-        ordering = ('item_name',)
+        ordering = ('category', 'item_name',)
 
     def __repr__(self):
         return f'<Labor: {self.item_name}>'

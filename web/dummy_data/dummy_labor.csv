@@ -1,16 +1,16 @@
 ﻿Item_Name,Minutes,Units
-Cabinet,120,each
-Door,60,each
-Drawer,60,each
-Shelf,5,each
-Unfinished,0,sq ft
-Sand & Prep Only,3,sq ft
-Clear,6,sq ft
-Stain,8,sq ft
-Stain & Glaze,12,sq ft
-Stain & Distress,12,sq ft
-"Stain, Glaze, & Distress",16,sq ft
-Paint,10,sq ft
-Paint & Glaze,14,sq ft
-Paint & Distress,14,sq ft
-"Paint, Glaze, & Distress",18,sq ft
+Cabinet,120,each,Production
+Door,60,each,Production
+Drawer,60,each,Production
+Shelf,5,each,Production
+Unfinished,0,Sq Ft,Finishing
+Sand & Prep Only,3,Sq Ft,Finishing
+Clear,6,Sq Ft,Finishing
+Stain,8,Sq Ft,Finishing
+Stain & Glaze,12,Sq Ft,Finishing
+Stain & Distress,12,Sq Ft,Finishing
+"Stain, Glaze, & Distress",16,Sq Ft,Finishing
+Paint,10,Sq Ft,Finishing
+Paint & Glaze,14,Sq Ft,Finishing
+Paint & Distress,14,Sq Ft,Finishing
+"Paint, Glaze, & Distress",18,Sq Ft,Finishing

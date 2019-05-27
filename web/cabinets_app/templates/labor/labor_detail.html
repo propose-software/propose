@@ -9,10 +9,12 @@
       <tr>
         <td>Labor Name:</td>
         <td>{{ labor.item_name }}</td>
+        <td>Category</td>
       </tr>
       <tr>
         <td>Minutes Per {{labor.unit_type }}:</td>
         <td>{{ labor.minutes }}</td>
+        <td>{{ labor.category }}</td>
       </tr>
     </table>
     <a class='update' href="{% url 'labor_update' labor_id=labor.id %}">Update</a>

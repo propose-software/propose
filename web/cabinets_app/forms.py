@@ -130,6 +130,7 @@ class LaborForm(forms.ModelForm):
             'item_name',
             'minutes',
             'unit_type',
+            'category',
         ]
 
 
