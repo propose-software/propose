@@ -10,7 +10,8 @@
         {% csrf_token %}
         {{ form }}
       </table>
-      <input class='update' type="submit" value="Submit">
+      <input class='create' type="submit" value="Submit">
+      <a class="cancel" href="{% url 'account_detail' account_id=account.id %}">Cancel</a>
     </form>
   </section>
 {% endblock content %}
