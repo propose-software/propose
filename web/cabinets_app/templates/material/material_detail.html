@@ -1,7 +1,7 @@
 {% extends "generic/base.html" %}
 {% load math_filters %}
 
-{% block title %}Material Detail{% endblock title %}
+{% block title %}Propose - Material Detail{% endblock title %}
 
 {% block content %}
   <section class="material_detail">
@@ -9,6 +9,8 @@
       <h2>Material Detail</h2>
       <tr><td>Material Name:</td> <td>{{ material.name }}</td></tr>
       <tr><td>Description:</td> <td>{{ material.description }}</td></tr>
+      <tr><td>Category:</td> <td>{{ material.category }}</td></tr>
+      <tr><td>Material Type:</td> <td>{{ material.mat_type }}</td></tr>
       <tr><td>Thickness:</td> <td>{{ material.thickness }}"</td></tr>
       <tr><td>Width:</td> <td>{{ material.width }}"</td></tr>
       <tr><td>Length:</td> <td>{{ material.length }}"</td></tr>

@@ -73,11 +73,11 @@ class MaterialForm(forms.ModelForm):
             'name',
             'description',
             'category',
+            'mat_type',
             'thickness',
             'width',
             'length',
             'sheet_cost',
-            'mat_type',
             'waste_factor',
             'markup',
         ]
