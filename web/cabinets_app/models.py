@@ -70,7 +70,7 @@ class Hardware(models.Model):
         ('Hinges', 'Hinges'),
         ('Drawer Guides', 'Drawer Guides'),
         ('Knobs/Pulls', 'Knobs/Pulls'),
-        ('Accessory', 'Accessory'),
+        ('Accessories', 'Accessories'),
         ('Misc.', 'Misc.'),
     ]
     category = models.CharField(

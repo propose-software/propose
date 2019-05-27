@@ -7,26 +7,29 @@
   <section>
     <h2>Existing Hardware</h2>
     {% if hardware %}
-      <table class="item_list">
-        <thead>
-          <tr>
-            <th>Item Name</th>
-            <th>Cost</th>
-            <th>Category</th>
-            <th>Labor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for hardware in hardware %}
-          <tr class="item">
-            <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
-            <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
-            <td>{{ hardware.category }}</td>
-            <td>{{ hardware.labor_minutes }} {% if hardware.labor_minutes == 1 %} minute {% else %} minutes {% endif %}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      {% for category in categories %}
+        <h3>{{ category }}</h3>
+        <table class="item_list">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Cost</th>
+              <th>Labor</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hardware in hardware %}
+              {% if hardware.category == category %}
+                <tr class="item">
+                  <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
+                  <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
+                  <td>{{ hardware.labor_minutes }} {% if hardware.labor_minutes == 1 %} minute {% else %} minutes {% endif %}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
     {% else %}
     <h4>There are no saved hardware items. Click the Create button below to create one!</h4>
     {% endif %}

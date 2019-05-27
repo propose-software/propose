@@ -156,8 +156,14 @@ def material_delete(req, material_id=None):
 
 @login_required
 def hardware_list(req):
+    hardwares = Hardware.objects.all()
+    categories = []
+    for hardware in hardwares:
+        if hardware.category not in categories:
+            categories.append(hardware.category)
     context = {
-        'hardware': Hardware.objects.all()
+        'hardware': hardwares,
+        'categories': categories,
     }
     return render(req, './hardware/hardware_list.html', context)
 
