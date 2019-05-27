@@ -10,6 +10,7 @@
         <tr>
           <th>Item Name</th>
           <th>Cost</th>
+          <th>Category</th>
         </tr>
       </thead>
       <tbody>
@@ -17,6 +18,7 @@
           <tr class="item">
             <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
             <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
+            <td>{{ hardware.category }}</td>
           </tr>
         {% endfor %}
       </tbody>

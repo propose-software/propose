@@ -18,6 +18,10 @@
         <td>Markup:</td>
         <td>{{ hardware.markup }}</td>
       </tr>
+      <tr>
+        <td>Category:</td>
+        <td>{{ hardware.category }}</td>
+      </tr>
     </table>
     <a class='update' href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a>
     <a class='delete' href="{% url 'hardware_delete' hardware_id=hardware.id %}">Delete</a>

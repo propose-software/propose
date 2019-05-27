@@ -91,7 +91,7 @@ class Hardware(models.Model):
     markup = models.DecimalField(max_digits=3, decimal_places=2)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('category', 'name',)
 
     def __repr__(self):
         return f'<Hardware: {self.name}>'

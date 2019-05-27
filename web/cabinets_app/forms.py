@@ -119,7 +119,8 @@ class HardwareForm(forms.ModelForm):
             'name',
             'cost_per',
             'unit_type',
-            'markup'
+            'markup',
+            'category',
         ]
 
 
