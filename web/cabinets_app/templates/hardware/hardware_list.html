@@ -5,24 +5,28 @@
 {% block content %}
   <section>
     <h2>Existing Hardware</h2>
-    <table class="item_list">
-      <thead>
-        <tr>
-          <th>Item Name</th>
-          <th>Cost</th>
-          <th>Category</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for hardware in hardware %}
+    {% if hardware %}
+      <table class="item_list">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Cost</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for hardware in hardware %}
           <tr class="item">
             <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
             <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
             <td>{{ hardware.category }}</td>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+    <h4>There are no saved hardware items. Click the Create button below to create one!</h4>
+    {% endif %}
     <a class='create' href="{% url 'hardware_create' %}">Create New Hardware</a>
   </section>
 {% endblock content %}

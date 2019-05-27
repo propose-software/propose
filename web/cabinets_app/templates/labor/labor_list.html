@@ -5,26 +5,31 @@
 {% block content %}
   <section>
     <h2>Existing Labor Items</h2>
-    <!-- {# for labor in labor #} -->
+    <!-- {# for category in labor #} -->
       <!-- <h3></h3> -->
-      <table class="item_list">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Minutes / Unit Type</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for labor in labor %}
+      {% if labor %}
+        <table class="item_list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Minutes / Unit Type</th>
+              <th>Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for labor in labor %}
             <tr class="item">
               <td><a class="item_link" href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.item_name }}</a></td>
               <td>{{ labor.minutes }} min / {{ labor.unit_type }}</td>
               <td>{{ labor.category }}</td>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <h4>There are no saved labor items. Click the Create button below to create one!</h4>
+      {% endif %}
+
       <a class='create' href="{% url 'labor_create' %}">Create Labor Item</a>
     </section>
   <!-- { endfor } -->

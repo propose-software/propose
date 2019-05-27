@@ -226,7 +226,7 @@ def hardware_delete(req, hardware_id=None):
 @login_required
 def labor_list(req):
     context = {
-        'labor': Labor.objects.all()
+        'labor': Labor.objects.all(),
     }
     return render(req, './labor/labor_list.html', context)
 
