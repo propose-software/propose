@@ -1,4 +1,5 @@
 {% extends "generic/base.html" %}
+{% load math_filters %}
 
 {% block title %}Hardware List{% endblock %}
 
@@ -12,6 +13,7 @@
             <th>Item Name</th>
             <th>Cost</th>
             <th>Category</th>
+            <th>Labor</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +22,7 @@
             <td><a class="item_link" href="{% url 'hardware_detail' hardware_id=hardware.id %}">{{ hardware.name }}</a></td>
             <td>${{ hardware.cost_per }} ({{ hardware.unit_type }})</td>
             <td>{{ hardware.category }}</td>
+            <td>{{ hardware.labor_minutes }} {% if hardware.labor_minutes == 1 %} minute {% else %} minutes {% endif %}</td>
           </tr>
           {% endfor %}
         </tbody>

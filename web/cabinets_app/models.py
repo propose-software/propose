@@ -79,6 +79,7 @@ class Hardware(models.Model):
         default='Misc.'
     )
     cost_per = models.DecimalField(max_digits=6, decimal_places=2)
+    labor_minutes = models.IntegerField()
     UNIT_TYPE_CHOICES = [
         ('Each', 'Each'),
         ('Pair', 'Pair'),
@@ -163,7 +164,7 @@ class Project(models.Model):
         return project_total
 
     class Meta:
-        ordering = ('name','account',)
+        ordering = ('name', 'account',)
 
     def __repr__(self):
         return f'<{self.name}>'

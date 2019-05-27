@@ -22,7 +22,7 @@
             <td>{{ account.billing_address }}</td>
             <td>{{ account.contact_name }}</td>
             <td>{{ account.billing_phone }}</td>
-            <td>{{ account.billing_email }}</td>
+            <td><a href="mailto:{{ account.billing_email }}">{{ account.billing_email }}</a></td>
           </tr>
         {% endfor %}
       </tbody>
