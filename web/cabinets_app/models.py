@@ -163,7 +163,7 @@ class Project(models.Model):
         return project_total
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('name','account',)
 
     def __repr__(self):
         return f'<{self.name}>'

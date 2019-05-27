@@ -5,15 +5,29 @@
 {% block content %}
   <section>
     <h2>Existing Projects</h2>
-    <ul>
-      {% for project in projects %}
-      <li>
-        <a href="{% url 'project_detail' proj_id=project.id %}">{{project.name}}</a> |
-        <a href="{% url 'project_update' proj_id=project.id %}">Update</a> |
-        <a href="{% url 'project_delete' proj_id=project.id %}">Delete</a>
-      </li>
-      {% endfor %}
-    </ul>
-    <p><a class='create' href="{% url 'project_create' %}">Create Project</a></p>
+    <table class="account_list item_list">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Account Name</th>
+            <th>Physical Address</th>
+            <th>Site Contact</th>
+            <th>Contact Phone</th>
+            <th>Contact Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+            <tr class="item">
+              <td><a class="item_link" href="{% url 'project_detail' proj_id=project.id %}">{{ project.name }}</a></td>
+              <td>{{ project.account }}</td>
+              <td>{{ project.physical_address }}</td>
+              <td>{{ project.site_contact }}</td>
+              <td>{{ project.contact_phone }}</td>
+              <td>{{ project.contact_email }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
   </section>
 {% endblock content %}
