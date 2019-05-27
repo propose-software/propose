@@ -66,6 +66,18 @@ class Hardware(models.Model):
     """ Applied to Project/Cabinet via Specification
     """
     name = models.CharField(max_length=128)
+    CATEGORY_CHOICES = [
+        ('Hinges', 'Hinges'),
+        ('Drawer Guides', 'Drawer Guides'),
+        ('Knobs/Pulls', 'Knobs/Pulls'),
+        ('Accessory', 'Accessory'),
+        ('Misc.', 'Misc.'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Misc.'
+    )
     cost_per = models.DecimalField(max_digits=6, decimal_places=2)
     UNIT_TYPE_CHOICES = [
         ('Each', 'Each'),
