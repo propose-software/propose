@@ -101,8 +101,9 @@ class Labor(models.Model):
         ('Misc.', 'Misc.'),
     ]
     category = models.CharField(
-        choices=CATEGORY_CHOICES
-        max_length=128
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Production'
     )
     minutes = models.IntegerField()
     UNIT_TYPE_CHOICES = [
