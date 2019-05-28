@@ -1,13 +1,39 @@
 from django.db import models
 from django.utils import timezone
 from datetime import datetime
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 
 
+class Company(models.Model):
+    """Defines a Company using the application"""
+    name = models.CharField(max_length=128)
+    billing_address = models.CharField(max_length=1024)
+    billing_phone = models.CharField(max_length=32)
+    billing_email = models.EmailField(max_length=256)
+    contact_name = models.CharField(max_length=128)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __repr__(self):
+        return f'<Company: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+class CustomUser(AbstractUser):
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='users',
+        default=Company.objects.get(name='Test Company'),
+    )
+
+
 class Account(models.Model):
-    """ Defines a customer account
-    """
+    """Defines a Company's Account"""
     name = models.CharField(max_length=128)
     billing_address = models.CharField(max_length=1024)
     billing_phone = models.CharField(max_length=32)
@@ -26,9 +52,28 @@ class Account(models.Model):
 
 
 class Material(models.Model):
-    """ Applied to Project/Cabinet via Specification
-    """
-    name = models.CharField(max_length=128)
+    """Applied to Project/Cabinet via Specification"""
+    name = models.CharField(max_length=128, unique=True, null=False)
+    CATEGORY_CHOICES = [
+        ('Interior Material', 'Interior Material'),
+        ('Exterior Material', 'Exterior Material'),
+        ('Drawer Material', 'Drawer Material'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Exterior Material'
+    )
+    TYPE_CHOICES = [
+        ('Sheet', 'Sheet'),
+        ('Board', 'Board'),
+        ('Moulding', 'Moulding'),
+    ]
+    mat_type = models.CharField(
+        choices=TYPE_CHOICES,
+        max_length=128,
+        default='Sheet'
+    )
     description = models.CharField(max_length=512)
     thickness = models.DecimalField(max_digits=4, decimal_places=2)
     width = models.DecimalField(max_digits=6, decimal_places=2)
@@ -43,13 +88,16 @@ class Material(models.Model):
 
     @property
     def sq_ft_cost(self):
-        sq_ft = ((self.width / 12) * (self.length / 12))
-        before_markup = self.sheet_cost / sq_ft
-        after_markup = before_markup + (before_markup * self.markup)
-        return after_markup
+        if self.mat_type == 'Sheet':
+            sq_ft = ((self.width / 12) * (self.length / 12))
+            before_markup = self.sheet_cost / sq_ft
+            after_markup = before_markup + (before_markup * self.markup)
+            return after_markup
+        else:
+            return 'N/A'
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('category', 'name',)
 
     def __repr__(self):
         return f'<Material: {self.name}>'
@@ -62,7 +110,20 @@ class Hardware(models.Model):
     """ Applied to Project/Cabinet via Specification
     """
     name = models.CharField(max_length=128)
+    CATEGORY_CHOICES = [
+        ('Hinges', 'Hinges'),
+        ('Drawer Guides', 'Drawer Guides'),
+        ('Knobs/Pulls', 'Knobs/Pulls'),
+        ('Accessories', 'Accessories'),
+        ('Misc.', 'Misc.'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Misc.'
+    )
     cost_per = models.DecimalField(max_digits=6, decimal_places=2)
+    labor_minutes = models.IntegerField()
     UNIT_TYPE_CHOICES = [
         ('Each', 'Each'),
         ('Pair', 'Pair'),
@@ -75,7 +136,7 @@ class Hardware(models.Model):
     markup = models.DecimalField(max_digits=3, decimal_places=2)
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('category', 'name',)
 
     def __repr__(self):
         return f'<Hardware: {self.name}>'
@@ -88,6 +149,19 @@ class Labor(models.Model):
     """ Correlates items to labor required, for invoice calculations
     """
     item_name = models.CharField(max_length=128)
+    CATEGORY_CHOICES = [
+        ('Design', 'Design'),
+        ('Engineering', 'Engineering'),
+        ('Production', 'Production'),
+        ('Finishing', 'Finishing'),
+        ('Installation', 'Installation'),
+        ('Misc.', 'Misc.'),
+    ]
+    category = models.CharField(
+        choices=CATEGORY_CHOICES,
+        max_length=128,
+        default='Production'
+    )
     minutes = models.IntegerField()
     UNIT_TYPE_CHOICES = [
         ('Each', 'Each'),
@@ -101,7 +175,7 @@ class Labor(models.Model):
     )
 
     class Meta:
-        ordering = ('item_name',)
+        ordering = ('category', 'item_name',)
 
     def __repr__(self):
         return f'<Labor: {self.item_name}>'
@@ -134,7 +208,7 @@ class Project(models.Model):
         return project_total
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('name', 'account',)
 
     def __repr__(self):
         return f'<{self.name}>'

@@ -1,6 +1,7 @@
 {% extends "generic/base.html" %}
+{% load math_filters %}
 
-{% block title %}Account Detail{% endblock %}
+{% block title %}Propose - Account Detail{% endblock %}
 
 {% block content %}
   <section>
@@ -11,7 +12,7 @@
       <tr><td>Phone:</td> <td>{{ account.billing_phone }}</td></tr>
       <tr><td>Email:</td> <td>{{ account.billing_email }}</td></tr>
       <tr><td>Contact:</td> <td>{{ account.contact_name }}</td></tr>
-      <tr><td>Discount:</td> <td>{{ account.discount }}</td></tr>
+      <tr><td>Discount:</td> <td>{{ account.discount|percent|floatformat:2 }}%</td></tr>
     </table>
 
     <a class='update' href="{% url 'account_update' account_id=account.id %}">Update</a>

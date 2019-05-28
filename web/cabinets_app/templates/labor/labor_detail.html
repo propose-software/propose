@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Labor Detail{% endblock %}
+{% block title %}Propose - Labor Detail{% endblock %}
 
 {% block content %}
   <section class="hardware_detail">
@@ -11,8 +11,12 @@
         <td>{{ labor.item_name }}</td>
       </tr>
       <tr>
-        <td>Minutes Per {{labor.unit_type }}:</td>
+        <td>Minutes / {{labor.unit_type }}:</td>
         <td>{{ labor.minutes }}</td>
+      </tr>
+      <tr>
+        <td>Category:</td>
+        <td>{{ labor.category }}</td>
       </tr>
     </table>
     <a class='update' href="{% url 'labor_update' labor_id=labor.id %}">Update</a>

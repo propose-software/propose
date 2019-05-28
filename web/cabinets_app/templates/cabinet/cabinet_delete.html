@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Project Delete{% endblock %}
+{% block title %}Propose - Delete Cabinet{% endblock %}
 
 {% block content %}
   <section>
@@ -11,6 +11,7 @@
     <form action="{% url 'cabinet_delete' proj_id=project.id cab_id=cabinet.id %}" method="POST">
       {% csrf_token %}
       <input class="delete" type="submit" value="Delete"/>
+      <a class="cancel" href="{% url 'cabinet_detail' proj_id=project.id cab_id=cabinet.id %}">Cancel</a>
     </form>
   </section>
 {% endblock %}

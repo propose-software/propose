@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Delete Specification{% endblock %}
+{% block title %}Propose - Delete Specification{% endblock %}
 
 {% block content %}
   <section>
@@ -15,6 +15,7 @@
         {% csrf_token %}
       </table>
       <input class="delete" type="submit" value="Delete"/>
+      <a class="cancel" href="{% url 'spec_detail' proj_id=project.id spec_id=spec.id %}">Cancel</a>
     </form>
   </section>
 {% endblock %}

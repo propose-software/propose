@@ -1,26 +1,36 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Labor List{% endblock title %}
+{% block title %}Propose - Labor List{% endblock title %}
 
 {% block content %}
   <section>
     <h2>Existing Labor Items</h2>
-    <table class="item_list">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Minutes per Unit Type</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for labor in labor %}
-          <tr class="item">
-            <td><a class="item_link" href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.item_name }}</a></td>
-            <td>{{ labor.minutes }} min / {{ labor.unit_type }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <a class='create' href="{% url 'labor_create' %}">Create Labor Item</a>
-  </section>
+    {% if labor %}
+      {% for category in categories %}
+        <h4>{{ category }}</h4>
+        <table class="item_list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th class="center">Labor Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for labor in labor %}
+              {% if labor.category == category %}
+                <tr class="item">
+                  <td><a class="item_link" href="{% url 'labor_detail' labor_id=labor.id %}">{{ labor.item_name }}</a></td>
+                  <td class="right">{{ labor.minutes }} min / {{ labor.unit_type }}</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
+    {% else %}
+      <h4>There are no saved labor items. Click the Create button below to create one!</h4>
+    {% endif %}
+
+      <a class='create' href="{% url 'labor_create' %}">Create Labor Item</a>
+    </section>
 {% endblock content %}

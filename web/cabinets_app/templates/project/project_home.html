@@ -1,7 +1,7 @@
 {% extends "generic/base.html" %}
 {% load humanize %}
 
-{% block title %}Project Home{% endblock %}
+{% block title %}Propose - Project Home{% endblock %}
 
 {% block content %}
   <section class="project-detail">
@@ -35,7 +35,7 @@
           <tbody>
             {% for cab in room.cabinets.all %}
             <tr>
-              <td>{{ cab.cabinet_number }}</td>
+              <td><a href="{% url 'cabinet_detail' proj_id=cab.project.id cab_id=cab.id %}">{{ cab.cabinet_number }}</a></td>
               <td><a href="{% url 'spec_detail' proj_id=cab.project.id spec_id=cab.specification.id %}">{{ cab.specification.name }}</a></td>
               <td>{{ cab.width }}"</td>
               <td>{{ cab.height }}"</td>

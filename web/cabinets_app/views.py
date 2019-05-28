@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.views.generic import CreateView
 from .models import (
     Account, Material, Labor,
     Specification, Hardware, Project, Room, Cabinet
 )
 from .forms import (
     ProjectForm, AccountForm, CabinetForm, SpecForm,
-    MaterialForm, HardwareForm, RoomForm, LaborForm
+    MaterialForm, HardwareForm, RoomForm, LaborForm,
+    CustomUserCreationForm
 )
 
 
@@ -85,8 +87,14 @@ def account_delete(req, account_id=None):
 
 @login_required
 def material_list(req):
+    materials = Material.objects.all()
+    categories = []
+    for material in materials:
+        if material.category not in categories:
+            categories.append(material.category)
     context = {
-        'materials': Material.objects.all()
+        'materials': materials,
+        'categories': categories,
     }
     return render(req, './material/material_list.html', context)
 
@@ -154,8 +162,14 @@ def material_delete(req, material_id=None):
 
 @login_required
 def hardware_list(req):
+    hardwares = Hardware.objects.all()
+    categories = []
+    for hardware in hardwares:
+        if hardware.category not in categories:
+            categories.append(hardware.category)
     context = {
-        'hardware': Hardware.objects.all()
+        'hardware': hardwares,
+        'categories': categories,
     }
     return render(req, './hardware/hardware_list.html', context)
 
@@ -223,8 +237,14 @@ def hardware_delete(req, hardware_id=None):
 
 @login_required
 def labor_list(req):
+    labors = Labor.objects.all()
+    categories = []
+    for labor in labors:
+        if labor.category not in categories:
+            categories.append(labor.category)
     context = {
-        'labor': Labor.objects.all()
+        'labor': labors,
+        'categories': categories,
     }
     return render(req, './labor/labor_list.html', context)
 

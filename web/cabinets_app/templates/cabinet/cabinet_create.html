@@ -1,24 +1,25 @@
 {% extends "generic/base.html" %}
 {% load static %}
 
-{% block title %}Cabinet Create{% endblock %}
+{% block title %}Propose - Create Cabinet{% endblock %}
 
 {% block content %}
   <section>
     <h2>Create Cabinet</h2>
     <form action="{% url 'cabinet_create' proj_id=project.id room_id=room.id %}" method="POST">
       <table>
-      {{ form }}
+        {{ form }}
       </table>
 
       <h3>Drawers:</h3>
       <div id="add-drawer-button" class="create drawer-button">+</div>
 
       <table id="drawer-form"
-          data-url="{% url 'drawer_form' proj_id=project.id %}">
+        data-url="{% url 'drawer_form' proj_id=project.id %}">
           {% include './drawer_form.html' %}
       </table>
       <input class="create" type="submit" value="Submit">
+      <a class="cancel" href="{% url 'project_home' proj_id=project.id %}">Cancel</a>
     </form>
   </section>
 

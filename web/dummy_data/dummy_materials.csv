@@ -1,22 +1,22 @@
-﻿Name,Description,Thickness,Width,Length,Sheet_Cost,Waste_Factor,Markup
-Select Cherry,3/4 A1 Select Cherry Plywood,0.75,48,96,120,0.15,0.2
-Rustic Cherry,3/4 A1 Rustic Cherry Plywood,0.75,48,96,100,0.3,0.2
-Select Walnut,3/4 A1 Select Walnut Plywood,0.75,48,96,140,0.15,0.2
-Select Alder,3/4 A1 Select Alder Plywood,0.75,48,96,120,0.15,0.2
-Knotty Alder,3/4 A1 Knotty Alder Plywood,0.75,48,96,115,0.25,0.2
-Select Maple,3/4 A1 Select Maple Plywood,0.75,48,96,120,0.15,0.2
-Rift White Oak,3/4 A1 Select Rift White Oak Plywood,0.75,48,96,135,0.15,0.2
-PG Maple,3/4 C2 Paint Grade Maple,0.75,48,96,80,0.15,0.2
-Absolute Acajou,3/4 Absolute Acajou,0.75,48,96,55,0.1,0.2
-Aimto Savatre,3/4 Aimto Savatre,0.75,48,96,55,0.1,0.2
-Cappucino Maple Timber,3/4 Cappucino Maple Timber,0.75,48,96,55,0.1,0.2
-Exquisite Elm,3/4 Exquisite Elm,0.75,48,96,55,0.1,0.2
-Kona Blend,3/4 Kona Blend,0.75,48,96,55,0.1,0.2
-Leave Likatre,3/4 Leave Likatre,0.75,48,96,55,0.1,0.2
-Looks Likatre,3/4 Looks Likatre,0.75,48,96,55,0.1,0.2
-Trytoo Savatre,3/4 Trytoo Savatre,0.75,48,96,55,0.1,0.2
-White Melamine,3/4 White Melamine,0.75,48,96,35,0.1,0.2
-Maple Melamine,3/4 Maple Melamine,0.75,48,96,40,0.1,0.2
-Black Melamine,3/4 Black Melamine,0.75,48,96,40,0.1,0.2
-Prefinished Maple,3/4 Prefinished Maple Plywood,0.75,48,96,65,0.1,0.2
-Drawer Material,1/2 Prefinished Birch Plywood,0.5,48,96,50,0.2,0.2
+﻿Name,Description,Thickness,Width,Length,Sheet_Cost,Waste_Factor,Markup,Category,Type
+Select Cherry,3/4 A1 Select Cherry Plywood,0.75,48,96,120,0.15,0.2,Exterior Material,Sheet
+Rustic Cherry,3/4 A1 Rustic Cherry Plywood,0.75,48,96,100,0.3,0.2,Exterior Material,Sheet
+Select Walnut,3/4 A1 Select Walnut Plywood,0.75,48,96,140,0.15,0.2,Exterior Material,Sheet
+Select Alder,3/4 A1 Select Alder Plywood,0.75,48,96,120,0.15,0.2,Exterior Material,Sheet
+Knotty Alder,3/4 A1 Knotty Alder Plywood,0.75,48,96,115,0.25,0.2,Exterior Material,Sheet
+Select Maple,3/4 A1 Select Maple Plywood,0.75,48,96,120,0.15,0.2,Exterior Material,Sheet
+Rift White Oak,3/4 A1 Select Rift White Oak Plywood,0.75,48,96,135,0.15,0.2,Exterior Material,Sheet
+PG Maple,3/4 C2 Paint Grade Maple,0.75,48,96,80,0.15,0.2,Exterior Material,Sheet
+Absolute Acajou,3/4 Absolute Acajou,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Aimto Savatre,3/4 Aimto Savatre,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Cappucino Maple Timber,3/4 Cappucino Maple Timber,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Exquisite Elm,3/4 Exquisite Elm,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Kona Blend,3/4 Kona Blend,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Leave Likatre,3/4 Leave Likatre,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Looks Likatre,3/4 Looks Likatre,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+Trytoo Savatre,3/4 Trytoo Savatre,0.75,48,96,55,0.1,0.2,Exterior Material,Sheet
+White Melamine,3/4 White Melamine,0.75,48,96,35,0.1,0.2,Interior Material,Sheet
+Maple Melamine,3/4 Maple Melamine,0.75,48,96,40,0.1,0.2,Interior Material,Sheet
+Black Melamine,3/4 Black Melamine,0.75,48,96,40,0.1,0.2,Interior Material,Sheet
+Prefinished Maple,3/4 Prefinished Maple Plywood,0.75,48,96,65,0.1,0.2,Interior Material,Sheet
+Prefinished Birch Plywood,1/2 Prefinished Birch Plywood,0.5,48,96,50,0.2,0.2,Drawer Material,Sheet

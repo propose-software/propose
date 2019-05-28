@@ -1,9 +1,30 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django_registration.forms import RegistrationForm
 from .models import (
     Account, Material, Hardware,
     Labor, Project, Specification,
-    Cabinet, Drawer, Room
+    Cabinet, Drawer, Room, CustomUser
 )
+
+User = get_user_model()
+
+
+class CustomUserCreationForm(RegistrationForm):
+    company = forms.CharField(max_length=256)
+
+    class Meta(RegistrationForm.Meta):
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'username', 'email', 'company', 'password1', 'password2']
+
+
+class CustomUserChangeForm(UserChangeForm):
+    company = forms.CharField(max_length=256)
+
+    class Meta:
+        model = CustomUser
+        fields = UserChangeForm.Meta.fields
 
 
 class AccountForm(forms.ModelForm):
@@ -51,6 +72,8 @@ class MaterialForm(forms.ModelForm):
         fields = [
             'name',
             'description',
+            'category',
+            'mat_type',
             'thickness',
             'width',
             'length',
@@ -98,7 +121,9 @@ class HardwareForm(forms.ModelForm):
             'name',
             'cost_per',
             'unit_type',
-            'markup'
+            'labor_minutes',
+            'markup',
+            'category',
         ]
 
 
@@ -109,6 +134,7 @@ class LaborForm(forms.ModelForm):
             'item_name',
             'minutes',
             'unit_type',
+            'category',
         ]
 
 

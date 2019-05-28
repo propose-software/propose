@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Account List{% endblock %}
+{% block title %}Propose - Account List{% endblock %}
 
 {% block content %}
   <section>
@@ -21,8 +21,8 @@
             <td><a class="item_link" href="{% url 'account_detail' account_id=account.id %}">{{ account.name }}</a></td>
             <td>{{ account.billing_address }}</td>
             <td>{{ account.contact_name }}</td>
-            <td>{{ account.billing_phone }}</td>
-            <td>{{ account.billing_email }}</td>
+            <td class="no-wrap">{{ account.billing_phone }}</td>
+            <td class="no-wrap"><a href="mailto:{{ account.billing_email }}">{{ account.billing_email }}</a></td>
           </tr>
         {% endfor %}
       </tbody>

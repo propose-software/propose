@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Project Detail{% endblock title %}
+{% block title %}Propose - Project Detail{% endblock title %}
 
 {% block content %}
   <section class="project_detail">
@@ -40,7 +40,6 @@
       <thead>
         <tr>
           <th>Spec Name</th>
-          <th>Project</th>
           <th>Catalog</th>
           <th>Interior Material</th>
           <th>Exterior Material</th>
@@ -50,7 +49,6 @@
         {% for spec in specs %}
         <tr class="item">
           <td><a class="item_link" href="{% url 'spec_detail' proj_id=project.id spec_id=spec.id %}">{{ spec.name }}</a></td>
-          <td>{{ spec.project.name }}</td>
           <td>{{ spec.catalog }}</td>
           <td>{{ spec.interior_material.name }}</td>
           <td>{{ spec.exterior_material.name }}</td>
@@ -62,19 +60,17 @@
   </section>
 
   <section>
-    <h3>Rooms</h3>
+    <h4>Rooms</h4>
     <table class="item_list">
       <thead>
         <tr>
           <th>Room Name</th>
-          <th>Project</th>
         </tr>
       </thead>
       <tbody>
         {% for room in project.rooms.all %}
         <tr class="item">
           <td><a href="{% url 'room_update' proj_id=project.id room_id=room.id %}">{{ room.name }}</a></td>
-          <td>{{ project.name }}</td>
         </tr>
         {% endfor %}
       </tbody>

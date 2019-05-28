@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Create Account{% endblock %}
+{% block title %}Propose - Create Account{% endblock %}
 
 {% block content %}
   <section>
@@ -11,6 +11,7 @@
       {{ form }}
       </table>
       <input class='create' type="submit" value="Submit">
+      <a class="cancel" href="{% url 'account' %}">Cancel</a>
     </form>
   </section>
 {% endblock content %}

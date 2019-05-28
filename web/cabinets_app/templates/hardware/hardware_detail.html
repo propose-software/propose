@@ -1,6 +1,7 @@
 {% extends "generic/base.html" %}
+{% load math_filters %}
 
-{% block title %}Hardware Detail{% endblock %}
+{% block title %}Propose - Hardware Detail{% endblock %}
 
 {% block content %}
   <section class="hardware_detail">
@@ -15,8 +16,16 @@
         <td>${{ hardware.cost_per }}</td>
       </tr>
       <tr>
+        <td>Labor Per:</td>
+        <td>{{ hardware.labor_minutes }} {% if hardware.labor_minutes == 1 %} minute {% else %} minutes {% endif %}</td>
+      </tr>
+      <tr>
         <td>Markup:</td>
-        <td>{{ hardware.markup }}</td>
+        <td>{{ hardware.markup|percent|floatformat:2 }}%</td>
+      </tr>
+      <tr>
+        <td>Category:</td>
+        <td>{{ hardware.category }}</td>
       </tr>
     </table>
     <a class='update' href="{% url 'hardware_update' hardware_id=hardware.id %}">Update</a>

@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils import timezone
 from cabinets_app.models import (
-    Account, Material, Hardware, Labor,
+    Company, Account, Material, Hardware, Labor,
     Project, Specification, Room, Cabinet, Drawer)
 import csv
 
@@ -9,11 +9,24 @@ import csv
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
+        Company.objects.all().delete()
         Account.objects.all().delete()
         Project.objects.all().delete()
         Material.objects.all().delete()
         Hardware.objects.all().delete()
         Labor.objects.all().delete()
+
+        with open('dummy_data/dummy_companies.csv') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                p = Company(
+                    name=row['name'],
+                    billing_address=row['billing_address'],
+                    billing_phone=row['billing_phone'],
+                    billing_email=row['billing_email'],
+                    contact_name=row['contact_name'],
+                )
+                p.save()
 
         with open('dummy_data/dummy_accounts.csv') as f:
             reader = csv.DictReader(f)
@@ -55,6 +68,8 @@ class Command(BaseCommand):
                     sheet_cost=row['Sheet_Cost'],
                     waste_factor=row['Waste_Factor'],
                     markup=row['Markup'],
+                    category=row['Category'],
+                    mat_type=row['Type'],
                 )
                 p.save()
 
@@ -66,6 +81,8 @@ class Command(BaseCommand):
                     cost_per=row['Cost_Per'],
                     unit_type=row['Unit'],
                     markup=row['Markup'],
+                    category=row['Category'],
+                    labor_minutes=row['Labor_Minutes'],
                 )
                 p.save()
 
@@ -76,6 +93,7 @@ class Command(BaseCommand):
                     item_name=row['\ufeffItem_Name'],
                     minutes=row['Minutes'],
                     unit_type=row['Units'],
+                    category=row['Category'],
                 )
                 p.save()
 

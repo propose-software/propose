@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Hardware Update{% endblock %}
+{% block title %}Propose - Update Hardware{% endblock %}
 
 {% block content %}
   <section>
@@ -10,7 +10,8 @@
       {% csrf_token %}
       {{ form }}
       </table>
-      <input class="update" type="submit" value="Save">
+      <input class="create" type="submit" value="Save">
+      <a class="cancel" href="{% url 'hardware_detail' hardware_id=hardware.id %}">Cancel</a>
     </form>
   </section>
 {% endblock content %}

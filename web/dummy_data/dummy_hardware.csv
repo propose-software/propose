@@ -1,3 +1,4 @@
-﻿Name,Description,Cost_Per,Unit,Markup
-Blum 110+ Hinge,Standard Door Hinge,4.25,each,0.15
-Blum 563 UM Guide,Undermount Drawer Guide,24.35,pair,0.15
+﻿Name,Description,Cost_Per,Unit,Markup,Category,Labor_Minutes
+Blum 110+ Hinge,Standard Door Hinge,4.25,Each,0.15,Hinges,3
+Blum 563 UM Guide,Undermount Drawer Guide,24.35,Pair,0.15,Drawer Guides,12
+LeMans II,Base Corner Unit with Pole,450.00,Set,0.05,Accessories,120

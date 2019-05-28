@@ -1,32 +1,48 @@
 {% extends "generic/base.html" %}
+{% load math_filters %}
 
-{% block title %}Material List{% endblock %}
+{% block title %}Propose - Material List{% endblock %}
 
 {% block content %}
   <section>
     <h2>Existing Materials</h2>
-    <table class="item_list">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Thickness</th>
-          <th>Width</th>
-          <th>Length</th>
-          <th>Cost</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for material in materials %}
-          <tr class="item">
-            <td><a class="item_link" href="{% url 'material_detail' material_id=material.id %}">{{ material.name }}</a></td>
-            <td>{{ material.thickness }}"</td>
-            <td>{{ material.width }}"</td>
-            <td>{{ material.length }}"</td>
-            <td>${{ material.sheet_cost }} / sheet</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {% if materials %}
+      {% for category in categories %}
+        <h4>{{ category }}</h4>
+        <table class="item_list">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Thickness</th>
+              <th>Width</th>
+              <th>Length</th>
+              <th class="center">Piece Cost</th>
+              <th class="center">Unit Cost</th>
+              <th>Waste</th>
+              <th>Markup</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for material in materials %}
+              {% if material.category == category %}
+                <tr class="item">
+                  <td><a class="item_link" href="{% url 'material_detail' material_id=material.id %}">{{ material.name }}</a></td>
+                  <td class="center">{{ material.thickness }}"</td>
+                  <td class="center">{{ material.width }}"</td>
+                  <td class="center">{{ material.length }}"</td>
+                  <td class="no-wrap right">${{ material.sheet_cost }} / {{ material.mat_type }}</td>
+                  <td class="no-wrap right">${{ material.sq_ft_cost|floatformat:2 }} / Sq Ft</td>
+                  <td class="center">{{ material.waste_factor|percent|floatformat:0 }}%</td>
+                  <td class="center">{{ material.markup|percent|floatformat:0 }}%</td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endfor %}
+    {% else %}
+        <h4>There are no saved materials. Click the Create button below to create one!</h4>
+    {% endif %}
     <a class='create' href="{% url 'material_create' %}">Create New Material</a>
   </section>
 {% endblock content %}

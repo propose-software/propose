@@ -1,6 +1,6 @@
 {% extends "generic/base.html" %}
 
-{% block title %}Hardware Delete{% endblock %}
+{% block title %}Propose - Delete Hardware{% endblock %}
 
 {% block content %}
   <section>
@@ -15,6 +15,7 @@
       {% csrf_token %}
       </table>
       <input class="delete" type="submit" value="Delete"/>
+      <a class="cancel" href="{% url 'hardware_detail' hardware_id=hardware.id %}">Cancel</a>
     </form>
   </section>
 {% endblock %}

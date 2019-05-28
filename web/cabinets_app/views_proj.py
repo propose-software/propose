@@ -15,7 +15,7 @@ from .forms import (
 @login_required
 def project_list(req, account_id=None):
     context = {
-        'projects': Project.objects.filter(account__id=account_id)
+        'projects': Project.objects.all()
     }
     return render(req, './project/project_list.html', context)
 
