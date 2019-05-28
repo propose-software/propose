@@ -5,13 +5,35 @@ from django.contrib.auth.models import AbstractUser
 from decimal import Decimal
 
 
+class Company(models.Model):
+    """Defines a Company using the application"""
+    name = models.CharField(max_length=128)
+    billing_address = models.CharField(max_length=1024)
+    billing_phone = models.CharField(max_length=32)
+    billing_email = models.EmailField(max_length=256)
+    contact_name = models.CharField(max_length=128)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __repr__(self):
+        return f'<Company: {self.name}>'
+
+    def __str__(self):
+        return f'{self.name}'
+
+
 class CustomUser(AbstractUser):
-    company = models.CharField(max_length=256)
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name='users',
+        default=Company.objects.get(name='Test Company'),
+    )
 
 
 class Account(models.Model):
-    """ Defines a customer account
-    """
+    """Defines a Company's Account"""
     name = models.CharField(max_length=128)
     billing_address = models.CharField(max_length=1024)
     billing_phone = models.CharField(max_length=32)
@@ -30,8 +52,7 @@ class Account(models.Model):
 
 
 class Material(models.Model):
-    """ Applied to Project/Cabinet via Specification
-    """
+    """Applied to Project/Cabinet via Specification"""
     name = models.CharField(max_length=128, unique=True, null=False)
     CATEGORY_CHOICES = [
         ('Interior Material', 'Interior Material'),
