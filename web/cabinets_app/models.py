@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
         Company,
         on_delete=models.CASCADE,
         related_name='users',
-        default=Company.objects.get(name='Test Company'),
+        null=True,
     )
 
 
