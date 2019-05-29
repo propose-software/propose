@@ -12,15 +12,22 @@ User = get_user_model()
 
 
 class CustomUserCreationForm(RegistrationForm):
-    company = forms.CharField(max_length=256)
+    # company = forms.CharField(max_length=256)
 
     class Meta(RegistrationForm.Meta):
         model = CustomUser
-        fields = ['first_name', 'last_name', 'username', 'email', 'company', 'password1', 'password2']
+        fields = [
+            'first_name',
+            'last_name',
+            'username',
+            'email',
+            'password1',
+            'password2',
+        ]
 
 
 class CustomUserChangeForm(UserChangeForm):
-    company = forms.CharField(max_length=256)
+    # company = forms.CharField(max_length=256)
 
     class Meta:
         model = CustomUser
