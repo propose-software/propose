@@ -19,7 +19,7 @@
         {% for account in accounts %}
           <tr class="item">
             <td><a class="item_link" href="{% url 'account_detail' account_id=account.id %}">{{ account.name }}</a></td>
-            <td>{{ account.billing_address }}</td>
+            <td><a href="{{ account.address_link }}" target="_blank">{{ account.billing_address }}</a></td>
             <td>{{ account.contact_name }}</td>
             <td class="no-wrap">{{ account.billing_phone }}</td>
             <td class="no-wrap"><a href="mailto:{{ account.billing_email }}">{{ account.billing_email }}</a></td>

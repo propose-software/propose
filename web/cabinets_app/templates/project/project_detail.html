@@ -10,7 +10,7 @@
     <table>
       <tr>
         <td>Jobsite Address:</td>
-        <td colspan="2">{{ project.physical_address }}</td>
+        <td colspan="2"><a href="{{ project.address_link }}" target="_blank">{{ project.physical_address }}</a></td>
       </tr>
       <tr>
         <td>Site Contact:</td>
@@ -23,7 +23,7 @@
       </tr>
       <tr>
         <td>Contact Email:</td>
-        <td colspan="2">{{ project.contact_email }}</td>
+        <td colspan="2"><a href="mailto:{{ project.contact_email }}">{{ project.contact_email }}</a></td>
       </tr>
       <tr>
         <td>Hourly Rate:</td>

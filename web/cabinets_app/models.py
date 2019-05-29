@@ -28,7 +28,7 @@ class CustomUser(AbstractUser):
         Company,
         on_delete=models.CASCADE,
         related_name='users',
-        default=Company.objects.get(name='Test Company'),
+        null=True,
     )
 
 
@@ -40,6 +40,11 @@ class Account(models.Model):
     billing_email = models.EmailField(max_length=256)
     contact_name = models.CharField(max_length=128)
     discount = models.DecimalField(max_digits=3, decimal_places=2)
+
+    @property
+    def address_link(self):
+        concat_address = self.billing_address.replace(' ', '+')
+        return 'https://www.google.com/maps/place/' + concat_address
 
     class Meta:
         ordering = ('name',)
@@ -198,6 +203,11 @@ class Project(models.Model):
     contact_phone = models.CharField(max_length=32)
     contact_email = models.EmailField(max_length=256)
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2)
+
+    @property
+    def address_link(self):
+        concat_address = self.physical_address.replace(' ', '+')
+        return 'https://www.google.com/maps/place/' + concat_address
 
     @property
     def price(self):
