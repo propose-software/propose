@@ -7,12 +7,30 @@
   <section>
     <h2>Account Detail</h2>
     <table>
-      <tr><td>Account Name:</td> <td>{{ account.name }}</td></tr>
-      <tr><td>Address:</td> <td>{{ account.billing_address }}</td></tr>
-      <tr><td>Phone:</td> <td>{{ account.billing_phone }}</td></tr>
-      <tr><td>Email:</td> <td>{{ account.billing_email }}</td></tr>
-      <tr><td>Contact:</td> <td>{{ account.contact_name }}</td></tr>
-      <tr><td>Discount:</td> <td>{{ account.discount|percent|floatformat:2 }}%</td></tr>
+      <tr>
+        <td>Account Name:</td>
+        <td>{{ account.name }}</td>
+      </tr>
+      <tr>
+        <td>Address:</td>
+        <td><a href="{{ account.address_link }}" target="_blank">{{ account.billing_address }}</a></td>
+      </tr>
+      <tr>
+        <td>Phone:</td>
+        <td>{{ account.billing_phone }}</td>
+      </tr>
+      <tr>
+        <td>Email:</td>
+        <td><a href="mailto:{{ account.billing_email }}">{{ account.billing_email }}</a></td>
+      </tr>
+      <tr>
+        <td>Contact:</td>
+        <td>{{ account.contact_name }}</td>
+      </tr>
+      <tr>
+        <td>Discount:</td>
+        <td>{{ account.discount|percent|floatformat:2 }}%</td>
+      </tr>
     </table>
 
     <a class='update' href="{% url 'account_update' account_id=account.id %}">Update</a>

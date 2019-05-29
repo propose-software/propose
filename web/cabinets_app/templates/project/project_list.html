@@ -21,7 +21,7 @@
             <tr class="item">
               <td><a class="item_link" href="{% url 'project_detail' proj_id=project.id %}">{{ project.name }}</a></td>
               <td><a class="item_link" href="{% url 'account_detail' account_id=project.account.id %}">{{ project.account }}</a></td>
-              <td>{{ project.physical_address }}</td>
+              <td><a href="{{ project.address_link }}" target="_blank">{{ project.physical_address }}</a></td>
               <td>{{ project.site_contact }}</td>
               <td class="no-wrap">{{ project.contact_phone }}</td>
               <td class="no-wrap"><a href="mailto:{{ project.contact_email }}">{{ project.contact_email }}</a></td>
