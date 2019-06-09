@@ -1,3 +1,7 @@
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse
+from io import BytesIO
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import (
@@ -99,6 +103,24 @@ def project_delete(req, proj_id=None):
             'project': Project.objects.get(pk=proj_id)
         }
         return render(req, './project/project_delete.html', context)
+
+
+@login_required
+def project_pdf(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    rooms = Room.objects.filter(project=project)
+    cabinets = Cabinet.objects.filter(project=project)
+    context = {
+        'project': project,
+        'rooms': rooms,
+        'cabinets': cabinets,
+        'request': req
+    }
+    template = get_template('./project/project_invoice_pdf.html')
+    html = template.render(context)
+    response = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), response)
+    return HttpResponse(response.getvalue(), content_type='application/pdf')
 
 
 # ----- SPECIFICATIONS ----- #

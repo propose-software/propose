@@ -1,0 +1,62 @@
+{% load humanize %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Project Invoice</title>
+    <style type="text/css">
+
+    </style>
+</head> 
+<body>
+    <h2>{{ project.name }} Project Invoice  -  ${{ project.price|floatformat:2|intcomma }}</h2>
+    {% for room in rooms %}
+    <h4>{{ room.name }}</h4>
+    <h5>${{ room.price|floatformat:2|intcomma }}</h5>
+    <table >
+      <thead>
+        <tr>
+          <th>Cabinet</br>Number</th>
+          <th>Spec.</th>
+          <th>Width</th>
+          <th>Height</th>
+          <th>Depth</th>
+          <th>Number</br>Doors</th>
+          <th>Number</br>Shelves</th>
+          <th>Finished</br>Interior</th>
+          <th>Finished</br>Left End</th>
+          <th>Finished</br>Right End</th>
+          <th>Finished</br>Top</th>
+          <th>Finished</br>Bottom</th>
+          <th>Cabinet</br>Price</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cab in room.cabinets.all %}
+        <tr>
+          <td>{{ cab.cabinet_number }}</td>
+          <td>{{ cab.specification.name }}</td>
+          <td>{{ cab.width }}"</td>
+          <td>{{ cab.height }}"</td>
+          <td>{{ cab.depth }}"</td>
+          <td>{{ cab.number_of_doors }}</td>
+          <td>{{ cab.number_of_shelves }} </td>
+          <td>{% if cab.finished_interior == True %}✔{% endif %}</td>
+          <td>{% if cab.finished_left_end == True %}✔{% endif %}</td>
+          <td>{% if cab.finished_right_end == True %}✔{% endif %}</td>
+          <td>{% if cab.finished_top == True %}✔{% endif %}</td>
+          <td>{% if cab.finished_bottom == True %}✔{% endif %}</td>
+          <td>${{ cab.price|floatformat:2|intcomma }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+      <p>{{ room.cabinets.all|length }} Cabinets</p>
+      <p>{{ room.drawer_count }} Drawers</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
