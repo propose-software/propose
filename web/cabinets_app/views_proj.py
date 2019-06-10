@@ -1,6 +1,6 @@
 from xhtml2pdf import pisa
 from django.template.loader import get_template
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from io import BytesIO
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -108,19 +108,24 @@ def project_delete(req, proj_id=None):
 @login_required
 def project_pdf(req, proj_id=None):
     project = Project.objects.get(pk=proj_id)
+    account = Account.objects.get(pk=project.account_id)
     rooms = Room.objects.filter(project=project)
     cabinets = Cabinet.objects.filter(project=project)
     context = {
+        'account': account,
         'project': project,
         'rooms': rooms,
         'cabinets': cabinets,
         'request': req
     }
-    template = get_template('./project/project_invoice_pdf.html')
+    template = get_template('./project/project_pdf.html')
     html = template.render(context)
-    response = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), response)
-    return HttpResponse(response.getvalue(), content_type='application/pdf')
+    stream = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), stream)
+    return HttpResponse(stream.getvalue(), content_type='application/pdf')
+    # response = HttpResponse(stream.getvalue(), content_type='application/pdf')
+    # response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    # return response
 
 
 # ----- SPECIFICATIONS ----- #

@@ -1,18 +1,91 @@
 {% load humanize %}
-<!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>Project Invoice</title>
-    <style type="text/css">
+<style>
+  @page {
+    size: letter portrait;
+    @frame header_frame {
+        -pdf-frame-content: header_content;
+        left: 50pt;
+        width: 512pt;
+        top: 50pt;
+        height: 40pt;
+    }
+    @frame content_frame {
+      left: 50pt;
+      width: 512pt;
+      top: 90pt;
+      bottom: 90pt;
+    }
+    @frame footer_frame {
+        -pdf-frame-content: footer_content;
+        left: 50pt;
+        width: 512pt;
+        top: 772pt;
+        height: 20pt;
+    }
+  }
+  th {
+    text-align: left;
+    width: 100pt;
+  }
+</style>
+<head>
 
-    </style>
-</head> 
 <body>
-    <h2>{{ project.name }} Project Invoice  -  ${{ project.price|floatformat:2|intcomma }}</h2>
+  <div id="header_content">
+    <h1>{{ project.name }} Project Invoice</h1>
+  </div>
+  <div id="footer_content">page <pdf:pagenumber>
+      of <pdf:pagecount>
+  </div>
+  <table id="project-info">
+    <tr>
+      <td>
+        <h2>Account: {{ account.name }}</h2>
+        <table>
+          <tr>
+            <th>Billing Address</th><td>{{ account.billing_address }}</td>
+          </tr>
+          <tr>
+            <th>Billing Phone</th><td>{{ account.billing_phone }}</td>
+          </tr>
+          <tr>
+            <th>Billing Email</th><td>{{ account.billing_email }}</td>
+          </tr>
+          <tr>
+            <th>Contact Name</th><td>{{ account.contact_name }}</td>
+          </tr>
+          <tr>
+            <th>Discount</th><td>{{ account.discount }}</td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <h2>Project Info</h2>
+        <table>
+          <tr>
+            <th>Physical Address</th><td>{{ project.physical_address }}</td>
+          </tr>
+          <tr>
+            <th>Site Contact</th><td>{{ project.site_contact }}</td>
+          </tr>
+          <tr>
+            <th>Contact Phone</th><td>{{ project.contact_phone }}</td>
+          </tr>
+          <tr>
+            <th>Contact Email</th><td>{{ project.contact_email }}</td>
+          </tr>
+          <tr>
+            <th>Hourly Rate</th><td>{{ project.hourly_rate }}</td>
+          </tr>
+        </table>      
+      </td>
+    </tr>
+  </table>
+  <div>
     {% for room in rooms %}
-    <h4>{{ room.name }}</h4>
-    <h5>${{ room.price|floatformat:2|intcomma }}</h5>
+    <h4>{{ room.name }} - ${{ room.price|floatformat:2|intcomma }}</h4>
     <table >
       <thead>
         <tr>
@@ -58,5 +131,9 @@
       <p>{{ room.drawer_count }} Drawers</p>
     </div>
     {% endfor %}
+  </div>
+  <div>
+    <p>Total Price: ${{ project.price|floatformat:2|intcomma }}</p>
+  </div>
 </body>
 </html>

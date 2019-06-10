@@ -32,4 +32,4 @@ sqlparse==0.3.0
 text-unidecode==1.2
 urllib3==1.25.3
 webencodings==0.5.1
-xhtml2pdf==0.2.3
+xhtml2pdf==0.2.1
