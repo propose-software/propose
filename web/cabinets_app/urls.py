@@ -12,7 +12,7 @@ from .views_cab import (
 )
 from .views_proj import (
     project_list, project_create, project_detail, project_update,
-    project_delete, project_home, project_pdf,
+    project_delete, project_home, project_pdf, project_email_pdf,
     spec_create, spec_detail, spec_delete, spec_update,
     room_create, room_update, room_delete,
 )
@@ -56,6 +56,7 @@ urlpatterns = [
     path('project/<int:proj_id>/update', project_update, name='project_update'),
     path('project/<int:proj_id>/delete', project_delete, name='project_delete'),
     path('project/<int:proj_id>/pdf', project_pdf, name='project_pdf'),
+    path('project/<int:proj_id>/email_pdf', project_email_pdf, name='project_email_pdf'),
 
     path('project/<int:proj_id>/room/', room_create, name='room_create'),
     path('project/<int:proj_id>/room/<int:room_id>/update', room_update, name='room_update'),

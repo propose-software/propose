@@ -60,6 +60,12 @@ class ProjectForm(forms.ModelForm):
         ]
 
 
+class EmailProjectForm(forms.Form):
+    recipient = forms.CharField(max_length=128)
+    cc_recipients = forms.CharField(max_length=1024, required=False)
+    message = forms.CharField(widget=forms.Textarea, required=False)
+
+
 class SpecForm(forms.ModelForm):
     class Meta:
         model = Specification

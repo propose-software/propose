@@ -67,4 +67,6 @@
     {% endfor %}
 
   </section>
+  <a class="create" href="{% url 'project_pdf' proj_id=project.id %}">Save Invoice</a>
+  <a class="create" href="{% url 'project_email_pdf' proj_id=project.id %}">Email Invoice</a>
 {% endblock content %}
