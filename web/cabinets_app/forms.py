@@ -104,8 +104,12 @@ class CabinetForm(forms.ModelForm):
             'finished_left_end',
             'finished_right_end',
             'finished_top',
-            'finished_bottom'
+            'finished_bottom',
+            'notes'
         ]
+        widgets = {
+            'notes': forms.Textarea(attrs={'rows': 4})
+        }
 
     def __init__(self, project, *args, **kwargs):
         super(CabinetForm, self).__init__(*args, **kwargs)

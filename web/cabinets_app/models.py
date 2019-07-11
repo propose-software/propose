@@ -364,6 +364,7 @@ class Cabinet(models.Model):
     finished_right_end = models.BooleanField(default=False)
     finished_top = models.BooleanField(default=False)
     finished_bottom = models.BooleanField(default=False)
+    notes = models.CharField(max_length=4096, null=True)
 
     @property
     def price(self):
