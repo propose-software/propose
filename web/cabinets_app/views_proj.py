@@ -1,3 +1,5 @@
+from django.core.mail import EmailMessage
+from django.conf import settings
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse, FileResponse
@@ -122,7 +124,7 @@ def project_pdf(req, proj_id=None):
     html = template.render(context)
     stream = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), stream)
-    # return HttpResponse(stream.getvalue(), content_type='application/pdf') // open in browser
+    # return HttpResponse(stream.getvalue(), content_type='application/pdf') # open in browser
     response = HttpResponse(stream.getvalue(), content_type='application/pdf')
     filename = f'{project.name} Project Invoice.pdf'
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
@@ -150,7 +152,15 @@ def project_email_pdf(req, proj_id=None):
             html = template.render(context)
             stream = BytesIO()
             pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), stream)
-            return
+            email = EmailMessage(
+                subject=f'{project.name} Invoice',
+                body=req.POST.get('message'),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[req.POST.get('recipient')]
+            )
+            email.attach(f'{project.name} Invoice.pdf', stream.getvalue())
+            email.send()
+            return redirect('project_detail', proj_id=proj_id)
         else:
             context = {
                 'form': form,
