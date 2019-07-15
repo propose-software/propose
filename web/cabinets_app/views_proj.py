@@ -160,11 +160,16 @@ def project_email_pdf(req, proj_id=None):
             )
             email.attach(f'{project.name} Invoice.pdf', stream.getvalue())
             email.send()
-            return redirect('project_detail', proj_id=proj_id)
+            context = {
+                'project': project,
+                'success': True
+            }
+            return render(req, './project/project_email_pdf.html', context)
         else:
             context = {
                 'form': form,
-                'project': project
+                'project': project,
+                'success': False
             }
             return render(req, './project/project_email_pdf.html', context)
     else:
@@ -173,7 +178,8 @@ def project_email_pdf(req, proj_id=None):
         }
         context = {
             'form': EmailProjectForm(form_data),
-            'project': project
+            'project': project,
+            'success': False
         }
         return render(req, './project/project_email_pdf.html', context)
 
