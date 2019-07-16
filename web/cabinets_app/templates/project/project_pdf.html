@@ -1,4 +1,8 @@
 {% load humanize %}
+{% comment %}
+See https://buildmedia.readthedocs.org/media/pdf/xhtml2pdf/latest/xhtml2pdf.pdf
+for info on @page, @frame, and supported CSS properties
+{% endcomment %}
 <html>
 <head>
 <style>
@@ -116,11 +120,11 @@
           <td>{{ cab.depth }}"</td>
           <td>{{ cab.number_of_doors }}</td>
           <td>{{ cab.number_of_shelves }} </td>
-          <td>{% if cab.finished_interior == True %}✔{% endif %}</td>
-          <td>{% if cab.finished_left_end == True %}✔{% endif %}</td>
-          <td>{% if cab.finished_right_end == True %}✔{% endif %}</td>
-          <td>{% if cab.finished_top == True %}✔{% endif %}</td>
-          <td>{% if cab.finished_bottom == True %}✔{% endif %}</td>
+          <td>{% if cab.finished_interior == True %}x{% endif %}</td>
+          <td>{% if cab.finished_left_end == True %}x{% endif %}</td>
+          <td>{% if cab.finished_right_end == True %}x{% endif %}</td>
+          <td>{% if cab.finished_top == True %}x{% endif %}</td>
+          <td>{% if cab.finished_bottom == True %}x{% endif %}</td>
           <td>${{ cab.price|floatformat:2|intcomma }}</td>
         </tr>
         {% endfor %}

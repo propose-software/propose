@@ -156,7 +156,8 @@ def project_email_pdf(req, proj_id=None):
                 subject=f'{project.name} Invoice',
                 body=req.POST.get('message'),
                 from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[req.POST.get('recipient')]
+                to=[req.POST.get('recipient')],
+                cc=form.cleaned_data['cc_recipients']
             )
             email.attach(f'{project.name} Invoice.pdf', stream.getvalue())
             email.send()

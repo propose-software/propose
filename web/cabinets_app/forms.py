@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import EmailValidator
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django_registration.forms import RegistrationForm
@@ -60,9 +61,31 @@ class ProjectForm(forms.ModelForm):
         ]
 
 
+class MultiEmailField(forms.Field):
+    def to_python(self, val):
+        """ Get list of emails, strip whitespace
+        """
+        if not val:
+            return []
+        return [e.strip() for e in val.split(',')]
+
+    def validate(self, val):
+        """ Check that each email is valid
+        """
+        super().validate(val)
+        validate_multi_email = EmailValidator(
+            message='Each comma-separated email address must be valid'
+        )
+        for email in val:
+            validate_multi_email(email)
+
+
 class EmailProjectForm(forms.Form):
-    recipient = forms.CharField(max_length=128)
-    cc_recipients = forms.CharField(max_length=1024, required=False)
+    recipient = forms.EmailField()
+    cc_recipients = MultiEmailField(
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Comma-separated'})
+    )
     message = forms.CharField(widget=forms.Textarea, required=False)
 
 
