@@ -1,0 +1,143 @@
+{% load humanize %}
+{% comment %}
+See https://buildmedia.readthedocs.org/media/pdf/xhtml2pdf/latest/xhtml2pdf.pdf
+for info on @page, @frame, and supported CSS properties
+{% endcomment %}
+<html>
+<head>
+<style>
+  @page {
+    size: letter portrait;
+    @frame header_frame {
+        -pdf-frame-content: header_content;
+        left: 50pt;
+        width: 512pt;
+        top: 50pt;
+        height: 40pt;
+    }
+    @frame content_frame {
+      left: 50pt;
+      width: 512pt;
+      top: 90pt;
+      bottom: 90pt;
+    }
+    @frame footer_frame {
+        -pdf-frame-content: footer_content;
+        left: 50pt;
+        width: 512pt;
+        top: 772pt;
+        height: 20pt;
+    }
+  }
+  th {
+    text-align: left;
+    width: 100pt;
+  }
+</style>
+<head>
+
+<body>
+  <div id="header_content">
+    <h1>{{ project.name }} Project Invoice</h1>
+  </div>
+  <div id="footer_content">page <pdf:pagenumber>
+      of <pdf:pagecount>
+  </div>
+  <table id="project-info">
+    <tr>
+      <td>
+        <h2>Account: {{ account.name }}</h2>
+        <table>
+          <tr>
+            <th>Billing Address</th><td>{{ account.billing_address }}</td>
+          </tr>
+          <tr>
+            <th>Billing Phone</th><td>{{ account.billing_phone }}</td>
+          </tr>
+          <tr>
+            <th>Billing Email</th><td>{{ account.billing_email }}</td>
+          </tr>
+          <tr>
+            <th>Contact Name</th><td>{{ account.contact_name }}</td>
+          </tr>
+          <tr>
+            <th>Discount</th><td>{{ account.discount }}</td>
+          </tr>
+        </table>
+      </td>
+      <td>
+        <h2>Project Info</h2>
+        <table>
+          <tr>
+            <th>Physical Address</th><td>{{ project.physical_address }}</td>
+          </tr>
+          <tr>
+            <th>Site Contact</th><td>{{ project.site_contact }}</td>
+          </tr>
+          <tr>
+            <th>Contact Phone</th><td>{{ project.contact_phone }}</td>
+          </tr>
+          <tr>
+            <th>Contact Email</th><td>{{ project.contact_email }}</td>
+          </tr>
+          <tr>
+            <th>Hourly Rate</th><td>{{ project.hourly_rate }}</td>
+          </tr>
+        </table>      
+      </td>
+    </tr>
+  </table>
+  <div>
+    {% for room in rooms %}
+    <h4>{{ room.name }} - ${{ room.price|floatformat:2|intcomma }}</h4>
+    <table >
+      <thead>
+        <tr>
+          <th>Cabinet</br>Number</th>
+          <th>Spec.</th>
+          <th>Width</th>
+          <th>Height</th>
+          <th>Depth</th>
+          <th>Number</br>Doors</th>
+          <th>Number</br>Shelves</th>
+          <th>Finished</br>Interior</th>
+          <th>Finished</br>Left End</th>
+          <th>Finished</br>Right End</th>
+          <th>Finished</br>Top</th>
+          <th>Finished</br>Bottom</th>
+          <th>Cabinet</br>Price</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cab in room.cabinets.all %}
+        <tr>
+          <td>{{ cab.cabinet_number }}</td>
+          <td>{{ cab.specification.name }}</td>
+          <td>{{ cab.width }}"</td>
+          <td>{{ cab.height }}"</td>
+          <td>{{ cab.depth }}"</td>
+          <td>{{ cab.number_of_doors }}</td>
+          <td>{{ cab.number_of_shelves }} </td>
+          <td>{% if cab.finished_interior == True %}x{% endif %}</td>
+          <td>{% if cab.finished_left_end == True %}x{% endif %}</td>
+          <td>{% if cab.finished_right_end == True %}x{% endif %}</td>
+          <td>{% if cab.finished_top == True %}x{% endif %}</td>
+          <td>{% if cab.finished_bottom == True %}x{% endif %}</td>
+          <td>${{ cab.price|floatformat:2|intcomma }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+      <p>{{ room.cabinets.all|length }} Cabinets</p>
+      <p>{{ room.drawer_count }} Drawers</p>
+    </div>
+    {% endfor %}
+  </div>
+  <div>
+    <p>Total Price: ${{ project.price|floatformat:2|intcomma }}</p>
+  </div>
+</body>
+</html>

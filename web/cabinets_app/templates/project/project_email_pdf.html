@@ -1,0 +1,24 @@
+{% extends "generic/base.html" %}
+
+{% block title %}Propose - Email Project Invoice{% endblock title %}
+
+{% block content %}
+  <section>
+    <h2>Email Project Invoice</h2>
+
+    {% if success %}
+      <p>Project invoice sent!</p>
+      <a class="create" href="{% url 'project_home' proj_id=project.id %}">OK</a>
+
+    {% else %}
+      <form action="{% url 'project_email_pdf' proj_id=project.id%}" method="POST">
+        <table>
+          {% csrf_token %}
+          {{ form }}
+        </table>
+        <input class="create" type="submit" value="Submit">
+        <a class="cancel" href="{% url 'project_home' proj_id=project.id %}">Cancel</a>
+      </form>
+    {% endif %}
+  </section>
+{% endblock content %}

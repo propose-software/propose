@@ -1,3 +1,9 @@
+from django.core.mail import EmailMessage
+from django.conf import settings
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse, FileResponse
+from io import BytesIO
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import (
@@ -5,7 +11,7 @@ from .models import (
     Specification, Hardware, Project, Room, Cabinet
 )
 from .forms import (
-    ProjectForm, AccountForm, CabinetForm, SpecForm,
+    ProjectForm, EmailProjectForm, AccountForm, CabinetForm, SpecForm,
     MaterialForm, HardwareForm, RoomForm
 )
 
@@ -99,6 +105,84 @@ def project_delete(req, proj_id=None):
             'project': Project.objects.get(pk=proj_id)
         }
         return render(req, './project/project_delete.html', context)
+
+
+@login_required
+def project_pdf(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    account = Account.objects.get(pk=project.account_id)
+    rooms = Room.objects.filter(project=project)
+    cabinets = Cabinet.objects.filter(project=project)
+    context = {
+        'account': account,
+        'project': project,
+        'rooms': rooms,
+        'cabinets': cabinets,
+        'request': req
+    }
+    template = get_template('./project/project_pdf.html')
+    html = template.render(context)
+    stream = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), stream)
+    # return HttpResponse(stream.getvalue(), content_type='application/pdf') # open in browser
+    response = HttpResponse(stream.getvalue(), content_type='application/pdf')
+    filename = f'{project.name} Project Invoice.pdf'
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
+
+
+@login_required
+def project_email_pdf(req, proj_id=None):
+    project = Project.objects.get(pk=proj_id)
+    if req.method == 'POST':
+        form = EmailProjectForm(req.POST)
+        if form.is_valid():
+            project = Project.objects.get(pk=proj_id)
+            account = Account.objects.get(pk=project.account_id)
+            rooms = Room.objects.filter(project=project)
+            cabinets = Cabinet.objects.filter(project=project)
+            context = {
+                'account': account,
+                'project': project,
+                'rooms': rooms,
+                'cabinets': cabinets,
+                'request': req
+            }
+            template = get_template('./project/project_pdf.html')
+            html = template.render(context)
+            stream = BytesIO()
+            pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), stream)
+            email = EmailMessage(
+                subject=f'{project.name} Invoice',
+                body=req.POST.get('message'),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[req.POST.get('recipient')],
+                cc=form.cleaned_data['cc_recipients']
+            )
+            email.attach(f'{project.name} Invoice.pdf', stream.getvalue())
+            email.send()
+            context = {
+                'project': project,
+                'success': True
+            }
+            return render(req, './project/project_email_pdf.html', context)
+        else:
+            context = {
+                'form': form,
+                'project': project,
+                'success': False
+            }
+            return render(req, './project/project_email_pdf.html', context)
+    else:
+        form_data = {
+            'recipient': project.contact_email
+        }
+        context = {
+            'form': EmailProjectForm(form_data),
+            'project': project,
+            'success': False
+        }
+        return render(req, './project/project_email_pdf.html', context)
 
 
 # ----- SPECIFICATIONS ----- #
