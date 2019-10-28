@@ -1,7 +1,7 @@
 {
     "python.linting.pylintEnabled": false,
-    "python.linting.pep8Enabled": true,
-    "python.linting.pep8Args": ["--ignore=E501"],
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.pycodestyleArgs": ["--ignore=E501"],
     "python.linting.enabled": true,
-    "python.pythonPath": "/home/milo/.local/share/virtualenvs/propose-g3XrvuVd/bin/python"
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7"
 }
